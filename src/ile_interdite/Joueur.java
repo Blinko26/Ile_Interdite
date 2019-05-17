@@ -4,11 +4,15 @@ import ile_interdite.Aventurier;
 import java.util.ArrayList;
 
 public class Joueur {
-	private int[] numjoueur;
+	private int numjoueur;
 	private String nomJoueur;
 	public ArrayList<CarteTresor> ct = new ArrayList<CarteTresor>();
 	public Aventurier roleJoueur;
         
+        public Joueur(int numJoueur, String nomJoueur){
+            this.numjoueur= numJoueur;
+            this.nomJoueur = nomJoueur;
+        }
 
 	public void PossibleMouvement() {
 		throw new UnsupportedOperationException();
