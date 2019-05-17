@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build">
+	<path id="build.classpath">
+		<pathelement location="classes"/>
+	</path>
+	<target name="init">
+		<mkdir dir="classes"/>
+	</target>
+	<target name="clean">
+		<delete dir="classes"/>
+	</target>
+	<target depends="init" name="build">
+		<javac srcdir="." destdir="classes" source="1.5" target="1.5" fork="yes">
+			<classpath refid="build.classpath"/>
+			<include name="EtatT.java"/>
+			<include name="TypeAventurier.java"/>
+			<include name="TypeT.java"/>
+			<include name="TypeC.java"/>
+			<include name="EtatC.java"/>
+			<include name="Tuile.java"/>
+			<include name="Ile.java"/>
+			<include name="Niveaudo.java"/>
+			<include name="TypeCT.java"/>
+			<include name="CarteTresor.java"/>
+			<include name="CarteInondation.java"/>
+			<include name="Application.java"/>
+			<include name="Tresor.java"/>
+			<include name="Joueur.java"/>
+			<include name="Plongeur.java"/>
+			<include name="Explorateur.java"/>
+			<include name="Messager.java"/>
+			<include name="Navigateur.java"/>
+			<include name="Pilote.java"/>
+			<include name="Aventurier.java"/>
+			<include name="Ingénieur.java"/>
+		</javac>
+	</target>
+</project>

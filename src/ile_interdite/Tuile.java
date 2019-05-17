@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package ile_interdite;
+import ile_interdite.Aventurier;
+import java.util.Vector;
 
-/**
- *
- * @author viellarb
- */
 public class Tuile {
-    
+	private int[] _numcase;
+	private TypeC _type;
+	private EtatC _etat;
+	private int[] _emplacement;
+	public Ile _iledescases;
+	public Vector<Aventurier> _aventurierOnCase = new Vector<Aventurier>();
 }
