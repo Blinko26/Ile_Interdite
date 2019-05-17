@@ -1,5 +1,6 @@
+package ile_interdite;
 import ile_interdite.Aventurier;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Tuile {
 	private int[] _numcase;
@@ -7,5 +8,5 @@ public class Tuile {
 	private EtatC _etat;
 	private int[] _emplacement;
 	public Ile _iledescases;
-	public Vector<Aventurier> _aventurierOnCase = new Vector<Aventurier>();
+	public ArrayList<Aventurier> = new ArrayList<Aventurier>();
 }

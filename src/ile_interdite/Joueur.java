@@ -1,10 +1,12 @@
+package ile_interdite;
+        
 import ile_interdite.Aventurier;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Joueur {
 	private int[] numjoueur;
 	private String nomJoueur;
-	public Vector<CarteTresor> _deck = new Vector<CarteTresor>();
+	public ArrayList<CarteTresor> = new ArrayList<CarteTresor>();
 	public Aventurier roleJoueur;
         
 

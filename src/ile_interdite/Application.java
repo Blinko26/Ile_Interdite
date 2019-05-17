@@ -1,12 +1,15 @@
-import java.util.Vector;
+package ile_interdite;
+
+import java.util.ArrayList;
+
 
 public class Application {
 	public Ile ile;
 	public Niveaudo niveaudeau;
-	public Vector<Tresor> trésors = new Vector<Tresor>();
-	public Vector<CarteInondation> cartesInondation = new Vector<CarteInondation>();
-	public Vector<Joueur> joueurs = new Vector<Joueur>();
-	public Vector<CarteTresor> cartesTresor = new Vector<CarteTresor>();
+	public ArrayList<Tresor> trésors = new ArrayList<Tresor>();
+	public ArrayList<CarteInondation> cartesInondation = new ArrayList<CarteInondation>();
+	public ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
+	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>();
 
 	public void getPointAction(Object aNumJ) {
 		throw new UnsupportedOperationException();

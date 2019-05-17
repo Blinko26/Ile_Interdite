@@ -1,10 +1,10 @@
 package ile_interdite;
-public enum TypeCT {
+public enum TypeC {
+	normal, 
+	héliport, 
 	calice, 
 	cristal, 
 	pierre, 
 	statue, 
-	montéedso, 
-	hélicoptère, 
-	sac2sable;
+	null;
 }
