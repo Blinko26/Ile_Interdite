@@ -3,10 +3,15 @@ import ile_interdite.Aventurier;
 import java.util.ArrayList;
 
 public class Tuile {
-	private int[] _numcase;
-	private TypeC _type;
-	private EtatC _etat;
-	private int[] _emplacement;
-	public Ile _iledescases;
-	public ArrayList<Aventurier> tu = new ArrayList<Aventurier>();
+	private int[] numcase;
+	private TypeC type;
+	private EtatC etat;
+	private int[] emplacement;
+	public Ile iledescases;
+	public ArrayList<Aventurier> aventuriers = new ArrayList<>();
+        
+        Tuile() { 
+            this.etat = normal;
+            aventuriers = new ArrayList<Aventurier>();
+        }
 }
