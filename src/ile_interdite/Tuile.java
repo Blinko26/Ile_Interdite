@@ -8,5 +8,5 @@ public class Tuile {
 	private EtatC _etat;
 	private int[] _emplacement;
 	public Ile _iledescases;
-	public ArrayList<Aventurier> = new ArrayList<Aventurier>();
+	public ArrayList<Aventurier> tu = new ArrayList<Aventurier>();
 }

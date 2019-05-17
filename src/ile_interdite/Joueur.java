@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Joueur {
 	private int[] numjoueur;
 	private String nomJoueur;
-	public ArrayList<CarteTresor> = new ArrayList<CarteTresor>();
+	public ArrayList<CarteTresor> ct = new ArrayList<CarteTresor>();
 	public Aventurier roleJoueur;
         
 
