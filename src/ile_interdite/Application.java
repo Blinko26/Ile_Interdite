@@ -12,6 +12,7 @@ public class Application {
 	public ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
 	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>();
 
+
         public void initPartie(int nombreJoueur, Joueur j){   //Initialisation de la partie==> Cases aventurier et Inscrire joueurs avec leur pion
             
             for (int i=0; i<nombreJoueur; i++) {
@@ -100,6 +101,21 @@ public class Application {
     public void setCartesTresor(ArrayList<CarteTresor> cartesTresor) {
         this.cartesTresor = cartesTresor;
     }
+    
+    public void initMap(){
+            ile = new Ile();
+            int eR[] = {3,4,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,26,27,28,29,33,34}; //Emplacement à attribuer restant
+            int i = 0;
+            
+            ArrayList<Integer> emplacements = new ArrayList<>();
+            
+            for (Tuile tuile:ile.getCase2ile()){
+                if (tuile.getEmplacement()==0) {
+                    tuile.setEmplacement(eR[i]);
+                    
+                }
+            }    
+        }
         
 	public void getPointAction(Object aNumJ) {
 		throw new UnsupportedOperationException();
