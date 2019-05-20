@@ -20,6 +20,46 @@ public class Tuile {
             aventuriers = new ArrayList<Aventurier>(); //Aventurier sur la tuile 
         }
 
+    public int getNumcase() {
+        return numcase;
+    }
+
+    public void setNumcase(int numcase) {
+        this.numcase = numcase;
+    }
+
+    public TypeC getType() {
+        return type;
+    }
+
+    public void setType(TypeC type) {
+        this.type = type;
+    }
+
+    public EtatC getEtat() {
+        return etat;
+    }
+
+    public void setEtat(EtatC etat) {
+        this.etat = etat;
+    }
+
+    public Ile getIledescases() {
+        return iledescases;
+    }
+
+    public void setIledescases(Ile iledescases) {
+        this.iledescases = iledescases;
+    }
+
+    public ArrayList<Aventurier> getAventuriers() {
+        return aventuriers;
+    }
+
+    public void setAventuriers(ArrayList<Aventurier> aventuriers) {
+        this.aventuriers = aventuriers;
+    }
+
     
         
         public void setEmplacement(int emplacement){
