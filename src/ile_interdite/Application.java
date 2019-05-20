@@ -12,8 +12,14 @@ public class Application {
 	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>();
 
         public void initPartie(){   //Initialisation de la partie==> Cases aventurier et Inscrire joueurs avec leur pion
+            //Initialisation de l'ile (carte)
             
         }
+        
+        public void initMap(){
+            
+        }
+        
         
 	public void getPointAction(Object aNumJ) {
 		throw new UnsupportedOperationException();
