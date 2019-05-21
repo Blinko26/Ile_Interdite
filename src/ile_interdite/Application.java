@@ -2,7 +2,8 @@ package ile_interdite;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import util.Utils;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Application {
@@ -105,8 +106,11 @@ public class Application {
     
     public void initMap(){
             ile = new Ile();
-            int eR[] = {3,4,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,26,27,28,29,33,34}; //Emplacement à attribuer restant
+            
+            List<Integer> eR = Arrays.asList(3,5,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,26,27,28,29,33,34); //Emplacement à attribuer restant
             int i = 0;
+            int j = 1;
+            int k = 24;
             
             ArrayList<Integer> emplacements = new ArrayList<>();
             ArrayList<String> noms = Utils.getNomsTuiles();
@@ -114,13 +118,16 @@ public class Application {
             
             for (Tuile tuile:ile.getCase2ile()){ //Atribution des emplacements restants aux tuiles restantes et attribution d'un nom
                 if (tuile.getEmplacement()==0) {
-                    i=i+1;
-                    tuile.setEmplacement(eR[i]);
+                    i=(int)((Math.random()*k));
+                    tuile.setEmplacement(eR.get(i));
+                    ile.getTuile(eR.get(i)).setNom(noms.get(j));
+                    j++;
+                    k--;
+                    eR.remove(i);
                 }
             }
-            
-            for (int j =0;i<eR.length; i++) {  //Attribution des noms aux tuiles
-                ile.getTuile(eR[j]).setNom(noms.get(j));
+            for (Tuile tuile:ile.getCase2ile()){
+                System.out.println(tuile.getNom()+"\n"+tuile.getEmplacement());
             }
         }
         

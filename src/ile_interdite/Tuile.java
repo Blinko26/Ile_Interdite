@@ -18,8 +18,17 @@ public class Tuile {
             this.etat = etat; // Etat de la tuile (Normale, innondée, sombrée)
             this.emplacement = 0; //Emplacement de la tuile sur l'ile (La map)
             this.aventuriers = new ArrayList<>(); // Liste des aventuriers sur cette tuile
-            aventuriers = new ArrayList<Aventurier>(); //Aventurier sur la tuile 
             this.nomcase = null;
+        }
+        
+        public Tuile(int numcase, TypeC type, EtatC etat, int emplacement) { 
+            this.numcase = numcase; //Numero d'identification de la tuile
+            this.type = type; // Type de la tuile (normal, héliport, calice, cristal, pierre, statue, null)
+            this.etat = etat; // Etat de la tuile (Normale, innondée, sombrée)
+            this.emplacement = 0; //Emplacement de la tuile sur l'ile (La map)
+            this.aventuriers = new ArrayList<>(); // Liste des aventuriers sur cette tuile
+            this.nomcase = null;
+            this.emplacement = emplacement;
         }
 
     public int getNumcase() {

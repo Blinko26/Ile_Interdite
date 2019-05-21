@@ -48,7 +48,8 @@ public class Ile_Interdite {
                     g2d.fillRect(8+2*i+i*(int)((int) size.getWidth()-30)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) size.getWidth()-30)/6, (int)((int) size.getHeight()-30)/6);
                 }
             }
-
+            Application application = new Application();
+            application.initMap();
         }
     }
     
