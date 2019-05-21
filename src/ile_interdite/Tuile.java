@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Tuile {
 	private int numcase;
+        private String nomcase;
 	private TypeC type;
 	private EtatC etat;
 	private int emplacement;
@@ -18,6 +19,7 @@ public class Tuile {
             this.emplacement = 0; //Emplacement de la tuile sur l'ile (La map)
             this.aventuriers = new ArrayList<>(); // Liste des aventuriers sur cette tuile
             aventuriers = new ArrayList<Aventurier>(); //Aventurier sur la tuile 
+            this.nomcase = null;
         }
 
     public int getNumcase() {
@@ -68,6 +70,14 @@ public class Tuile {
 
         public int getEmplacement() {
             return emplacement;
+        }
+        
+        public void setNom(String nom){
+            this.nomcase = nom;
+        }
+        
+        public String getNom(){
+            return nomcase;
         }
         
 }

@@ -47,5 +47,14 @@ public class Ile {
    public void setCase2ile(ArrayList<Tuile> case2ile) {
         this.case2ile = case2ile;
     }
+   
+   public Tuile getTuile(int emplacementTuile){
+       for(Tuile tuile: case2ile) {
+           if (tuile.getEmplacement()== emplacementTuile){
+               return tuile;
+           }
+       }
+       return null;
+   }
         
 }

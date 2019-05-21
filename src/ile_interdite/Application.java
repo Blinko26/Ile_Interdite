@@ -2,6 +2,7 @@ package ile_interdite;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import util.Utils;
 
 
 public class Application {
@@ -108,13 +109,19 @@ public class Application {
             int i = 0;
             
             ArrayList<Integer> emplacements = new ArrayList<>();
+            ArrayList<String> noms = Utils.getNomsTuiles();
             
-            for (Tuile tuile:ile.getCase2ile()){
+            
+            for (Tuile tuile:ile.getCase2ile()){ //Atribution des emplacements restants aux tuiles restantes et attribution d'un nom
                 if (tuile.getEmplacement()==0) {
+                    i=i+1;
                     tuile.setEmplacement(eR[i]);
-                    
                 }
-            }    
+            }
+            
+            for (int j =0;i<eR.length; i++) {  //Attribution des noms aux tuiles
+                ile.getTuile(eR[j]).setNom(noms.get(j));
+            }
         }
         
 	public void getPointAction(Object aNumJ) {

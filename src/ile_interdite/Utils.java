@@ -39,9 +39,9 @@ public class Utils {
         ROUGE("Rouge", new Color(255, 0, 0)),
         VERT("Vert", new Color(0, 195, 0)),
         BLEU("Bleu", new Color(55,194,198)),
-        ORANGE("Orange", new Color(255, 148, 0)),
-        VIOLET("Violet", new Color(204, 94, 255)),
-        JAUNE("Jaune", new Color(255, 255, 0)) ;    
+        JAUNE("Jaune", new Color(255, 255, 0)),
+        BLANC("Blanc", new Color(0, 0, 0)),
+        NOIR("Noir", new Color(255, 255, 255)) ;    
 
         private final String libelle ;
         private final Color couleur ;
@@ -65,8 +65,8 @@ public class Utils {
             if (ROUGE.name().equals(name)) return ROUGE ;
             if (VERT.name().equals(name)) return VERT ;
             if (BLEU.name().equals(name)) return BLEU ;
-            if (ORANGE.name().equals(name)) return ORANGE ;
-            if (VIOLET.name().equals(name)) return VIOLET ;
+            if (BLANC.name().equals(name)) return BLANC ;
+            if (NOIR.name().equals(name)) return NOIR ;
             if (JAUNE.name().equals(name)) return JAUNE ;
             return null ;
         }
@@ -97,5 +97,34 @@ public class Utils {
      */
     public static void afficherInformation(String message) {
         JOptionPane.showMessageDialog(null, message, "Information", JOptionPane.OK_OPTION);
+    }
+    
+    public static ArrayList<String> getNomsTuiles(){
+        ArrayList<String> listeNomsTuiles = new ArrayList<>();
+        listeNomsTuiles.add("Le Pont des Abimes");
+        listeNomsTuiles.add("La Porte de Bronze");
+        listeNomsTuiles.add("La Caverne des Ombres");
+        listeNomsTuiles.add("La Porte de Fer");
+        listeNomsTuiles.add("La Porte d’Or");
+        listeNomsTuiles.add("Les Falaises de l’Oubli");
+        listeNomsTuiles.add("Le Palais de Corail");
+        listeNomsTuiles.add("La Porte d’Argent");
+        listeNomsTuiles.add("Les Dunes de l’Illusion");
+        listeNomsTuiles.add("Heliport");
+        listeNomsTuiles.add("La Porte de Cuivre");
+        listeNomsTuiles.add("Le Jardin des Hurlements");
+        listeNomsTuiles.add("La Foret Pourpre");
+        listeNomsTuiles.add("Le Lagon Perdu");
+        listeNomsTuiles.add("Le Marais Brumeux");
+        listeNomsTuiles.add("Observatoire");
+        listeNomsTuiles.add("Le Rocher Fantome");
+        listeNomsTuiles.add("La Caverne du Brasier");
+        listeNomsTuiles.add("Le Temple du Soleil");
+        listeNomsTuiles.add("Le Temple de La Lune");
+        listeNomsTuiles.add("Le Palais des Marees");
+        listeNomsTuiles.add("Le Val du Crepuscule");
+        listeNomsTuiles.add("La Tour du Guet");
+        listeNomsTuiles.add("Le Jardin des Murmures");
+        return listeNomsTuiles;
     }
 }
