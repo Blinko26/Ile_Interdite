@@ -3,6 +3,11 @@ import java.util.ArrayList;
 
 public class Ile {
 	public ArrayList<Tuile> case2ile;
+        public ArrayList<Tuile> tuilesadj;
+        public ArrayList<Tuile> tuilesinondees;
+        public ArrayList<Tuile> tuilesnoninondees;
+        public ArrayList<Tuile> tuilesdispos;
+        public ArrayList<Tuile> tuilesdiag;
         
       public Ile(){
             for (int i = 0; i < 12; i++){   //Ajout des tuiles null (sur les bords)
@@ -56,5 +61,67 @@ public class Ile {
        }
        return null;
    }
+   
+   public ArrayList<Tuile> getCasesAdjacentes(Tuile t){ //Ajout des cases au nord, au sud, à l'est et à l'ouest d'une case donnée
+       int i;
+       i = t.getEmplacement();
+       tuilesadj.add(getTuile(i-6)); //case du nord
+       tuilesadj.add(getTuile(i-1)); //case de l'ouest
+       tuilesadj.add(getTuile(i+1)); //case de l'est
+       tuilesadj.add(getTuile(i+6)); //case du sud
+       
+       return tuilesadj;
+   }
+   
+   public ArrayList<Tuile> getCasesInondees(){ //Ajout des cases ayant sombrées
+       for (Tuile tuile : case2ile) { //Parcourt l'ensemble des cases de l'île
+           if (tuile.getEtat()==EtatC.sombré){
+               tuilesinondees.add(tuile);
+           }
+       }
+       
+       return tuilesinondees;
+   }
+   
+   public ArrayList<Tuile> getDiagonales(Tuile t){ //Ajout des cases en diagonale d'une case donnée
+       int i;
+       i = t.getEmplacement();
+       tuilesdiag.add(getTuile(i-7)); //case du nord-ouest
+       tuilesdiag.add(getTuile(i-5)); //case du nord-est
+       tuilesdiag.add(getTuile(i+5)); //case du sud-ouest
+       tuilesdiag.add(getTuile(i+7)); //case du sud-est
+       
+       return tuilesdiag;
+   }
+   
+   public ArrayList<Tuile> getCasesNonInondees(){ //Ajout des cases n'ayant pas sombrées
+       for (Tuile tuile : case2ile) {
+           if (tuile.getEtat()==EtatC.normal || tuile.getEtat()==EtatC.innondé){
+               tuilesinondees.add(tuile);
+           }
+       }
+       
+       return tuilesnoninondees;
+   }
+   
+    public ArrayList<Tuile> getTuilesDispoAutourJoueurClassique(){ //Retourne toutes les cases adjacentes n'ayant pas sombrées
+        for (Tuile tuile : tuilesadj) {
+            if (tuile.getEtat()!=EtatC.sombré){
+                tuilesdispos.add(tuile);
+            }
+        }
+        return tuilesdispos;
+    }
+    
+    public ArrayList<Tuile> getAllTuilesDispo() {
+        tuilesdispos=getTuilesDispoAutourJoueurClassique();
+
+        for (Tuile tuile : tuilesdiag) {
+            if (tuile.getEtat()!=EtatC.sombré){
+                tuilesdispos.add(tuile);
+            }
+        }
+        return tuilesdispos;
+    }
         
 }
