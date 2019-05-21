@@ -1,14 +1,54 @@
 package ile_interdite;
         
 import ile_interdite.Aventurier;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Joueur {
-	private int[] numjoueur;
+	private int numJoueur;
 	private String nomJoueur;
-	public ArrayList<CarteTresor> = new ArrayList<CarteTresor>();
+	public ArrayList<CarteTresor> cartesT = new ArrayList<CarteTresor>();
 	public Aventurier roleJoueur;
         
+        public Joueur(int numJoueur, String nomJoueur, Aventurier roleJoueur){
+            this.numJoueur= numJoueur;
+            this.nomJoueur = nomJoueur;
+            cartesT = new ArrayList<CarteTresor>();
+            this.roleJoueur = roleJoueur;
+        }
+
+        public int getNumJoueur() {
+            return numJoueur;
+        }
+
+        public String getNomJoueur() {
+            return nomJoueur;
+        }
+
+        public ArrayList<CarteTresor> getCartesT() {
+            return cartesT;
+        }
+
+        public Aventurier getRoleJoueur() {
+            return roleJoueur;
+        }
+
+        public void setNumJoueur(int numJoueur) {
+            this.numJoueur = numJoueur;
+        }
+
+        public void setNomJoueur(String nomJoueur) {
+            this.nomJoueur = nomJoueur;
+        }   
+
+        public void setCartesT(ArrayList<CarteTresor> cartesT) {
+            this.cartesT = cartesT;
+        }
+
+        public void setRoleJoueur(Aventurier roleJoueur) {
+            this.roleJoueur = roleJoueur;
+        }
 
 	public void PossibleMouvement() {
 		throw new UnsupportedOperationException();
@@ -64,5 +104,5 @@ public class Joueur {
 
 	public void removeCarte(CarteTresor aDefausseC) {
 		throw new UnsupportedOperationException();
-	}
+        }
 }
