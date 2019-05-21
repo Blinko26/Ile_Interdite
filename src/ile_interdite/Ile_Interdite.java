@@ -40,7 +40,7 @@ public class Ile_Interdite {
             for(int j=0;j<=5;j++){
                 for(int i=0;i<=5;i++){
                     if(i==2 && j==0||i==1 && j==1 ||i==0 && j==2||i==1 && j==4 ||i==2 &&j==5){
-                        g2d.setColor(new Color(255,255,128));
+                        g2d.setColor(new Color(255,255,127));
                     }
                     if(i==4 && j==0||i==5 && j==1 ||i==0 && j==4 ||i==5 && j==4 ||i==4 &&j==5){
                         g2d.setColor(new Color(0,0,255));
@@ -48,8 +48,16 @@ public class Ile_Interdite {
                     g2d.fillRect(8+2*i+i*(int)((int) size.getWidth()-30)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) size.getWidth()-30)/6, (int)((int) size.getHeight()-30)/6);
                 }
             }
-            Application application = new Application();
+            Application application = new Application();         
             application.initMap();
+            
+            g2d.setColor(new Color(255,0,0));
+            for(int j=0;j<=5;j++){
+                for(int i=0;i<=5;i++){
+                    g2d.drawString("Nom : "+application.getIle().getTuile(i+1, j+1).getNom(), 8+2*i+i*(int)((int) size.getWidth()-30)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+30);
+                    g2d.drawString("Coord : "+application.getIle().getTuile(i+1, j+1).getEmplacementX()+", "+application.getIle().getTuile(i+1, j+1).getEmplacementY(), 8+2*i+i*(int)((int) size.getWidth()-30)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+45);
+                }
+            }
         }
     }
     

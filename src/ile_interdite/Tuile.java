@@ -7,7 +7,8 @@ public class Tuile {
         private String nomcase;
 	private TypeC type;
 	private EtatC etat;
-	private int emplacement;
+	private int emplacementX;
+        private int emplacementY;
 	public Ile iledescases;
 	public ArrayList<Aventurier> aventuriers;
         
@@ -16,19 +17,20 @@ public class Tuile {
             this.numcase = numcase; //Numero d'identification de la tuile
             this.type = type; // Type de la tuile (normal, héliport, calice, cristal, pierre, statue, null)
             this.etat = etat; // Etat de la tuile (Normale, innondée, sombrée)
-            this.emplacement = 0; //Emplacement de la tuile sur l'ile (La map)
+            this.emplacementX = 0; //Emplacement de la tuile sur l'ile (La map)
+            this.emplacementY = 0;
             this.aventuriers = new ArrayList<>(); // Liste des aventuriers sur cette tuile
             this.nomcase = null;
         }
         
-        public Tuile(int numcase, TypeC type, EtatC etat, int emplacement) { 
+        public Tuile(int numcase, TypeC type, EtatC etat, int emplacement[]) { 
             this.numcase = numcase; //Numero d'identification de la tuile
             this.type = type; // Type de la tuile (normal, héliport, calice, cristal, pierre, statue, null)
             this.etat = etat; // Etat de la tuile (Normale, innondée, sombrée)
-            this.emplacement = 0; //Emplacement de la tuile sur l'ile (La map)
+            this.emplacementX = emplacement[0]; //Emplacement de la tuile sur l'ile (La map)
+            this.emplacementY = emplacement[1];
             this.aventuriers = new ArrayList<>(); // Liste des aventuriers sur cette tuile
             this.nomcase = null;
-            this.emplacement = emplacement;
         }
 
     public int getNumcase() {
@@ -73,12 +75,17 @@ public class Tuile {
 
     
         
-        public void setEmplacement(int emplacement){
-            this.emplacement = emplacement;
+        public void setEmplacement(int emplacementX,int emplacementY){
+            this.emplacementX = emplacementX;
+            this.emplacementY = emplacementY;
         }
 
-        public int getEmplacement() {
-            return emplacement;
+        public int getEmplacementX() {
+            return emplacementX;
+        }
+        
+        public int getEmplacementY() {
+            return emplacementY;
         }
         
         public void setNom(String nom){

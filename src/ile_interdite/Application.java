@@ -104,30 +104,28 @@ public class Application {
         this.cartesTresor = cartesTresor;
     }
     
-    public void initMap(){
+    public void initMap(){   
             ile = new Ile();
-            
-            List<Integer> eR = Arrays.asList(3,5,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,26,27,28,29,33,34); //Emplacement à attribuer restant
+
+            int eR[][] = {{1,3},{1,4},{2,2},{2,3},{2,4},{2,5},{3,1},{3,2},{3,3},{3,4},{3,5},{3,6},{4,1},{4,2},{4,3},{4,4},{4,5},{4,6},{5,2},{5,3},{5,4},{5,5},{6,3},{6,4}}; //Emplacement à attribuer restant
             int i = 0;
-            int j = 1;
-            int k = 24;
+            int j = 0;
             
             ArrayList<Integer> emplacements = new ArrayList<>();
             ArrayList<String> noms = Utils.getNomsTuiles();
             
-            
+
             for (Tuile tuile:ile.getCase2ile()){ //Atribution des emplacements restants aux tuiles restantes et attribution d'un nom
-                if (tuile.getEmplacement()==0) {
-                    i=(int)((Math.random()*k));
-                    tuile.setEmplacement(eR.get(i));
-                    ile.getTuile(eR.get(i)).setNom(noms.get(j));
+                if (tuile.getEmplacementX()==0 && tuile.getEmplacementY()==0) {
+                    i=(int)((Math.random()*24));
+                    while(eR[i][0]==0){
+                        i=(int)((Math.random()*24));
+                    }
+                    tuile.setEmplacement(eR[i][0],eR[i][1]);
+                    tuile.setNom(noms.get(j));
                     j++;
-                    k--;
-                    eR.remove(i);
+                    eR[i][0]=0;
                 }
-            }
-            for (Tuile tuile:ile.getCase2ile()){
-                System.out.println(tuile.getNom()+"\n"+tuile.getEmplacement());
             }
         }
         
