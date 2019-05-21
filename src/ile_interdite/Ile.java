@@ -123,5 +123,45 @@ public class Ile {
         }
         return tuilesdispos;
     }
+
+    public ArrayList<Tuile> getTuilesadj() {
+        return tuilesadj;
+    }
+
+    public void setTuilesadj(ArrayList<Tuile> tuilesadj) {
+        this.tuilesadj = tuilesadj;
+    }
+
+    public ArrayList<Tuile> getTuilesinondees() {
+        return tuilesinondees;
+    }
+
+    public void setTuilesinondees(ArrayList<Tuile> tuilesinondees) {
+        this.tuilesinondees = tuilesinondees;
+    }
+
+    public ArrayList<Tuile> getTuilesnoninondees() {
+        return tuilesnoninondees;
+    }
+
+    public void setTuilesnoninondees(ArrayList<Tuile> tuilesnoninondees) {
+        this.tuilesnoninondees = tuilesnoninondees;
+    }
+
+    public ArrayList<Tuile> getTuilesdispos() {
+        return tuilesdispos;
+    }
+
+    public void setTuilesdispos(ArrayList<Tuile> tuilesdispos) {
+        this.tuilesdispos = tuilesdispos;
+    }
+
+    public ArrayList<Tuile> getTuilesdiag() {
+        return tuilesdiag;
+    }
+
+    public void setTuilesdiag(ArrayList<Tuile> tuilesdiag) {
+        this.tuilesdiag = tuilesdiag;
+    }
         
 }

@@ -45,6 +45,20 @@ public abstract class Aventurier {
     public void setPosition(Tuile position) {
         this.position = position;
     }
+    
+    public Tuile getMouvement(){
+        if (this.type==TypeAventurier.messager || this.type==TypeAventurier.ingénieur) {
+            Ile ile = this.position.getIledescases();
+            ile.getCasesAdjacentes(position);
+            ile.getTuilesDispoAutourJoueurClassique();
+            
+            for (Tuile t : ile.getTuilesdispos()) {
+                System.out.println("Une tuile disponible a pour emplacement : " + t.getEmplacement());
+            }
+            
+            System.out.println("Choisissez une case disponible");
+        }
+    }
         
 	public void getTuile() {
 		throw new UnsupportedOperationException();

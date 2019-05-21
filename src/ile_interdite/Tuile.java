@@ -10,7 +10,6 @@ public class Tuile {
 	private int emplacement;
 	public Ile iledescases;
 	public ArrayList<Aventurier> aventuriers;
-        public ArrayList<Tuile> tuilesadj;
         
         
         public Tuile(int numcase, TypeC type, EtatC etat/*, int emplacement*/) { 
