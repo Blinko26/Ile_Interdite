@@ -10,6 +10,7 @@
  */
 package ile_interdite;
 
+import java.util.Scanner;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -36,20 +37,24 @@ public class Ile_Interdite {
             g2d.setColor(Color.white);
             g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
             
-            g2d.setColor(new Color(0,0,255));
+            Application application = new Application();         
+            application.initMap();
+            
             for(int j=0;j<=5;j++){
                 for(int i=0;i<=5;i++){
-                    if(i==2 && j==0||i==1 && j==1 ||i==0 && j==2||i==1 && j==4 ||i==2 &&j==5){
+                    if(application.getIle().getTuile(i+1,j+1).getEtat()==EtatC.normale){
                         g2d.setColor(new Color(255,255,127));
                     }
-                    if(i==4 && j==0||i==5 && j==1 ||i==0 && j==4 ||i==5 && j==4 ||i==4 &&j==5){
+                    if(application.getIle().getTuile(i+1,j+1).getEtat()==EtatC.innondée){
+                        g2d.setColor(new Color(0,255,255));
+                    }
+                    if(application.getIle().getTuile(i+1,j+1).getEtat()==EtatC.sombrée){
                         g2d.setColor(new Color(0,0,255));
                     }
                     g2d.fillRect(8+2*i+i*(int)((int) size.getWidth()-30)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) size.getWidth()-30)/6, (int)((int) size.getHeight()-30)/6);
                 }
             }
-            Application application = new Application();         
-            application.initMap();
+            
             
             g2d.setColor(new Color(255,0,0));
             for(int j=0;j<=5;j++){
@@ -103,11 +108,4 @@ public class Ile_Interdite {
     
     public static void main(String[] args) { new Ile_Interdite(); }
     
-    public void innondationIHM(Graphics2D g,Application app,String nomtuile){
-        Tuile tuile=app.getIle().getTuile(nomtuile);
-        tuile.setEtat(EtatC.innondée);
-        g.setColor(new Color(0,255,255));
-        //g.fillRect(8+2*tuile.getEmplacementX()+tuile.getEmplacementX()*(int)((int) g.-30)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) size.getWidth()-30)/6, (int)((int) size.getHeight()-30)/6);
-        
-    }
 }
