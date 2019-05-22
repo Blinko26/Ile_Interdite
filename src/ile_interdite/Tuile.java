@@ -9,6 +9,7 @@ public class Tuile {
 	private EtatC etat;
 	private int emplacementX;
         private int emplacementY;
+        public int tuilesadj[][];
 	public Ile iledescases;
 	public ArrayList<Aventurier> aventuriers;
         
@@ -23,6 +24,7 @@ public class Tuile {
             this.nomcase = null;
         }
         
+        @SuppressWarnings("empty-statement")
         public Tuile(int numcase, TypeC type, EtatC etat, int emplacement[]) { 
             this.numcase = numcase; //Numero d'identification de la tuile
             this.type = type; // Type de la tuile (normal, héliport, calice, cristal, pierre, statue, null)
@@ -31,6 +33,8 @@ public class Tuile {
             this.emplacementY = emplacement[1];
             this.aventuriers = new ArrayList<>(); // Liste des aventuriers sur cette tuile
             this.nomcase = null;
+            int adjacentes[][] = {{emplacement[0]-1,emplacement[1]},{emplacement[0],emplacement[1]-1},{emplacement[0]+1,emplacement[1]},{emplacement[0],emplacement[1]+1}};
+            this.tuilesadj=adjacentes;
         }
 
     public int getNumcase() {

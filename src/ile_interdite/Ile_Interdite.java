@@ -103,7 +103,11 @@ public class Ile_Interdite {
     
     public static void main(String[] args) { new Ile_Interdite(); }
     
-    public void innondationIHM(Application app,String nomtuile){
-        Tuile tuile=app.getIle().
+    public void innondationIHM(Graphics2D g,Application app,String nomtuile){
+        Tuile tuile=app.getIle().getTuile(nomtuile);
+        tuile.setEtat(EtatC.innondée);
+        g.setColor(new Color(0,255,255));
+        //g.fillRect(8+2*tuile.getEmplacementX()+tuile.getEmplacementX()*(int)((int) g.-30)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) size.getWidth()-30)/6, (int)((int) size.getHeight()-30)/6);
+        
     }
 }
