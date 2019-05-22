@@ -11,6 +11,10 @@ public class Tuile {
         private int emplacementY;
 	public Ile iledescases;
 	public ArrayList<Aventurier> aventuriers;
+        private ArrayList<Tuile> tuilesadj;
+        private ArrayList<Tuile> tuilesdiag;
+        private ArrayList<Tuile> tuilesdispos;
+
         
         
         public Tuile(int numcase, TypeC type, EtatC etat/*, int emplacement*/) { 
@@ -107,15 +111,16 @@ public class Tuile {
        //return tuilesadj;
    //}
         
-       //public ArrayList<Tuile> getDiagonales(Tuile t){ //Ajout des cases en diagonale d'une case donnée
-       //int i;
-      // i = t.getEmplacement();
-       //tuilesdiag.add(getTuile(i-7)); //case du nord-ouest
-       //tuilesdiag.add(getTuile(i-5)); //case du nord-est
-       //tuilesdiag.add(getTuile(i+5)); //case du sud-ouest
-       //tuilesdiag.add(getTuile(i+7)); //case du sud-est
+    public ArrayList<Tuile> getDiagonales(Tuile t){ //Ajout des cases en diagonale d'une case donnée
+        int x = t.getEmplacementX();
+        int y = t.getEmplacementY();
+        Ile ile = getIledescases();
+        tuilesdiag.add(ile.getTuile(x-1,y)); //case du nord-ouest
+        tuilesdiag.add(ile.getTuile(x+1,y)); //case du nord-est
+        tuilesdiag.add(ile.getTuile(x,y-1)); //case du sud-ouest
+        tuilesdiag.add(ile.getTuile(x,y+1)); //case du sud-est
        
-       //return tuilesdiag;
-   //}
+        return tuilesdiag;
+    }
         
 }
