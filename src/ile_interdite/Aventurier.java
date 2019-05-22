@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 public abstract class Aventurier {
 	private TypeAventurier type;
-	private int[] emplacement;
+	private int emplacement;
 	public Joueur joueur;
 	public Tuile position;
         
@@ -18,7 +18,7 @@ public abstract class Aventurier {
         return type;
     }
 
-    public int[] getEmplacement() {
+    public int getEmplacement() {
         return emplacement;
     }
 
@@ -34,7 +34,7 @@ public abstract class Aventurier {
         this.type = type;
     }
 
-    public void setEmplacement(int[] emplacement) {
+    public void setEmplacement(int emplacement) {
         this.emplacement = emplacement;
     }
 
@@ -45,6 +45,20 @@ public abstract class Aventurier {
     public void setPosition(Tuile position) {
         this.position = position;
     }
+    
+    //public Tuile getMouvement(){
+        //if (this.type==TypeAventurier.messager || this.type==TypeAventurier.ingénieur) {
+            //Ile ile = this.position.getIledescases();
+            //ile.getCasesAdjacentes(position);
+            //ile.getTuilesDispoAutourJoueurClassique();
+            
+            //for (Tuile t : ile.getTuilesdispos()) {
+            //    System.out.println("Une tuile disponible a pour emplacement : " + t.getEmplacement());
+           // }
+            
+            //System.out.println("Choisissez une case disponible");
+        //}
+    //}
         
 	public void getTuile() {
 		throw new UnsupportedOperationException();

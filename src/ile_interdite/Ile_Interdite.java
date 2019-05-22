@@ -102,4 +102,8 @@ public class Ile_Interdite {
     }
     
     public static void main(String[] args) { new Ile_Interdite(); }
+    
+    public void innondationIHM(String nomtuile){
+        
+    }
 }

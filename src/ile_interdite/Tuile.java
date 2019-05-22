@@ -96,4 +96,26 @@ public class Tuile {
             return nomcase;
         }
         
+       //public ArrayList<Tuile> getCasesAdjacentes(Tuile t){ //Ajout des cases au nord, au sud, à l'est et à l'ouest d'une case donnée
+       //int i;
+       //i = t.getEmplacementX();
+       //tuilesadj.add(getTuile(i-6)); //case du nord
+      // tuilesadj.add(getTuile(i-1)); //case de l'ouest
+      // tuilesadj.add(getTuile(i+1)); //case de l'est
+       //tuilesadj.add(getTuile(i+6)); //case du sud
+       
+       //return tuilesadj;
+   //}
+        
+       //public ArrayList<Tuile> getDiagonales(Tuile t){ //Ajout des cases en diagonale d'une case donnée
+       //int i;
+      // i = t.getEmplacement();
+       //tuilesdiag.add(getTuile(i-7)); //case du nord-ouest
+       //tuilesdiag.add(getTuile(i-5)); //case du nord-est
+       //tuilesdiag.add(getTuile(i+5)); //case du sud-ouest
+       //tuilesdiag.add(getTuile(i+7)); //case du sud-est
+       
+       //return tuilesdiag;
+   //}
+        
 }

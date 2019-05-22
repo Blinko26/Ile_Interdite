@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class Ile {
 	private ArrayList<Tuile> case2ile;
+        private ArrayList<Tuile> tuilesinondees;
         
       public Ile(){
             this.case2ile = new ArrayList<Tuile>();
@@ -50,5 +51,89 @@ public class Ile {
        }
        return tuiltest;
    }
+   
+   
+   
+   public ArrayList<Tuile> getCasesInondees(){ //Ajout des cases ayant sombrées
+       for (Tuile tuile : case2ile) { //Parcourt l'ensemble des cases de l'île
+           if (tuile.getEtat()==EtatC.sombré){
+               tuilesinondees.add(tuile);
+           }
+       }
+       
+       return tuilesinondees;
+   }
+   
+   
+   
+   //public ArrayList<Tuile> getCasesNonInondees(){ //Ajout des cases n'ayant pas sombrées
+   //    for (Tuile tuile : case2ile) {
+   //        if (tuile.getEtat()==EtatC.normal || tuile.getEtat()==EtatC.innondé){
+   //            tuilesinondees.add(tuile);
+   //        }
+   //    }
+       
+   //    return tuilesnoninondees;
+   //}
+   
+    //public ArrayList<Tuile> getTuilesDispoAutourJoueurClassique(){ //Retourne toutes les cases adjacentes n'ayant pas sombrées
+    //    for (Tuile tuile : tuilesadj) {
+    //        if (tuile.getEtat()!=EtatC.sombré){
+    //            tuilesdispos.add(tuile);
+    //        }
+    //    }
+    //    return tuilesdispos;
+    //}
+    
+    //public ArrayList<Tuile> getAllTuilesDispo() {
+    //    tuilesdispos=getTuilesDispoAutourJoueurClassique();
+
+    //    for (Tuile tuile : tuilesdiag) {
+    //        if (tuile.getEtat()!=EtatC.sombré){
+     //           tuilesdispos.add(tuile);
+     //       }
+     //   }
+     //   return tuilesdispos;
+    //}
+
+    //public ArrayList<Tuile> getTuilesadj() {
+    //    return tuilesadj;
+    //}
+
+    //public void setTuilesadj(ArrayList<Tuile> tuilesadj) {
+    //    this.tuilesadj = tuilesadj;
+    //}
+
+    public ArrayList<Tuile> getTuilesinondees() {
+        return tuilesinondees;
+    }
+
+    public void setTuilesinondees(ArrayList<Tuile> tuilesinondees) {
+        this.tuilesinondees = tuilesinondees;
+    }
+
+    //public ArrayList<Tuile> getTuilesnoninondees() {
+    //    return tuilesnoninondees;
+    //}
+
+    //public void setTuilesnoninondees(ArrayList<Tuile> tuilesnoninondees) {
+     //   this.tuilesnoninondees = tuilesnoninondees;
+    //}
+
+    //public ArrayList<Tuile> getTuilesdispos() {
+    //    return tuilesdispos;
+    //}
+
+    //public void setTuilesdispos(ArrayList<Tuile> tuilesdispos) {
+    //    this.tuilesdispos = tuilesdispos;
+    //}
+
+    //public ArrayList<Tuile> getTuilesdiag() {
+    //    return tuilesdiag;
+    //}
+
+    //public void setTuilesdiag(ArrayList<Tuile> tuilesdiag) {
+    //    this.tuilesdiag = tuilesdiag;
+    //}
         
 }
