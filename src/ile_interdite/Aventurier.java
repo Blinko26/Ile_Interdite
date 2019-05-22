@@ -2,6 +2,7 @@ package ile_interdite;
 
 import java.awt.Color;
 import java.util.Comparator;
+import java.util.Scanner;
 
 public abstract class Aventurier {
 	private TypeAventurier type;
@@ -46,19 +47,21 @@ public abstract class Aventurier {
         this.position = position;
     }
     
-    //public Tuile getMouvement(){
-        //if (this.type==TypeAventurier.messager || this.type==TypeAventurier.ingénieur) {
-            //Ile ile = this.position.getIledescases();
-            //ile.getCasesAdjacentes(position);
-            //ile.getTuilesDispoAutourJoueurClassique();
+  //  public void getMouvement(){
+    //        Ile ile = this.position.getIledescases();
+      //      ile.getCasesAdjacentes(position);
+        //    ile.getTuilesDispoAutourJoueurClassique();
             
-            //for (Tuile t : ile.getTuilesdispos()) {
-            //    System.out.println("Une tuile disponible a pour emplacement : " + t.getEmplacement());
-           // }
+          //  System.out.println("Choisissez une case disponible");
+            //Scanner sc = new Scanner(System.in);
+//            int tuilechoisie = sc.nextInt();
             
-            //System.out.println("Choisissez une case disponible");
+  //          for (Tuile t : ile.getTuilesdispos()) {
+    //            if (t.getEmplacement()==tuilechoisie) {
+      //              setPosition(ile.getTuile(tuilechoisie));
+        //        }
+          //  }
         //}
-    //}
         
 	public void getTuile() {
 		throw new UnsupportedOperationException();
