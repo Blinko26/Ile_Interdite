@@ -43,15 +43,22 @@ public class Ile {
     }
    
    public Tuile getTuile(int emplacementXTuile,int emplacementYTuile){
-       Tuile tuiltest = new Tuile(40,TypeC.normal,EtatC.innondé);
        for(Tuile tuile: case2ile) {
            if (tuile.getEmplacementX()== emplacementXTuile && tuile.getEmplacementY()== emplacementYTuile){
                return tuile;
            }
        }
-       return tuiltest;
+       return null;
    }
    
+   public Tuile getTuile(String nomTuile){
+       for(Tuile tuile: case2ile) {
+           if (tuile.getNom()==nomTuile){
+               return tuile;
+           }
+       }
+       return null;
+   }
    
    
    public ArrayList<Tuile> getCasesInondees(){ //Ajout des cases ayant sombrées
