@@ -48,18 +48,8 @@ public abstract class Aventurier {
     }
     
     public void getMouvement(){
-            Ile ile = this.position.getIledescases();
             
-            System.out.println("Choisissez une case disponible");
-            Scanner sc = new Scanner(System.in);
-            int tuilechoisie = sc.nextInt();
-            
-            for (Tuile t : ile.getTuilesdispos()) {
-                if (t.getEmplacementX()==tuilechoisieX && t.getEmplacementY()==tuilechoisieY) {
-                    setPosition(ile.getTuile(tuilechoisie));
-                }
-            }
-        }
+    }
         
 	public void getTuile() {
 		throw new UnsupportedOperationException();

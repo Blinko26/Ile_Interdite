@@ -10,10 +10,9 @@ public class Tuile {
 	private int emplacementX;
         private int emplacementY;
         public int tuilesadj[][];
+        public int tuilesdiag[][];
 	public Ile iledescases;
 	public ArrayList<Aventurier> aventuriers;
-        private ArrayList<Tuile> tuilesadj;
-        private ArrayList<Tuile> tuilesdiag;
         private ArrayList<Tuile> tuilesdispos;
 
         
@@ -24,10 +23,10 @@ public class Tuile {
             this.etat = etat; // Etat de la tuile (Normale, innondée, sombrée)
             this.emplacementX = 0; //Emplacement de la tuile sur l'ile (La map)
             this.emplacementY = 0;
-            this.aventuriers = new ArrayList<>(); // Liste des aventuriers sur cette tuile
-            this.nomcase = null;
+            this.aventuriers = new ArrayList<>(); // Liste des aventuriers sur cette tuile                
+            this.nomcase = null;        
         }
-        
+                
         @SuppressWarnings("empty-statement")
         public Tuile(int numcase, TypeC type, EtatC etat, int emplacement[]) { 
             this.numcase = numcase; //Numero d'identification de la tuile
@@ -39,6 +38,8 @@ public class Tuile {
             this.nomcase = null;
             int adjacentes[][] = {{emplacement[0]-1,emplacement[1]},{emplacement[0],emplacement[1]-1},{emplacement[0]+1,emplacement[1]},{emplacement[0],emplacement[1]+1}};
             this.tuilesadj=adjacentes;
+            int diagonales[][] = {{emplacement[0]-1,emplacement[1]-1},{emplacement[0]+1,emplacement[1]-1},{emplacement[0]+1,emplacement[1]+1},{emplacement[0]-1,emplacement[1]+1}};
+            this.tuilesdiag=diagonales;
         }
 
     public int getNumcase() {
@@ -103,28 +104,5 @@ public class Tuile {
         public String getNom(){
             return nomcase;
         }
-        
-       //public ArrayList<Tuile> getCasesAdjacentes(Tuile t){ //Ajout des cases au nord, au sud, à l'est et à l'ouest d'une case donnée
-       //int i;
-       //i = t.getEmplacementX();
-       //tuilesadj.add(getTuile(i-6)); //case du nord
-      // tuilesadj.add(getTuile(i-1)); //case de l'ouest
-      // tuilesadj.add(getTuile(i+1)); //case de l'est
-       //tuilesadj.add(getTuile(i+6)); //case du sud
-       
-       //return tuilesadj;
-   //}
-        
-    public ArrayList<Tuile> getDiagonales(Tuile t){ //Ajout des cases en diagonale d'une case donnée
-        int x = t.getEmplacementX();
-        int y = t.getEmplacementY();
-        Ile ile = getIledescases();
-        tuilesdiag.add(ile.getTuile(x-1,y)); //case du nord-ouest
-        tuilesdiag.add(ile.getTuile(x+1,y)); //case du nord-est
-        tuilesdiag.add(ile.getTuile(x,y-1)); //case du sud-ouest
-        tuilesdiag.add(ile.getTuile(x,y+1)); //case du sud-est
-       
-        return tuilesdiag;
-    }
         
 }
