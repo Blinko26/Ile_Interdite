@@ -47,21 +47,9 @@ public abstract class Aventurier {
         this.position = position;
     }
     
-  //  public void getMouvement(){
-    //        Ile ile = this.position.getIledescases();
-      //      ile.getCasesAdjacentes(position);
-        //    ile.getTuilesDispoAutourJoueurClassique();
+    public void getMouvement(){
             
-          //  System.out.println("Choisissez une case disponible");
-            //Scanner sc = new Scanner(System.in);
-//            int tuilechoisie = sc.nextInt();
-            
-  //          for (Tuile t : ile.getTuilesdispos()) {
-    //            if (t.getEmplacement()==tuilechoisie) {
-      //              setPosition(ile.getTuile(tuilechoisie));
-        //        }
-          //  }
-        //}
+    }
         
 	public void getTuile() {
 		throw new UnsupportedOperationException();
