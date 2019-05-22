@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Joueur {
-	private int numJoueur;
-	private String nomJoueur;
-	public ArrayList<CarteTresor> cartesT = new ArrayList<CarteTresor>();
-	public Aventurier roleJoueur;
+	private int numJoueur; //numéro du joueur
+	private String nomJoueur; //nom du joueur
+	public ArrayList<CarteTresor> cartesT; //inventaire de cartes trésor du joueur
+	public Aventurier roleJoueur; //aventurier associé au joueur
         
         public Joueur(int numJoueur, String nomJoueur, Aventurier roleJoueur){
             this.numJoueur= numJoueur;
@@ -18,91 +18,63 @@ public class Joueur {
             this.roleJoueur = roleJoueur;
         }
 
-        public int getNumJoueur() {
+        public int getNumJoueur() { //retourne le numéro du joueur, soit sa place dans le tour
             return numJoueur;
         }
 
-        public String getNomJoueur() {
+        public String getNomJoueur() { //retourne le nom du joueur
             return nomJoueur;
         }
 
-        public ArrayList<CarteTresor> getCartesT() {
+        public ArrayList<CarteTresor> getCartesT() { //retourne les cartes possedées par le joueur
             return cartesT;
         }
 
-        public Aventurier getRoleJoueur() {
+        public Aventurier getRoleJoueur() { //retourne l'aventurier associé au joueur
             return roleJoueur;
         }
 
-        public void setNumJoueur(int numJoueur) {
+        public void setNumJoueur(int numJoueur) { //permet de donner un numéro au joueur
             this.numJoueur = numJoueur;
         }
 
-        public void setNomJoueur(String nomJoueur) {
+        public void setNomJoueur(String nomJoueur) { //permet de donner un nom au joueur
             this.nomJoueur = nomJoueur;
         }   
 
-        public void setCartesT(ArrayList<CarteTresor> cartesT) {
+        public void setCartesT(ArrayList<CarteTresor> cartesT) { //permet d'associer un inventaire de cartes à un joueur
             this.cartesT = cartesT;
         }
 
-        public void setRoleJoueur(Aventurier roleJoueur) {
+        public void setRoleJoueur(Aventurier roleJoueur) { //permet d'associer un aventurier au joueur
             this.roleJoueur = roleJoueur;
         }
 
-	public void PossibleMouvement() {
-		throw new UnsupportedOperationException();
+	public ArrayList<CarteTresor> getCarteSpeciale(Joueur aJ) { //permet de ne récupérer que les cartes spéciales de ce joueur
+		ArrayList<CarteTresor> cartesT = aJ.getCartesT();
+                ArrayList<CarteTresor> cartesS = new ArrayList<>();
+                for(CarteTresor c : cartesT) {
+                    if(c.getType() == TypeCT.hélicoptère || c.getType() == TypeCT.sac2sable) {
+                        cartesS.add(c);
+                    }
+                }
+                return cartesS;
 	}
 
-	public void setPosition(Object aNumJ) {
-		throw new UnsupportedOperationException();
+	public void addCarteToJoueur(Joueur aJ, CarteTresor aCartepioche) { //permet de rajouter une carte à l'inventaire du joueur
+		aJ.cartesT.add(aCartepioche);
 	}
 
-	public TypeAventurier getRole(Joueur aJoueur) {
-		throw new UnsupportedOperationException();
+	public int getNombreCartesJoueur(Joueur aJ) { //permet de connaitre le nombre de cartes du joueur
+		ArrayList<CarteTresor> cartesT = aJ.getCartesT();
+                int i = 0;
+                for(CarteTresor c : cartesT) {
+                    i++;
+                }
+                return i;
 	}
 
-	public int getPointAction() {
-		throw new UnsupportedOperationException();
-	}
-
-	public int getAction(Joueur aJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	public Aventurier getMouvement(Joueur aJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	public Tresor getTresor(Joueur aJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	public EtatC getAssechement(Aventurier aJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	public CarteTresor getDonnerCarte(TypeAventurier aJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	public CarteTresor getCarteSpeciale(TypeAventurier aJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void addCarteToJoueur(Joueur aJ, CarteTresor aCartepioche) {
-		throw new UnsupportedOperationException();
-	}
-
-	public int getNombreCartesJoueur(Joueur aJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	public CarteTresor getDefausseCarte(Joueur aJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void removeCarte(CarteTresor aDefausseC) {
-		throw new UnsupportedOperationException();
+	public void removeCarte(CarteTresor aDefausseC) { //permet de retirer une carte de l'inventaire du joueur
+		this.cartesT.remove(aDefausseC);
         }
 }

@@ -3,20 +3,22 @@ package ile_interdite;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
 public class Application {
-	public Ile ile;
-	public Niveaudo niveaudeau;
-	public ArrayList<Tresor> trésors = new ArrayList<Tresor>();
-	public ArrayList<CarteInondation> cartesInondation = new ArrayList<CarteInondation>();
-	public ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
-	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>();
+	public Ile ile; //ile contenant les tuiles du jeu
+	public Niveaudo niveaudeau; //niveau de l'eau   
+	public ArrayList<Tresor> trésors = new ArrayList<Tresor>(); //liste des trésors de l'ile
+	public ArrayList<CarteInondation> cartesInondation = new ArrayList<CarteInondation>(); //liste des cartes inondation pouvant être piochées
+        public ArrayList<CarteInondation> defausseInondation = new ArrayList<>(); //liste des cartes inondation défaussées
+	public ArrayList<Joueur> joueurs = new ArrayList<Joueur>(); //liste des joueurs
+	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>(); //liste des cartes trésor poyvant être piochées
+        public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
 
 
         public void initPartie(int nombreJoueur, Joueur j){   //Initialisation de la partie==> Cases aventurier et Inscrire joueurs avec leur pion
-            
             for (int i=0; i<nombreJoueur; i++) {
                 addJoueur(j);
             }
@@ -128,36 +130,44 @@ public class Application {
                 }
             }
         }
-        
-	public void getPointAction(Object aNumJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void typeAventurier(Object aNumJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void DemandeMouvement(Object aNumJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	private void TourJeu() {
-		throw new UnsupportedOperationException();
-	}
-
-	public Joueur getJoueur(int aNumJoueur) {
-		throw new UnsupportedOperationException();
-	}
-
-	public CarteTresor getCartetresor(Joueur aJoueur) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void addDefausseCarte(CarteTresor aDefausseC) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void getCarteInondation(CarteInondation aJoueur) {
-		throw new UnsupportedOperationException();
-	}
+    
+    public int getNbCartesTresor() { //retourne le nombre de cartes trésor dans la pioche
+        int i = 0;
+        for(CarteTresor ct : this.getCartesTresor()) {
+            i++;
+        }
+        return i;
+    }
+    
+    public int getNbCartesInondation() { //retourne le nombre de cartes inondation dans la pioche
+        int i = 0;
+        for(CarteInondation ci : this.getCartesInondation()) {
+            i++;
+        }
+        return i;
+    }
+    
+    public void defausserCarteTresor(CarteTresor c) { //permet de defausser une carte trésor
+        defausseTresor.add(c);
+    }
+    
+    public void defausserCarteInondation(CarteInondation c) { //permet de defausser une carte inondation
+        defausseInondation.add(c);
+    }
+    
+    public void retournerDefausseTresor() { //permet de mélanger la défausse de cartes trésor et d'en faire la pioche
+        Collections.shuffle(defausseTresor);
+        for(CarteTresor ct : defausseTresor) {
+            cartesTresor.add(ct);
+            defausseTresor.remove(ct);
+        }
+    }
+    
+    public void retournerDefausseInondation(){ //permet de mélanger la défausse de cartes trésor et d'en faire la pioche
+        Collections.shuffle(defausseInondation);
+        for(CarteInondation ci : defausseInondation) {
+            cartesInondation.add(ci);
+            defausseInondation.remove(ci);
+        }
+    }
 }
