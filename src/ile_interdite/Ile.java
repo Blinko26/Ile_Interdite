@@ -2,45 +2,34 @@ package ile_interdite;
 import java.util.ArrayList;
 
 public class Ile {
-	public ArrayList<Tuile> case2ile;
-        public ArrayList<Tuile> tuilesadj;
-        public ArrayList<Tuile> tuilesinondees;
-        public ArrayList<Tuile> tuilesnoninondees;
-        public ArrayList<Tuile> tuilesdispos;
-        public ArrayList<Tuile> tuilesdiag;
+	private ArrayList<Tuile> case2ile;
+        private ArrayList<Tuile> tuilesinondees;
         
       public Ile(){
+            this.case2ile = new ArrayList<Tuile>();
+            
             for (int i = 0; i < 12; i++){   //Ajout des tuiles null (sur les bords)
-                int eN[] = {1,2,5,6,7,12,25,30,31,32,35,36}; //Emplacement des tuiles dites null qui ne changera jamais
-                Tuile tuile = new Tuile(i,TypeC.nulle,EtatC.sombré);
-                tuile.setEmplacement(eN[i]); //Set leur emplacement définitif
-                case2ile.add(tuile);
+                int eN[][] = {{1,1},{1,2},{1,5},{1,6},{2,1},{2,6},{5,1},{5,6},{6,1},{6,2},{6,5},{6,6}}; //Emplacement des tuiles dites null qui ne changera jamaiS
+                case2ile.add(new Tuile(i,TypeC.nulle,EtatC.sombré,eN[i]));
+                case2ile.get(i).setNom("Mer");
             }
-            
-            for (int i=13; i<27; i++){      //Ajout des tuiles dites normal
-                Tuile tuile = new Tuile(i,TypeC.normal,EtatC.normal);
-                case2ile.add(tuile);
+            for (int i=12; i<27; i++){      //Ajout des tuiles dites normal
+                case2ile.add(new Tuile(i,TypeC.normal,EtatC.normal));
             }
-            for (int i = 28; i<29;i++) {    //Ajout des tuiles dites Trésor==> Calice
-                Tuile tuile = new Tuile(i,TypeC.calice,EtatC.normal);
-                case2ile.add(tuile);
+            for (int i = 27; i<29;i++) {    //Ajout des tuiles dites Trésor==> Calice
+                case2ile.add(new Tuile(i,TypeC.calice,EtatC.normal));
             }
-            for (int i = 30; i<31;i++) {    //Ajout des tuiles dites Trésor==>Cristal
-                Tuile tuile = new Tuile(i,TypeC.cristal,EtatC.normal);
-                case2ile.add(tuile);
+            for (int i = 29; i<31;i++) {    //Ajout des tuiles dites Trésor==>Cristal
+                case2ile.add(new Tuile(i,TypeC.cristal,EtatC.normal));
             }
-            for (int i = 32; i<33;i++) {    //Ajout des tuiles dites Trésor==> Pierre
-                Tuile tuile = new Tuile(i,TypeC.pierre,EtatC.normal);
-                case2ile.add(tuile);
+            for (int i = 31; i<33;i++) {    //Ajout des tuiles dites Trésor==> Pierre
+                case2ile.add(new Tuile(i,TypeC.pierre,EtatC.normal));
             }
-            for (int i = 34; i<35;i++) {    //Ajout des tuiles dites Trésor==> Statue
-                Tuile tuile = new Tuile(i,TypeC.statut,EtatC.normal);
-                case2ile.add(tuile);
+            for (int i = 33; i<35;i++) {    //Ajout des tuiles dites Trésor==> Statue
+                case2ile.add(new Tuile(i,TypeC.statut,EtatC.normal));
             }
-            
-            Tuile tuile = new Tuile(36,TypeC.héliport,EtatC.normal); //Ajout des tuiles dites Héliport
-                case2ile.add(tuile);
-            
+             //Ajout des tuiles dites Héliport
+            case2ile.add(new Tuile(36,TypeC.héliport,EtatC.normal));
             
         }
 
@@ -53,25 +42,17 @@ public class Ile {
         this.case2ile = case2ile;
     }
    
-   public Tuile getTuile(int emplacementTuile){
+   public Tuile getTuile(int emplacementXTuile,int emplacementYTuile){
+       Tuile tuiltest = new Tuile(40,TypeC.normal,EtatC.innondé);
        for(Tuile tuile: case2ile) {
-           if (tuile.getEmplacement()== emplacementTuile){
+           if (tuile.getEmplacementX()== emplacementXTuile && tuile.getEmplacementY()== emplacementYTuile){
                return tuile;
            }
        }
-       return null;
+       return tuiltest;
    }
    
-   public ArrayList<Tuile> getCasesAdjacentes(Tuile t){ //Ajout des cases au nord, au sud, à l'est et à l'ouest d'une case donnée
-       int i;
-       i = t.getEmplacement();
-       tuilesadj.add(getTuile(i-6)); //case du nord
-       tuilesadj.add(getTuile(i-1)); //case de l'ouest
-       tuilesadj.add(getTuile(i+1)); //case de l'est
-       tuilesadj.add(getTuile(i+6)); //case du sud
-       
-       return tuilesadj;
-   }
+   
    
    public ArrayList<Tuile> getCasesInondees(){ //Ajout des cases ayant sombrées
        for (Tuile tuile : case2ile) { //Parcourt l'ensemble des cases de l'île
@@ -83,54 +64,45 @@ public class Ile {
        return tuilesinondees;
    }
    
-   public ArrayList<Tuile> getDiagonales(Tuile t){ //Ajout des cases en diagonale d'une case donnée
-       int i;
-       i = t.getEmplacement();
-       tuilesdiag.add(getTuile(i-7)); //case du nord-ouest
-       tuilesdiag.add(getTuile(i-5)); //case du nord-est
-       tuilesdiag.add(getTuile(i+5)); //case du sud-ouest
-       tuilesdiag.add(getTuile(i+7)); //case du sud-est
-       
-       return tuilesdiag;
-   }
    
-   public ArrayList<Tuile> getCasesNonInondees(){ //Ajout des cases n'ayant pas sombrées
-       for (Tuile tuile : case2ile) {
-           if (tuile.getEtat()==EtatC.normal || tuile.getEtat()==EtatC.innondé){
-               tuilesinondees.add(tuile);
-           }
-       }
-       
-       return tuilesnoninondees;
-   }
    
-    public ArrayList<Tuile> getTuilesDispoAutourJoueurClassique(){ //Retourne toutes les cases adjacentes n'ayant pas sombrées
-        for (Tuile tuile : tuilesadj) {
-            if (tuile.getEtat()!=EtatC.sombré){
-                tuilesdispos.add(tuile);
-            }
-        }
-        return tuilesdispos;
-    }
+   //public ArrayList<Tuile> getCasesNonInondees(){ //Ajout des cases n'ayant pas sombrées
+   //    for (Tuile tuile : case2ile) {
+   //        if (tuile.getEtat()==EtatC.normal || tuile.getEtat()==EtatC.innondé){
+   //            tuilesinondees.add(tuile);
+   //        }
+   //    }
+       
+   //    return tuilesnoninondees;
+   //}
+   
+    //public ArrayList<Tuile> getTuilesDispoAutourJoueurClassique(){ //Retourne toutes les cases adjacentes n'ayant pas sombrées
+    //    for (Tuile tuile : tuilesadj) {
+    //        if (tuile.getEtat()!=EtatC.sombré){
+    //            tuilesdispos.add(tuile);
+    //        }
+    //    }
+    //    return tuilesdispos;
+    //}
     
-    public ArrayList<Tuile> getAllTuilesDispo() {
-        tuilesdispos=getTuilesDispoAutourJoueurClassique();
+    //public ArrayList<Tuile> getAllTuilesDispo() {
+    //    tuilesdispos=getTuilesDispoAutourJoueurClassique();
 
-        for (Tuile tuile : tuilesdiag) {
-            if (tuile.getEtat()!=EtatC.sombré){
-                tuilesdispos.add(tuile);
-            }
-        }
-        return tuilesdispos;
-    }
+    //    for (Tuile tuile : tuilesdiag) {
+    //        if (tuile.getEtat()!=EtatC.sombré){
+     //           tuilesdispos.add(tuile);
+     //       }
+     //   }
+     //   return tuilesdispos;
+    //}
 
-    public ArrayList<Tuile> getTuilesadj() {
-        return tuilesadj;
-    }
+    //public ArrayList<Tuile> getTuilesadj() {
+    //    return tuilesadj;
+    //}
 
-    public void setTuilesadj(ArrayList<Tuile> tuilesadj) {
-        this.tuilesadj = tuilesadj;
-    }
+    //public void setTuilesadj(ArrayList<Tuile> tuilesadj) {
+    //    this.tuilesadj = tuilesadj;
+    //}
 
     public ArrayList<Tuile> getTuilesinondees() {
         return tuilesinondees;
@@ -140,28 +112,28 @@ public class Ile {
         this.tuilesinondees = tuilesinondees;
     }
 
-    public ArrayList<Tuile> getTuilesnoninondees() {
-        return tuilesnoninondees;
-    }
+    //public ArrayList<Tuile> getTuilesnoninondees() {
+    //    return tuilesnoninondees;
+    //}
 
-    public void setTuilesnoninondees(ArrayList<Tuile> tuilesnoninondees) {
-        this.tuilesnoninondees = tuilesnoninondees;
-    }
+    //public void setTuilesnoninondees(ArrayList<Tuile> tuilesnoninondees) {
+     //   this.tuilesnoninondees = tuilesnoninondees;
+    //}
 
-    public ArrayList<Tuile> getTuilesdispos() {
-        return tuilesdispos;
-    }
+    //public ArrayList<Tuile> getTuilesdispos() {
+    //    return tuilesdispos;
+    //}
 
-    public void setTuilesdispos(ArrayList<Tuile> tuilesdispos) {
-        this.tuilesdispos = tuilesdispos;
-    }
+    //public void setTuilesdispos(ArrayList<Tuile> tuilesdispos) {
+    //    this.tuilesdispos = tuilesdispos;
+    //}
 
-    public ArrayList<Tuile> getTuilesdiag() {
-        return tuilesdiag;
-    }
+    //public ArrayList<Tuile> getTuilesdiag() {
+    //    return tuilesdiag;
+    //}
 
-    public void setTuilesdiag(ArrayList<Tuile> tuilesdiag) {
-        this.tuilesdiag = tuilesdiag;
-    }
+    //public void setTuilesdiag(ArrayList<Tuile> tuilesdiag) {
+    //    this.tuilesdiag = tuilesdiag;
+    //}
         
 }

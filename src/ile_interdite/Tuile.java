@@ -7,7 +7,8 @@ public class Tuile {
         private String nomcase;
 	private TypeC type;
 	private EtatC etat;
-	private int emplacement;
+	private int emplacementX;
+        private int emplacementY;
 	public Ile iledescases;
 	public ArrayList<Aventurier> aventuriers;
         
@@ -16,8 +17,19 @@ public class Tuile {
             this.numcase = numcase; //Numero d'identification de la tuile
             this.type = type; // Type de la tuile (normal, héliport, calice, cristal, pierre, statue, null)
             this.etat = etat; // Etat de la tuile (Normale, innondée, sombrée)
-            this.emplacement = 0; //Emplacement de la tuile sur l'ile (La map)
-            aventuriers = new ArrayList<Aventurier>(); //Aventurier sur la tuile 
+            this.emplacementX = 0; //Emplacement de la tuile sur l'ile (La map)
+            this.emplacementY = 0;
+            this.aventuriers = new ArrayList<>(); // Liste des aventuriers sur cette tuile
+            this.nomcase = null;
+        }
+        
+        public Tuile(int numcase, TypeC type, EtatC etat, int emplacement[]) { 
+            this.numcase = numcase; //Numero d'identification de la tuile
+            this.type = type; // Type de la tuile (normal, héliport, calice, cristal, pierre, statue, null)
+            this.etat = etat; // Etat de la tuile (Normale, innondée, sombrée)
+            this.emplacementX = emplacement[0]; //Emplacement de la tuile sur l'ile (La map)
+            this.emplacementY = emplacement[1];
+            this.aventuriers = new ArrayList<>(); // Liste des aventuriers sur cette tuile
             this.nomcase = null;
         }
 
@@ -63,12 +75,17 @@ public class Tuile {
 
     
         
-        public void setEmplacement(int emplacement){
-            this.emplacement = emplacement;
+        public void setEmplacement(int emplacementX,int emplacementY){
+            this.emplacementX = emplacementX;
+            this.emplacementY = emplacementY;
         }
 
-        public int getEmplacement() {
-            return emplacement;
+        public int getEmplacementX() {
+            return emplacementX;
+        }
+        
+        public int getEmplacementY() {
+            return emplacementY;
         }
         
         public void setNom(String nom){
@@ -78,5 +95,27 @@ public class Tuile {
         public String getNom(){
             return nomcase;
         }
+        
+       //public ArrayList<Tuile> getCasesAdjacentes(Tuile t){ //Ajout des cases au nord, au sud, à l'est et à l'ouest d'une case donnée
+       //int i;
+       //i = t.getEmplacementX();
+       //tuilesadj.add(getTuile(i-6)); //case du nord
+      // tuilesadj.add(getTuile(i-1)); //case de l'ouest
+      // tuilesadj.add(getTuile(i+1)); //case de l'est
+       //tuilesadj.add(getTuile(i+6)); //case du sud
+       
+       //return tuilesadj;
+   //}
+        
+       //public ArrayList<Tuile> getDiagonales(Tuile t){ //Ajout des cases en diagonale d'une case donnée
+       //int i;
+      // i = t.getEmplacement();
+       //tuilesdiag.add(getTuile(i-7)); //case du nord-ouest
+       //tuilesdiag.add(getTuile(i-5)); //case du nord-est
+       //tuilesdiag.add(getTuile(i+5)); //case du sud-ouest
+       //tuilesdiag.add(getTuile(i+7)); //case du sud-est
+       
+       //return tuilesdiag;
+   //}
         
 }
