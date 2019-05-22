@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Ile {
 	private ArrayList<Tuile> case2ile;
-        private ArrayList<Tuile> tuilesinondees;
+        private ArrayList<Tuile> tuilesJouables;
         
       public Ile(){
             this.case2ile = new ArrayList<Tuile>();
@@ -58,30 +58,7 @@ public class Ile {
            }
        }
        return null;
-   }
-   
-   
-   public ArrayList<Tuile> getCasesInondees(){ //Ajout des cases ayant sombrées
-       for (Tuile tuile : case2ile) { //Parcourt l'ensemble des cases de l'île
-           if (tuile.getEtat()==EtatC.sombrée){
-               tuilesinondees.add(tuile);
-           }
-       }
-       
-       return tuilesinondees;
-   }
-   
-   
-   
-   //public ArrayList<Tuile> getCasesNonInondees(){ //Ajout des cases n'ayant pas sombrées
-   //    for (Tuile tuile : case2ile) {
-   //        if (tuile.getEtat()==EtatC.normal || tuile.getEtat()==EtatC.innondé){
-   //            tuilesinondees.add(tuile);
-   //        }
-   //    }
-       
-   //    return tuilesnoninondees;
-   //}
+   }   
    
     //public ArrayList<Tuile> getTuilesDispoAutourJoueurClassique(){ //Retourne toutes les cases adjacentes n'ayant pas sombrées
     //    for (Tuile tuile : tuilesadj) {
@@ -111,21 +88,13 @@ public class Ile {
     //    this.tuilesadj = tuilesadj;
     //}
 
-    public ArrayList<Tuile> getTuilesinondees() {
-        return tuilesinondees;
+    public ArrayList<Tuile> getTuilesNonInondees() {
+        return tuilesJouables;
     }
 
-    public void setTuilesinondees(ArrayList<Tuile> tuilesinondees) {
-        this.tuilesinondees = tuilesinondees;
+    public void setTuilesNonInondees(ArrayList<Tuile> tuilesNonSombrées) {
+       this.tuilesJouables = tuilesNonSombrées;
     }
-
-    //public ArrayList<Tuile> getTuilesnoninondees() {
-    //    return tuilesnoninondees;
-    //}
-
-    //public void setTuilesnoninondees(ArrayList<Tuile> tuilesnoninondees) {
-     //   this.tuilesnoninondees = tuilesnoninondees;
-    //}
 
     //public ArrayList<Tuile> getTuilesdispos() {
     //    return tuilesdispos;
