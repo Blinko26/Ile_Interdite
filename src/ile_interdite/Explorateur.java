@@ -1,15 +1,12 @@
 package ile_interdite;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-import util.Utils.Pion;
+import ile_interdite.Aventurier;
 
 public class Explorateur extends Aventurier {
-    
-    private final Pion cPion;
+   
 
-    public Explorateur(TypeAventurier type,Joueur joueur) {
-        super(type,joueur);
-        this.cPion = Pion.VERT;
+    public Explorateur() {
+        super(TypeAventurier.explorateur,Utils.Pion.VERT,"La Porte de Cuivre");
+
     }
 }

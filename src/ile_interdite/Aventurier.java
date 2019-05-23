@@ -6,11 +6,15 @@ import java.util.Scanner;
 
 public abstract class Aventurier {
 	private TypeAventurier type;
-	private int [] emplacement;
-	public Tuile position;
+	private int [] emplacement={0,0};
+        private final Utils.Pion cPion;
+        private String tuiledepart;
+        public Tuile position;
         
-        public Aventurier(TypeAventurier type) {
+        public Aventurier(TypeAventurier type,Utils.Pion pion,String depart) {
             this.type = type;
+            this.cPion=pion;
+            this.tuiledepart=depart;
         }
 
     public TypeAventurier getType() {
@@ -23,6 +27,13 @@ public abstract class Aventurier {
 
     public Tuile getPosition() {
         return position;
+    }
+    
+    public Color getCouleur() {
+        return cPion.getCouleur();
+    }
+    public String getDepart(){
+        return tuiledepart;
     }
 
     public void setType(TypeAventurier type) {

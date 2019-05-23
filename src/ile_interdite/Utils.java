@@ -40,8 +40,8 @@ public class Utils {
         VERT("Vert", new Color(0, 195, 0)),
         BLEU("Bleu", new Color(55,194,198)),
         JAUNE("Jaune", new Color(255, 255, 0)),
-        BLANC("Blanc", new Color(0, 0, 0)),
-        NOIR("Noir", new Color(255, 255, 255)) ;    
+        BLANC("Blanc", new Color(255, 255, 255)),
+        NOIR("Noir", new Color(0, 0, 0)) ;    
 
         private final String libelle ;
         private final Color couleur ;

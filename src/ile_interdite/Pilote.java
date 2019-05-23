@@ -4,11 +4,10 @@ import ile_interdite.Aventurier;
 
 public class Pilote extends Aventurier {
     
-        private final Utils.Pion cPion;
+        
 
     public Pilote() {
-        super(TypeAventurier.pilote);
-        this.cPion = Utils.Pion.BLEU;
+        super(TypeAventurier.pilote,Utils.Pion.BLEU,"Heliport");
         
     }
 }
