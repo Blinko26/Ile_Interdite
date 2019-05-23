@@ -40,6 +40,12 @@ public class Ile_Interdite {
             Application application = new Application();         
             application.initMap();
             
+            Pilote pilote=new Pilote();
+            Joueur j1=new Joueur(1,"Pilote",pilote);
+            application.addJoueur(j1);
+            
+            j1.getRoleJoueur().setEmplacement(application.getIle().getTuile("Héliport").getEmplacementX(),application.getIle().getTuile("Héliport").getEmplacementY());
+            
             for(int j=0;j<=5;j++){
                 for(int i=0;i<=5;i++){
                     if(application.getIle().getTuile(i+1,j+1).getEtat()==EtatC.normale){
@@ -55,6 +61,11 @@ public class Ile_Interdite {
                 }
             }
             
+            for(int i=0;i<=application.getJoueurs().size();i++){
+                g2d.setColor(new Color(255,0,255));
+                //g2d.setColor(application.getJoueurs().get(i).getRoleJoueur());
+                g2d.fillOval(8+2*application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]+application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]*(int)((int) size.getWidth()-30)/6, 8+2*application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]+application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]*(int)((int) size.getHeight()-30)/6, 10, 10);
+            }
             
             g2d.setColor(new Color(255,0,0));
             for(int j=0;j<=5;j++){

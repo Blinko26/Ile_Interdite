@@ -6,25 +6,19 @@ import java.util.Scanner;
 
 public abstract class Aventurier {
 	private TypeAventurier type;
-	private int emplacement;
-	public Joueur joueur;
+	private int [] emplacement;
 	public Tuile position;
         
-        public Aventurier(TypeAventurier type,Joueur joueur) {
+        public Aventurier(TypeAventurier type) {
             this.type = type;
-            this.joueur = joueur;
         }
 
     public TypeAventurier getType() {
         return type;
     }
 
-    public int getEmplacement() {
+    public int[] getEmplacement() {
         return emplacement;
-    }
-
-    public Joueur getJoueur() {
-        return joueur;
     }
 
     public Tuile getPosition() {
@@ -35,12 +29,9 @@ public abstract class Aventurier {
         this.type = type;
     }
 
-    public void setEmplacement(int emplacement) {
-        this.emplacement = emplacement;
-    }
-
-    public void setJoueur(Joueur joueur) {
-        this.joueur = joueur;
+    public void setEmplacement(int emplacementX,int emplacementY) {
+        this.emplacement[0] = emplacementX;
+        this.emplacement[1] = emplacementY;
     }
 
     public void setPosition(Tuile position) {
