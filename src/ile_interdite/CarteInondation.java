@@ -1,22 +1,16 @@
 package ile_interdite;
 
 public class CarteInondation {
-	private int[] numcarte;
+	private String nomcarte;
+        CarteInondation(String nom){
+            this.nomcarte=nom;
+        }
 
-    public int[] getNumcarte() {
-        return numcarte;
+    public String getNomCarte() {
+        return nomcarte;
     }
 
-    public void setNumcarte(int[] numcarte) {
-        this.numcarte = numcarte;
+    public void setNomCarte(String nomcarte) {
+        this.nomcarte = nomcarte;
     }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-	private String nom;
 }

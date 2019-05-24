@@ -48,9 +48,46 @@ public class Application {
                 this.getJoueurs().get(j).getRoleJoueur().setEmplacement(this.getIle().getTuile(this.getJoueurs().get(j).getRoleJoueur().getDepart()).getEmplacementX(),this.getIle().getTuile(this.getJoueurs().get(j).getRoleJoueur().getDepart()).getEmplacementY());
                 roles.remove(i);
                 j++;
-                System.out.println(this.getJoueurs().get(j-1).getRoleJoueur().getDepart());
             }
             
+        }
+        
+        public void initCartes(){
+            ArrayList<String> noms = Utils.getNomsTuiles();
+            for(int i=0;i<Utils.getNomsTuiles().size();i++){
+                cartesInondation.add(new CarteInondation(noms.get(i)));                
+            } 
+        }
+        
+        public void initPartie(){
+            for(int j=0;j<6;j++){
+                int i=(int)((Math.random()*cartesInondation.size()));
+                if(this.getIle().getTuile(cartesInondation.get(i).getNomCarte()).getEtat()==EtatC.normale){
+                    this.getIle().getTuile(cartesInondation.get(i).getNomCarte()).setEtat(EtatC.innondée);
+                    defausseInondation.add(cartesInondation.get(i));
+                    cartesInondation.remove(cartesInondation.get(i));
+                }
+            }
+        }
+        
+        public void innonder(int nbtuiles){
+            for(int j=0;j<nbtuiles;j++){
+                int i=(int)((Math.random()*cartesInondation.size()));
+                if(this.getIle().getTuile(cartesInondation.get(i).getNomCarte()).getEtat()==EtatC.normale){
+                    this.getIle().getTuile(cartesInondation.get(i).getNomCarte()).setEtat(EtatC.innondée);
+                    defausseInondation.add(cartesInondation.get(i));
+                    cartesInondation.remove(cartesInondation.get(i));
+                } else if(this.getIle().getTuile(cartesInondation.get(i).getNomCarte()).getEtat()==EtatC.innondée){
+                    this.getIle().getTuile(cartesInondation.get(i).getNomCarte()).setEtat(EtatC.sombrée);    
+                    cartesInondation.remove(cartesInondation.get(i));
+                }
+                if(cartesInondation.size()==0){
+                    for(int k=0;k<defausseInondation.size();k++){
+                        cartesInondation.add(defausseInondation.get(k));
+                        defausseInondation.remove(defausseInondation.get(k));
+                    }
+                }
+            }
         }
         
         public void addJoueur(Joueur j) { 

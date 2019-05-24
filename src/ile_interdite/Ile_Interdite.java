@@ -10,21 +10,21 @@
  */
 package ile_interdite;
 
-import java.util.Scanner;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.util.Scanner;
+
 
 /**
  *
  * @author IUT2
  */
 public class Ile_Interdite {
-    private static Application application = new Application();         
+    private static Application application = new Application();   
     public static class MyCanvas extends JPanel {
 
         public MyCanvas () {
@@ -78,6 +78,9 @@ public class Ile_Interdite {
     private MyCanvas canvas;
 
     public Ile_Interdite() {
+        
+
+        
         /* Instanciation et configuration du composant fenetre */
         window = new JFrame("Ile interdite");
         this.configureWindow(window);
@@ -116,6 +119,22 @@ public class Ile_Interdite {
     public static void main(String[] args) { new Ile_Interdite();
         application.initMap();
         application.initJoueurs(6);
+        application.initCartes();
+        
+        int valeur=0;
+        int debut=0;
+        while(valeur!=1){
+            Scanner entree = new Scanner(System.in);
+            System.out.print("Saisir un entier : ");
+            valeur = entree.nextInt();
+            if(valeur==5 && debut==0){
+                debut=1;
+                application.initPartie();
+            }
+            if(valeur==3){
+                application.innonder(4);
+            }
+        }   
     }
     
 }

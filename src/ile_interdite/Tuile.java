@@ -63,16 +63,6 @@ public class Tuile {
     }
 
     public void setEtat(EtatC etat) {
-        if(etat == EtatC.sombrée) {
-            Ile ile = getIledescases();
-            ArrayList<Tuile> tuilesJouables = ile.getTuilesNonInondees();
-            for(Tuile t : tuilesJouables) {
-                if(t.nomcase == this.nomcase) {
-                    tuilesJouables.remove(t);
-                }
-            }
-            ile.setTuilesNonInondees(tuilesJouables);
-        }
         this.etat = etat;
     }
 
