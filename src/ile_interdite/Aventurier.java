@@ -1,6 +1,7 @@
 package ile_interdite;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
 
@@ -57,9 +58,19 @@ public abstract class Aventurier {
 		throw new UnsupportedOperationException();
 	}
 
-	public void PossibleMouvement() {
-		throw new UnsupportedOperationException();
+	public ArrayList<Tuile> PossibleMouvement() {
+        ArrayList<Tuile> casesDisp = new ArrayList<>();
+        Tuile tu = this.getPosition();
+        Ile ile = tu.getIledescases();
+        for(int i[] : tu.getTuilesAdj()) {
+            Tuile t = ile.getTuile(i[0],i[1]);
+            if(t.getEtat() != EtatC.sombrée) {
+                casesDisp.add(t);
+            }
+            
 	}
+        return casesDisp;
+        }
         
         public static final Comparator<Aventurier> TriAventurierType = new Comparator<Aventurier>() {
         @Override
