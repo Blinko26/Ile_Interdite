@@ -31,7 +31,7 @@ public class Ile_Interdite {
         }
 
         @Override
-        public void paintComponent (Graphics g) {  
+        public void paintComponent (Graphics g) {  //permet de dessiner la carte de l'ile
             Graphics2D g2d = (Graphics2D) g;
             Dimension size = getSize();
             

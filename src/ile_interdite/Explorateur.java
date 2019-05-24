@@ -11,7 +11,7 @@ public class Explorateur extends Aventurier {
     }
 
     
-    public ArrayList<Tuile> getMouvementPossible() {
+    public ArrayList<Tuile> getMouvementPossible() { //retourne les cases sur lesquelles l'explorateur peut se déplacer en fonction de sa position
         ArrayList<Tuile> casesDisp = new ArrayList<>();
         Tuile tu = this.getPosition();
         Ile ile = tu.getIledescases();

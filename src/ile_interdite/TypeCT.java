@@ -1,5 +1,5 @@
 package ile_interdite;
-public enum TypeCT {
+public enum TypeCT { //différents types de cartes trésor
 	calice, 
 	cristal, 
 	pierre, 

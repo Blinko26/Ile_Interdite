@@ -1,5 +1,5 @@
 package ile_interdite;
-public enum TypeC {
+public enum TypeC { //différents types de tuiles
         nulle,
         statut,
 	normal, 

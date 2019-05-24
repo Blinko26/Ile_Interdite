@@ -3,17 +3,16 @@ import ile_interdite.Aventurier;
 import java.util.ArrayList;
 
 public class Tuile {
-	private int numcase;
-        private String nomcase;
-	private TypeC type;
-	private EtatC etat;
-	private int emplacementX;
-        private int emplacementY;
-        public int tuilesadj[][];
-        public int tuilesdiag[][];
-	public Ile iledescases;
-	public ArrayList<Aventurier> aventuriers;
-        private ArrayList<Tuile> tuilesdispos;
+	private int numcase; //numéro de la tuile
+        private String nomcase; //nom de la tuile
+	private TypeC type; //type de la tuile
+	private EtatC etat; //etat de la tuile
+	private int emplacementX; //position en X de la tuile
+        private int emplacementY; //position en Y de la tuile
+        public int tuilesadj[][]; //position en XY des tuiles nord, sud, est et ouest
+        public int tuilesdiag[][]; //position en XY des tuiles nord-est, nord-ouest, sud-est, sud-ouest
+	public Ile iledescases; //ile à laquelle la tuile appartient
+	public ArrayList<Aventurier> aventuriers; //liste des aventuriers présents sur la tuile
 
         
         

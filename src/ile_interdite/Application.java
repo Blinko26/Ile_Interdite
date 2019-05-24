@@ -53,59 +53,67 @@ public class Application {
             
         }
         
-        public void addJoueur(Joueur j) { 
+    public void addJoueur(Joueur j) { //ajoute un joueur dans le jeu
             this.joueurs.add(j);
-        }
+    }
 
-    public Ile getIle() {
+    public Ile getIle() { //retourne l'ile du jeu
         return ile;
     }
 
-    public Niveaudo getNiveaudeau() {
+    public Niveaudo getNiveaudeau() { //retourne le niveau d'eau
         return niveaudeau;
     }
 
-    public ArrayList<Tresor> getTrésors() {
+    public ArrayList<Tresor> getTrésors() { //retourne les trésors
         return trésors;
     }
 
-    public ArrayList<CarteInondation> getCartesInondation() {
+    public ArrayList<CarteInondation> getCartesInondation() { //retourne la pile de cartes inondation
         return cartesInondation;
     }
+    
+    public ArrayList<CarteInondation> getDefausseCartesInondation() { //retourne la defausse des cartes inondation
+        return defausseInondation;
+    }
 
-    public ArrayList<Joueur> getJoueurs() {
+    public ArrayList<Joueur> getJoueurs() { //retourne les joueurs de la partie
         return joueurs;
     }
 
-    public ArrayList<CarteTresor> getCartesTresor() {
+    public ArrayList<CarteTresor> getCartesTresor() { //retourne la pile des cartes trésor
         return cartesTresor;
+    } 
+    
+    public ArrayList<CarteTresor> getDefausseCartesTresor() { //retourne la defausse des cartes trésor
+        return defausseTresor;
     }
 
-    public void setIle(Ile ile) {
+    public void setIle(Ile ile) { //associe une ile à la partie
         this.ile = ile;
     }
 
-    public void setNiveaudeau(Niveaudo niveaudeau) {
+    public void setNiveaudeau(Niveaudo niveaudeau) { //permet de donner un niveau d'eau
         this.niveaudeau = niveaudeau;
     }
 
-    public void setTrésors(ArrayList<Tresor> trésors) {
+    public void setTrésors(ArrayList<Tresor> trésors) { //permet d'associer des trésors à la partie
         this.trésors = trésors;
     }
 
-    public void setCartesInondation(ArrayList<CarteInondation> cartesInondation) {
+    public void setCartesInondation(ArrayList<CarteInondation> cartesInondation) { //permet d'associer des cartes inondation à la partie
         this.cartesInondation = cartesInondation;
     }
 
-    public void setJoueurs(ArrayList<Joueur> joueurs) {
+    public void setJoueurs(ArrayList<Joueur> joueurs) { //permet d'aasocier des joueurs à la partie
         this.joueurs = joueurs;
     }
 
-    public void setCartesTresor(ArrayList<CarteTresor> cartesTresor) {
+    public void setCartesTresor(ArrayList<CarteTresor> cartesTresor) { //permet d'associer des cartes trésor à la partie
         this.cartesTresor = cartesTresor;
     }
     
-    public void initMap(){   
+    public void initMap(){ //initialise l'ile   
             ile = new Ile();
 
             int eR[][] = {{1,3},{1,4},{2,2},{2,3},{2,4},{2,5},{3,1},{3,2},{3,3},{3,4},{3,5},{3,6},{4,1},{4,2},{4,3},{4,4},{4,5},{4,6},{5,2},{5,3},{5,4},{5,5},{6,3},{6,4}}; //Emplacement à attribuer restant

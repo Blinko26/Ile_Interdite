@@ -2,8 +2,8 @@ package ile_interdite;
 import java.util.ArrayList;
 
 public class Ile {
-	private ArrayList<Tuile> case2ile;
-        private ArrayList<Tuile> tuilesJouables;
+	private ArrayList<Tuile> case2ile; //contient toutes les cases de l'ile
+        private ArrayList<Tuile> tuilesJouables; //contient uniquement les case non sombrées de l'ile
         
       public Ile(){
             this.case2ile = new ArrayList<Tuile>();
@@ -33,16 +33,16 @@ public class Ile {
             
         }
 
-   public ArrayList<Tuile> getCase2ile() {
+   public ArrayList<Tuile> getCase2ile() { //retourne les cases de l'ile
         return case2ile;
     }
 
 
-   public void setCase2ile(ArrayList<Tuile> case2ile) {
+   public void setCase2ile(ArrayList<Tuile> case2ile) { //permet d'associer des cases à l'ile
         this.case2ile = case2ile;
     }
-   
-   public Tuile getTuile(int emplacementXTuile,int emplacementYTuile){
+    
+   public Tuile getTuile(int emplacementXTuile,int emplacementYTuile){ //retourne la case correspondant à ces coordonnées
        for(Tuile tuile: case2ile) {
            if (tuile.getEmplacementX()== emplacementXTuile && tuile.getEmplacementY()== emplacementYTuile){
                return tuile;
@@ -51,7 +51,7 @@ public class Ile {
        return null;
    }
    
-   public Tuile getTuile(String nomTuile){
+   public Tuile getTuile(String nomTuile){ //retourne la tuile correspondant à ce nom
        for(Tuile tuile: case2ile) {
            if (tuile.getNom()==nomTuile){
                return tuile;
@@ -88,11 +88,11 @@ public class Ile {
     //    this.tuilesadj = tuilesadj;
     //}
 
-    public ArrayList<Tuile> getTuilesNonInondees() {
+    public ArrayList<Tuile> getTuilesNonInondees() { //retourne les tuiles non sombrées de l'ile
         return tuilesJouables;
     }
 
-    public void setTuilesNonInondees(ArrayList<Tuile> tuilesNonSombrées) {
+    public void setTuilesNonInondees(ArrayList<Tuile> tuilesNonSombrées) { //associe des cases non sombrées à l'ile
        this.tuilesJouables = tuilesNonSombrées;
     }
 

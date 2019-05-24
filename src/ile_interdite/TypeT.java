@@ -1,5 +1,5 @@
 package ile_interdite;
-public enum TypeT {
+public enum TypeT { //différents types de trésors
 	calice, 
 	cristal, 
 	pierre, 
