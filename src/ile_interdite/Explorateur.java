@@ -16,12 +16,12 @@ public class Explorateur extends Aventurier {
         Tuile tu = this.getPosition();
         Ile ile = tu.getIledescases();
         for(int i[] : tu.getTuilesAdj()) {
-            Tuile t = ile.getTuile(i[1],i[2]);
+            Tuile t = ile.getTuile(i[0],i[1]);
             if(t.getEtat() != EtatC.sombrée) {
                 casesDisp.add(t);
             }
         for(int j[] : tu.getTuilesDiag()) {
-            Tuile t2 = ile.getTuile(j[1],j[2]);
+            Tuile t2 = ile.getTuile(j[0],j[1]);
             if(t.getEtat() != EtatC.sombrée) {
                 casesDisp.add(t2);
             }
