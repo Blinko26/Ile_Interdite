@@ -18,9 +18,9 @@ public class Application {
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
 
 
-        public void initPartie(int nombreJoueur, Joueur j){   //Initialisation de la partie==> Cases aventurier et Inscrire joueurs avec leur pion
+        public void initPartie(int nombreJoueur, Joueur joueur){   //Initialisation de la partie==> Cases aventurier et Inscrire joueurs avec leur pion
             for (int i=0; i<nombreJoueur; i++) {
-                addJoueur(j);
+                addJoueur(joueur);
             }
         }
         
@@ -29,20 +29,20 @@ public class Application {
             return j;
         }
         
-        public boolean addJoueur(Joueur j) {
+        public boolean addJoueur(Joueur joueur) {
             boolean i;
             i=true;
             
             for (Joueur test : joueurs) {
-                if (test.getNumJoueur()==j.getNumJoueur()){
+                if (test.getNumJoueur()==joueur.getNumJoueur()){
                     i=false;
                 }
                 else{
-                    if (test.getNomJoueur().contentEquals(j.getNomJoueur())){
+                    if (test.getNomJoueur().contentEquals(joueur.getNomJoueur())){
                         i=false;
                     }
                     else{
-                        if (test.getRoleJoueur()==j.getRoleJoueur()){
+                        if (test.getRoleJoueur()==joueur.getRoleJoueur()){
                             i=false;
                         }
                     }
@@ -50,7 +50,7 @@ public class Application {
             }
             
             if (i==true) {
-                joueurs.add(j);
+                joueurs.add(joueur);
                 return true;
             }
             else{
