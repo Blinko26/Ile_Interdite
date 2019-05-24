@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package util;
+package Ile_Interdite;
 
 import java.awt.Color;
 
