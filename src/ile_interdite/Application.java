@@ -18,9 +18,9 @@ public class Application {
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
 
 
-        public void initPartie(int nombreJoueur, Joueur j){   //Initialisation de la partie==> Cases aventurier et Inscrire joueurs avec leur pion
+        public void initPartie(int nombreJoueur, Joueur joueur){   //Initialisation de la partie==> Cases aventurier et Inscrire joueurs avec leur pion
             for (int i=0; i<nombreJoueur; i++) {
-                addJoueur(j);
+                addJoueur(joueur);
             }
         }
         
