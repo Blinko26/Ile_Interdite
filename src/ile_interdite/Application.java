@@ -53,8 +53,8 @@ public class Application {
             
         }
         
-        public void addJoueur(Joueur j) { 
-            this.joueurs.add(j);
+        public void addJoueur(Joueur joueur) { 
+            this.joueurs.add(joueur);
         }
 
     public Ile getIle() {
