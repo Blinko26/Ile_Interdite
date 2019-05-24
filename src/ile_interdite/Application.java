@@ -24,38 +24,37 @@ public class Application {
             }
         }
         
-        public Joueur initJoueurs(int numJoueur, String nomJoueur, Aventurier roleJoueur) {  //Initialisation du joueur==> Nom, Numéro, Couleur, Type d'aventurier et pile de cartes persos(vide)
-            Joueur j = new Joueur(numJoueur, nomJoueur, roleJoueur);
-            return j;
+        public void initJoueurs(int nbJoueurs) {  //Initialisation du joueur==> Nom, Numéro, Couleur, Type d'aventurier et pile de cartes persos(vide)
+            if(nbJoueurs>4){
+                nbJoueurs=4;
+            }
+            Pilote pilote=new Pilote();
+            Explorateur explorateur=new Explorateur();
+            Ingénieur ingenieur=new Ingénieur();
+            Navigateur navigateur=new Navigateur();
+            Plongeur plongeur=new Plongeur();
+            Messager messager=new Messager();
+            ArrayList <Aventurier> roles=new ArrayList<Aventurier>();
+            roles.add(pilote);
+            roles.add(explorateur);
+            roles.add(ingenieur);
+            roles.add(navigateur);
+            roles.add(plongeur);
+            roles.add(messager);
+            int j=0;
+            while(j<nbJoueurs){
+                int i=(int)((Math.random()*roles.size()));
+                this.addJoueur(new Joueur(j+1,"J"+(j+1),roles.get(i)));
+                this.getJoueurs().get(j).getRoleJoueur().setEmplacement(this.getIle().getTuile(this.getJoueurs().get(j).getRoleJoueur().getDepart()).getEmplacementX(),this.getIle().getTuile(this.getJoueurs().get(j).getRoleJoueur().getDepart()).getEmplacementY());
+                roles.remove(i);
+                j++;
+                System.out.println(this.getJoueurs().get(j-1).getRoleJoueur().getDepart());
+            }
+            
         }
         
-        public boolean addJoueur(Joueur j) {
-            boolean i;
-            i=true;
-            
-            for (Joueur test : joueurs) {
-                if (test.getNumJoueur()==j.getNumJoueur()){
-                    i=false;
-                }
-                else{
-                    if (test.getNomJoueur().contentEquals(j.getNomJoueur())){
-                        i=false;
-                    }
-                    else{
-                        if (test.getRoleJoueur()==j.getRoleJoueur()){
-                            i=false;
-                        }
-                    }
-                }
-            }
-            
-            if (i==true) {
-                joueurs.add(j);
-                return true;
-            }
-            else{
-                return false;
-            }
+        public void addJoueur(Joueur j) { 
+            this.joueurs.add(j);
         }
 
     public Ile getIle() {

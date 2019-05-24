@@ -1,16 +1,15 @@
 package ile_interdite;
 
+import ile_interdite.Aventurier;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Explorateur extends Aventurier {
-    
-    private final Utils.Pion cPion;
+   
 
-    public Explorateur(TypeAventurier type,Joueur joueur) {
-        super(TypeAventurier.pilote);
-        this.cPion = Utils.Pion.VERT;
+    public Explorateur() {
+        super(TypeAventurier.explorateur,Utils.Pion.VERT,"La Porte de Cuivre");
     }
+
     
     public ArrayList<Tuile> getMouvementPossible() {
         ArrayList<Tuile> casesDisp = new ArrayList<>();
@@ -30,5 +29,7 @@ public class Explorateur extends Aventurier {
         }
     }
         return casesDisp;
-    }
+
+
+}
 }
