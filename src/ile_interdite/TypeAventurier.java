@@ -1,5 +1,5 @@
 package ile_interdite;
-public enum TypeAventurier {
+public enum TypeAventurier { //différents types d'aventuriers
 	explorateur, 
 	ingénieur, 
 	messager, 
