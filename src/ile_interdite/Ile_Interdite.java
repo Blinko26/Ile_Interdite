@@ -24,6 +24,7 @@ import javax.swing.JPanel;
  * @author IUT2
  */
 public class Ile_Interdite {
+    private static Application application = new Application();         
     public static class MyCanvas extends JPanel {
 
         public MyCanvas () {
@@ -36,15 +37,8 @@ public class Ile_Interdite {
             
             g2d.setColor(Color.white);
             g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
+
             
-            Application application = new Application();         
-            application.initMap();
-            
-            Pilote pilote=new Pilote();
-            Joueur j1=new Joueur(1,"Pilote",pilote);
-            application.addJoueur(j1);
-            
-            j1.getRoleJoueur().setEmplacement(application.getIle().getTuile("Héliport").getEmplacementX(),application.getIle().getTuile("Héliport").getEmplacementY());
             
             for(int j=0;j<=5;j++){
                 for(int i=0;i<=5;i++){
@@ -61,10 +55,12 @@ public class Ile_Interdite {
                 }
             }
             
-            for(int i=0;i<=application.getJoueurs().size();i++){
-                g2d.setColor(new Color(255,0,255));
-                //g2d.setColor(application.getJoueurs().get(i).getRoleJoueur());
-                g2d.fillOval(8+2*application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]+application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]*(int)((int) size.getWidth()-30)/6, 8+2*application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]+application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]*(int)((int) size.getHeight()-30)/6, 10, 10);
+            for(int i=0;i<application.getJoueurs().size();i++){
+                g2d.setColor(application.getJoueurs().get(i).getRoleJoueur().getCouleur());
+                g2d.fillOval(8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)*(int)((int) size.getWidth()-30)/6 +(int)((int) size.getWidth()-30)/12-10,8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)*(int)((int) size.getHeight()-30)/6+(int)((int) size.getHeight()-30)/12 -10, 20, 20);
+                g2d.setColor(new Color(0,0,0));
+                g2d.drawOval(8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)*(int)((int) size.getWidth()-30)/6 +(int)((int) size.getWidth()-30)/12-10,8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)*(int)((int) size.getHeight()-30)/6+(int)((int) size.getHeight()-30)/12 -10, 20, 20);
+
             }
             
             g2d.setColor(new Color(255,0,0));
@@ -117,6 +113,9 @@ public class Ile_Interdite {
         });
     }
     
-    public static void main(String[] args) { new Ile_Interdite(); }
+    public static void main(String[] args) { new Ile_Interdite();
+        application.initMap();
+        application.initJoueurs(6);
+    }
     
 }
