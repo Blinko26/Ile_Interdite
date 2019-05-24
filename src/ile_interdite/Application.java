@@ -53,6 +53,7 @@ public class Application {
             
         }
         
+
     public void addJoueur(Joueur j) { //ajoute un joueur dans le jeu
             this.joueurs.add(j);
     }
