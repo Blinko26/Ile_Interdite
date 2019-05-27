@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Pilote extends Aventurier {
     
     private int ptActionSpeciale; //le pilote a un point d'action spéciale représentant sa capacité à se déplacer en hélicoptère une fois par tour
+    
     public Pilote() {
         super(TypeAventurier.pilote,Utils.Pion.BLEU,"Heliport");
         this.setPtActionSpeciale(); //nombre de points d'action spéciale du pilote

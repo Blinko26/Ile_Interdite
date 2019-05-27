@@ -16,13 +16,6 @@ public class Application {
 	public ArrayList<Joueur> joueurs = new ArrayList<Joueur>(); //liste des joueurs
 	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>(); //liste des cartes trésor poyvant être piochées
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
-
-
-        public void initPartie(int nombreJoueur, Joueur joueur){   //Initialisation de la partie==> Cases aventurier et Inscrire joueurs avec leur pion
-            for (int i=0; i<nombreJoueur; i++) {
-                addJoueur(joueur);
-            }
-        }
         
         public void initJoueurs(int nbJoueurs) {  //Initialisation du joueur==> Nom, Numéro, Couleur, Type d'aventurier et pile de cartes persos(vide)
             if(nbJoueurs>4){

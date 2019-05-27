@@ -1,21 +1,21 @@
 package ile_interdite;
 public class Niveaudo {
-	private int[] _niveau; //niveau de l'eau
-	private int[] _niveauinondation; //niveau d'innondation
+	private int[] niveau; //niveau de l'eau
+	private int[] niveauinondation; //niveau d'innondation
 
     public int[] getNiveau() { //retourne le niveau de l'eau
-        return _niveau;
+        return niveau;
     }
 
-    public void setNiveau(int[] _niveau) { //permet de donner un niveau d'eau
-        this._niveau = _niveau;
+    public void setNiveau(int[] niveau) { //permet de donner un niveau d'eau
+        this.niveau = niveau;
     }
 
     public int[] getNiveauinondation() { //retourne le niveau d'innondation
-        return _niveauinondation;
+        return niveauinondation;
     }
 
-    public void setNiveauinondation(int[] _niveauinondation) { //permet de donner un niveau d'innondation
-        this._niveauinondation = _niveauinondation;
+    public void setNiveauinondation(int[] niveauinondation) { //permet de donner un niveau d'innondation
+        this.niveauinondation = niveauinondation;
     }
 }

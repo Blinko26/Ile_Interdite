@@ -9,7 +9,7 @@ public class Plongeur extends Aventurier {
     ArrayList<Tuile> casesInondees = new ArrayList<>();
     ArrayList<Tuile> casesSombrees = new ArrayList<>(); 
     ArrayList<Tuile> casesSeches = new ArrayList<>();
-    ArrayList<Tuile> casesContigu = new ArrayList<>();
+    ArrayList<Tuile> casesContiguës = new ArrayList<>();
     
     ArrayList<Tuile> casesAdjacentes = new ArrayList<>();
     
@@ -27,13 +27,13 @@ public class Plongeur extends Aventurier {
         return casesInondees;      
     }
     
-    public void addTuileContigu(Tuile tu){
+    public void addTuileContiguë(Tuile tu){
         
         //Avoir la position tu du plongeur
         tu = this.getPosition();
         //Si sa position = innondée ou sombrée alors on l'ajoute à l'arraylist casesContigu
         if(tu.getEtat() == EtatC.sombrée || tu.getEtat() == EtatC.innondée){
-            casesContigu.add(tu);
+            casesContiguës.add(tu);
         }else{
             casesSeches.add(tu);
         }
@@ -53,7 +53,7 @@ public class Plongeur extends Aventurier {
             for(int i[] : tu.getTuilesAdj()) {
                 Tuile t = ile.getTuile(i[0],i[1]);
                 if(t.getEtat() == EtatC.sombrée || t.getEtat() == EtatC.innondée) {
-                    casesContigu.add(t);
+                    casesContiguës.add(t);
                     
                 }
             }
@@ -68,7 +68,7 @@ public class Plongeur extends Aventurier {
         casesSeches.add(tu);
     }
     
-    public void ShowPossitionsPossibles(){
+    public void ShowPositionsPossibles(){
         for(Tuile i : casesSeches){
             System.out.println("Case :" +i +"tuile seche");
             //Envoyer un message au controleur pour les faire changer de couleur ?
