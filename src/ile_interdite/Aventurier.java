@@ -72,16 +72,19 @@ public abstract class Aventurier {
         return casesDisp;
         }
         
-        public static final Comparator<Aventurier> TriAventurierType = new Comparator<Aventurier>() {
-        @Override
-        public int compare(Aventurier a1, Aventurier a2) {
-            if (a1.getType()==a2.getType()) {
-                return 1;
+        public ArrayList<Tuile> CasesAssechables() { //retourne les cases asséchables par l'aventurier
+            ArrayList<Tuile> casesAsech = new ArrayList<>();
+            Tuile tu = this.getPosition();
+            if(tu.getEtat() == EtatC.innondée) {
+                casesAsech.add(tu);
             }
-        
-            else {
-                return -1;
+            Ile ile = tu.getIledescases();
+            for(int i[] : tu.getTuilesAdj()) {
+                Tuile t = ile.getTuile(i[0],i[1]);
+                if(t.getEtat() == EtatC.innondée) {
+                    casesAsech.add(t);
+                }
             }
-        }
-    };
+        return casesAsech;
+    }
 }

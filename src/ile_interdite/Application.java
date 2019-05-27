@@ -214,4 +214,8 @@ public class Application {
             defausseInondation.remove(ci);
         }
     }
+    
+    public void assecherTuile(Tuile tu) { //permet d'assécher une tuile
+        tu.setEtat(EtatC.normale);
+    }
 }

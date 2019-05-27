@@ -32,4 +32,25 @@ public class Explorateur extends Aventurier {
 
 
 }
+    public ArrayList<Tuile> CasesAssechables() { //retourne les cases asséchables par l'explorateur
+            ArrayList<Tuile> casesAsech = new ArrayList<>();
+            Tuile tu = this.getPosition();
+            if(tu.getEtat() == EtatC.innondée) {
+                casesAsech.add(tu);
+            }
+            Ile ile = tu.getIledescases();
+            for(int i[] : tu.getTuilesAdj()) {
+                Tuile t = ile.getTuile(i[0],i[1]);
+                if(t.getEtat() == EtatC.innondée) {
+                    casesAsech.add(t);
+                }
+            }
+            for(int j[] : tu.getTuilesDiag()) {
+                Tuile t2 = ile.getTuile(j[0],j[1]);
+                if(t2.getEtat() != EtatC.innondée) {
+                    casesAsech.add(t2);
+                }
+        
+            }
+        return casesAsech;
 }
