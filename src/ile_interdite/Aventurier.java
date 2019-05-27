@@ -49,14 +49,6 @@ public abstract class Aventurier {
     public void setPosition(Tuile position) { //permet de donner une position à l'aventurier
         this.position = position;
     }
-    
-    public void getMouvement(){
-            
-    }
-        
-	public void getTuile() { 
-		throw new UnsupportedOperationException();
-	}
 
 	public ArrayList<Tuile> PossibleMouvement() { //retourne les cases sur lequelles l'aventurier peut se déplacer
         ArrayList<Tuile> casesDisp = new ArrayList<>();

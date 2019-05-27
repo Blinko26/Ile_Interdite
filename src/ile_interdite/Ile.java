@@ -26,7 +26,7 @@ public class Ile {
                 case2ile.add(new Tuile(i,TypeC.pierre,EtatC.normale));
             }
             for (int i = 33; i<35;i++) {    //Ajout des tuiles dites Trésor==> Statue
-                case2ile.add(new Tuile(i,TypeC.statut,EtatC.normale));
+                case2ile.add(new Tuile(i,TypeC.statue,EtatC.normale));
             }
              //Ajout des tuiles dites Héliport
             case2ile.add(new Tuile(36,TypeC.héliport,EtatC.normale));
