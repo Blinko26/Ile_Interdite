@@ -60,6 +60,16 @@ public class Ile {
        return null;
    }   
    
+   public ArrayList<Tuile> getMer(){
+       ArrayList<Tuile> mer=new ArrayList<Tuile>();
+       for(Tuile tuile: case2ile) {
+           if (tuile.getType()==TypeC.nulle){
+               mer.add(tuile);
+           }
+       }
+       return mer;
+   }
+   
     //public ArrayList<Tuile> getTuilesDispoAutourJoueurClassique(){ //Retourne toutes les cases adjacentes n'ayant pas sombrées
     //    for (Tuile tuile : tuilesadj) {
     //        if (tuile.getEtat()!=EtatC.sombré){

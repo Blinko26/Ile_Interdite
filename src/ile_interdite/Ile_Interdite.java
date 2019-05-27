@@ -30,7 +30,9 @@ public class Ile_Interdite {
     private static int etatJeu=1;
     private static int debut=0;
     private static int xsouris;
-     private static int ysouris;
+    private static int ysouris;
+    private static boolean presse=false;
+    private static int joueur=1;
     public static class MyCanvas extends JPanel {
 
         public MyCanvas () {
@@ -57,46 +59,49 @@ public class Ile_Interdite {
                     if(application.getIle().getTuile(i+1,j+1).getEtat()==EtatC.sombrée){
                         g2d.setColor(new Color(0,0,255));
                     }
-                    g2d.fillRect(8+2*i+i*(int)((int) size.getWidth()-30)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) size.getWidth()-30)/6, (int)((int) size.getHeight()-30)/6);
+                    if(xsouris<=8+2*(i+1)+(i+1)*(int)((int) (size.getWidth()-30)*7/8)/6 && xsouris>=8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6 && ysouris<=8+2*(j+1)+(j+1)*(int)((int) size.getHeight()-30)/6 && ysouris>=8+2*j+j*(int)((int) size.getHeight()-30)/6 && application.getIle().getTuile(i+1,j+1).getType()!=TypeC.nulle
+                            && presse){
+                        
+                        g2d.setColor(new Color(255,0,255));
+                    }
+                    g2d.fillRect(8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) (size.getWidth()-30)*7/8)/6, (int)((int) size.getHeight()-30)/6);
                     
                 }
             }
             
             for(int i=0;i<application.getJoueurs().size();i++){
                 g2d.setColor(application.getJoueurs().get(i).getRoleJoueur().getCouleur());
-                g2d.fillOval(8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)*(int)((int) size.getWidth()-30)/6 +(int)((int) size.getWidth()-30)/12-10,8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)*(int)((int) size.getHeight()-30)/6+(int)((int) size.getHeight()-30)/12 -10, 20, 20);
+                g2d.fillOval(8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)*(int)((int) (size.getWidth()-30)*7/8)/6 +(int)((int) (size.getWidth()-30)*7/8)/12-10,8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)*(int)((int) size.getHeight()-30)/6+(int)((int) size.getHeight()-30)/12 -10, 20, 20);
                 g2d.setColor(new Color(0,0,0));
-                g2d.drawOval(8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)*(int)((int) size.getWidth()-30)/6 +(int)((int) size.getWidth()-30)/12-10,8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)*(int)((int) size.getHeight()-30)/6+(int)((int) size.getHeight()-30)/12 -10, 20, 20);
+                g2d.drawOval(8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)*(int)((int) (size.getWidth()-30)*7/8)/6 +(int)((int) (size.getWidth()-30)*7/8)/12-10,8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)*(int)((int) size.getHeight()-30)/6+(int)((int) size.getHeight()-30)/12 -10, 20, 20);
 
             }
             
             g2d.setColor(new Color(255,0,0));
             for(int j=0;j<=5;j++){
                 for(int i=0;i<=5;i++){
-                    g2d.drawString("Nom : "+application.getIle().getTuile(i+1, j+1).getNom(), 8+2*i+i*(int)((int) size.getWidth()-30)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+30);
-                    g2d.drawString("Coord : "+application.getIle().getTuile(i+1, j+1).getEmplacementX()+", "+application.getIle().getTuile(i+1, j+1).getEmplacementY(), 8+2*i+i*(int)((int) size.getWidth()-30)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+45);
+                    g2d.drawString("Nom : "+application.getIle().getTuile(i+1, j+1).getNom(), 8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+30);
+                    g2d.drawString("Coord : "+application.getIle().getTuile(i+1, j+1).getEmplacementX()+", "+application.getIle().getTuile(i+1, j+1).getEmplacementY(), 8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+45);
                 }
             }
+            
+            if(application.getJoueurs().get(joueur).getNumJoueur()==1){
+                
+            }
             for(int i=0;i<application.getJoueurs().size();i++){
-                if(application.getIle().getTuile(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.sombrée){
+                if(application.getIle().getTuile(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.sombrée ||application.getIle().getTuile("Heliport").getEtat()==EtatC.sombrée){
                     g2d.setColor(new Color(0,0,255));
                     g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
                     g2d.setColor(new Color(255,0,128));
                     g2d.drawString("Perdu !", size.width/2, size.height/2);
                 }
             }
-            if(application.getIle().getTuile("Heliport").getEtat()==EtatC.sombrée){
-                g2d.setColor(new Color(0,0,255));
-                g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
-                g2d.setColor(new Color(255,0,128));
-                g2d.drawString("Perdu !", size.width/2, size.height/2);
-            }
             
-            if(debut==0){
+            if(debut==0 && !presse){
                 g2d.setColor(Color.white);
                 g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
                 g2d.setColor(new Color(0,0,0));
-                g2d.drawString("Pour commencer taper 5", size.width/2, size.height/2);
+                g2d.drawString("Pour commencer cliquer", size.width/2, size.height/2);
             }
         }
     }
@@ -119,8 +124,14 @@ public class Ile_Interdite {
         canvas.addMouseListener(new MouseListener(){
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (debut==0){
+                    debut=1;
+                    presse=!presse;
+                    application.initPartie();
+                }
                 xsouris=e.getX();
                 ysouris=e.getY();
+                presse=!presse;
                 window.repaint();
             }
             @Override
@@ -145,7 +156,7 @@ public class Ile_Interdite {
         /****************************************************************/
         
         /* Affichage de la fenetre */
-        window.setSize(400, 400);
+        window.setSize(1900, 1200);
         window.setVisible(true);        
     }    
     /*
@@ -174,35 +185,16 @@ public class Ile_Interdite {
         application.initJoueurs(6);
         application.initCartes();
         
-        int valeur=0;
-        while(etatJeu==1){
-            Scanner entree = new Scanner(System.in);
-            System.out.print("Saisir un entier :\n\tCommencer-5\n\tInonder-3\n\tAction ?");
-            valeur = entree.nextInt();
-            if(valeur==5 && debut==0){
-                debut=1;
-                application.initPartie();
-            }
-            if (debut==1){
-                if(valeur==3){
-                application.innonder(4);
-                
-            }
-            }
-            window.repaint();
             
-            for(int i=0;i<application.getJoueurs().size();i++){
-                if(application.getIle().getTuile(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.sombrée){
-                   System.out.println("coule");
-                    etatJeu=0; 
-                }
-            }
+            //for(int i=0;i<application.getJoueurs().size();i++){
+            //    if(application.getIle().getTuile(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.sombrée){
+            //        etatJeu=0; 
+            //    }
+            //}
             
-            if(application.getIle().getTuile("Heliport").getEtat()==EtatC.sombrée){
-                System.out.println("perdu");
-                etatJeu=0;
-            }
+            //if(application.getIle().getTuile("Heliport").getEtat()==EtatC.sombrée){
+            //    etatJeu=0;
+            //}
         }   
-    }
     
 }
