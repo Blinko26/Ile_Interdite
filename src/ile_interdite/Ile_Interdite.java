@@ -84,10 +84,21 @@ public class Ile_Interdite {
                     g2d.drawString("Coord : "+application.getIle().getTuile(i+1, j+1).getEmplacementX()+", "+application.getIle().getTuile(i+1, j+1).getEmplacementY(), 8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+45);
                 }
             }
+            g2d.setColor(new Color(196,196,196));
+            g2d.fillRect((int)size.width-175,10,150,75);
+            g2d.setColor(new Color(0,0,0));
+            g2d.drawRect((int)size.width-175,10,150,75);
+            if(application.getIle().getTuile(application.getJoueurs().get(joueur-1).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(joueur).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.normale){
+                  g2d.setColor(new Color(128,128,128));
+            }  
+            g2d.drawString("Assecher",(int)size.width-165,50);
             
-            if(application.getJoueurs().get(joueur).getNumJoueur()==1){
-                
-            }
+            g2d.setColor(new Color(196,196,196));
+            g2d.fillRect((int)size.width-175,87,150,75);
+            g2d.setColor(new Color(0,0,0));
+            g2d.drawRect((int)size.width-175,87,150,75);
+            g2d.drawString("Y aller",(int)size.width-165,127);
+            
             for(int i=0;i<application.getJoueurs().size();i++){
                 if(application.getIle().getTuile(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.sombrée ||application.getIle().getTuile("Heliport").getEtat()==EtatC.sombrée){
                     g2d.setColor(new Color(0,0,255));
