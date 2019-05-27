@@ -39,17 +39,7 @@ public class Tuile {
             this.tuilesadj=adjacentes;
             int diagonales[][] = {{emplacement[0]-1,emplacement[1]-1},{emplacement[0]+1,emplacement[1]-1},{emplacement[0]+1,emplacement[1]+1},{emplacement[0]-1,emplacement[1]+1}};
             this.tuilesdiag=diagonales;
-        }
-    
-    public Tuile getTuile(int x, int y) { //retourne la tuile à l'emplacement xy, ou null si pas trouvée
-        Tuile res = null;
-        for(Tuile tu : this.getIledescases().getCase2ile()) {
-            if(tu.emplacementX == x && tu.emplacementY == y) {
-                res = tu;
-            }
-        }
-            return res;
-    }    
+        }  
         
     public int getNumcase() { //retourne le numéro de la case
         return numcase;
@@ -90,14 +80,7 @@ public class Tuile {
     public void setAventuriers(ArrayList<Aventurier> aventuriers) { //permet d'affecter un aventurier à la case 
         this.aventuriers = aventuriers;
     }
-
     
-        
-        public void setEmplacement(int emplacementX,int emplacementY){ //permet de donner un emplacement à la carte
-            this.emplacementX = emplacementX;
-            this.emplacementY = emplacementY;
-        }
-
         public int getEmplacementX() { //retourne la position en X de la case
             return emplacementX;
         }
@@ -106,12 +89,17 @@ public class Tuile {
             return emplacementY;
         }
         
-        public void setNom(String nom){ //permet de donner un nom à la case
-            this.nomcase = nom;
-        }
+         public void setEmplacement(int emplacementX,int emplacementY){ //permet de donner un emplacement à la carte
+            this.emplacementX = emplacementX;
+            this.emplacementY = emplacementY;
+        }   
         
         public String getNom(){ //retourne le nom de la case
             return nomcase;
+        }
+        
+        public void setNom(String nom){ //permet de donner un nom à la case
+            this.nomcase = nom;
         }
         
         public int[][] getTuilesAdj() { //retourne les position des cases adjacentes (nord, sud, est, ouest)

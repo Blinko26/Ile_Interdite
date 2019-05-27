@@ -1,7 +1,7 @@
 package ile_interdite;
 public enum TypeC { //différents types de tuiles
         nulle,
-        statut,
+        statue,
 	normal, 
 	héliport, 
 	calice, 
