@@ -66,12 +66,7 @@ public class Joueur {
 	}
 
 	public int getNombreCartesJoueur(Joueur aJ) { //permet de connaitre le nombre de cartes du joueur
-		ArrayList<CarteTresor> cartesT = aJ.getCartesT();
-                int i = 0;
-                for(CarteTresor c : cartesT) {
-                    i++;
-                }
-                return i;
+            return aJ.getCartesT().size();
 	}
 
 	public void removeCarte(CarteTresor aDefausseC) { //permet de retirer une carte de l'inventaire du joueur
