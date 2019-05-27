@@ -24,7 +24,9 @@ import java.util.Scanner;
  * @author IUT2
  */
 public class Ile_Interdite {
-    private static Application application = new Application();   
+    private static Application application = new Application();
+    private static int etatJeu=1;
+    private static int debut=0;
     public static class MyCanvas extends JPanel {
 
         public MyCanvas () {
@@ -70,11 +72,32 @@ public class Ile_Interdite {
                     g2d.drawString("Coord : "+application.getIle().getTuile(i+1, j+1).getEmplacementX()+", "+application.getIle().getTuile(i+1, j+1).getEmplacementY(), 8+2*i+i*(int)((int) size.getWidth()-30)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+45);
                 }
             }
+            for(int i=0;i<application.getJoueurs().size();i++){
+                if(application.getIle().getTuile(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.sombrée){
+                    g2d.setColor(new Color(0,0,255));
+                    g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
+                    g2d.setColor(new Color(255,0,128));
+                    g2d.drawString("Perdu !", size.width/2, size.height/2);
+                }
+            }
+            if(application.getIle().getTuile("Heliport").getEtat()==EtatC.sombrée){
+                g2d.setColor(new Color(0,0,255));
+                g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
+                g2d.setColor(new Color(255,0,128));
+                g2d.drawString("Perdu !", size.width/2, size.height/2);
+            }
+            
+            if(debut==0){
+                g2d.setColor(Color.white);
+                g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
+                g2d.setColor(new Color(0,0,0));
+                g2d.drawString("Pour commencer taper 5", size.width/2, size.height/2);
+            }
         }
     }
     
     /* Composant fenêtre */
-    private JFrame window;
+    private static JFrame window;
     private MyCanvas canvas;
 
     public Ile_Interdite() {
@@ -122,17 +145,32 @@ public class Ile_Interdite {
         application.initCartes();
         
         int valeur=0;
-        int debut=0;
-        while(valeur!=1){
+        while(etatJeu==1){
             Scanner entree = new Scanner(System.in);
-            System.out.print("Saisir un entier : ");
+            System.out.print("Saisir un entier :\n\tCommencer-5\n\tInonder-3\n\tAction ?");
             valeur = entree.nextInt();
             if(valeur==5 && debut==0){
                 debut=1;
                 application.initPartie();
             }
-            if(valeur==3){
+            if (debut==1){
+                if(valeur==3){
                 application.innonder(4);
+                
+            }
+            }
+            window.repaint();
+            
+            for(int i=0;i<application.getJoueurs().size();i++){
+                if(application.getIle().getTuile(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.sombrée){
+                   System.out.println("coule");
+                    etatJeu=0; 
+                }
+            }
+            
+            if(application.getIle().getTuile("Heliport").getEtat()==EtatC.sombrée){
+                System.out.println("perdu");
+                etatJeu=0;
             }
         }   
     }

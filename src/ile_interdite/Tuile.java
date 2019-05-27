@@ -72,16 +72,6 @@ public class Tuile {
     }
 
     public void setEtat(EtatC etat) { //permet de changer l'état de la case et met à jour les listes de cases
-        if(etat == EtatC.sombrée) {
-            Ile ile = getIledescases();
-            ArrayList<Tuile> tuilesJouables = ile.getTuilesNonInondees();
-            for(Tuile t : tuilesJouables) {
-                if(t.nomcase == this.nomcase) {
-                    tuilesJouables.remove(t);
-                }
-            }
-            ile.setTuilesNonInondees(tuilesJouables);
-        }
         this.etat = etat;
     }
 
