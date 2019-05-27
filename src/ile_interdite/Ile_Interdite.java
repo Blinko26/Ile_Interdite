@@ -14,6 +14,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.util.Scanner;
@@ -27,6 +29,8 @@ public class Ile_Interdite {
     private static Application application = new Application();
     private static int etatJeu=1;
     private static int debut=0;
+    private static int xsouris;
+     private static int ysouris;
     public static class MyCanvas extends JPanel {
 
         public MyCanvas () {
@@ -54,6 +58,7 @@ public class Ile_Interdite {
                         g2d.setColor(new Color(0,0,255));
                     }
                     g2d.fillRect(8+2*i+i*(int)((int) size.getWidth()-30)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) size.getWidth()-30)/6, (int)((int) size.getHeight()-30)/6);
+                    
                 }
             }
             
@@ -111,6 +116,31 @@ public class Ile_Interdite {
         /****************************************************************/
         canvas = new MyCanvas();
         window.add(canvas);
+        canvas.addMouseListener(new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                xsouris=e.getX();
+                ysouris=e.getY();
+                window.repaint();
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+            } 
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            } 
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        }
+
+);
         
         /****************************************************************/
         
