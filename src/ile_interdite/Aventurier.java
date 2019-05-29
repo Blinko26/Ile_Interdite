@@ -64,4 +64,19 @@ public abstract class Aventurier {
         return casesDisp;
         }
         
+        public void assecher(Tuile tuile){ //Le joueur assèche une tuile
+            tuile.setEtat(EtatC.normale); //La tuile revient à un état normal
+        }
+        
+        public ArrayList<Tuile> getTuileAssechable(){
+            Ile ile = position.getIledescases();
+            ArrayList<Tuile> casesAssechable = new ArrayList<>();
+            for (int[] tuile: position.getTuilesAdj()) {
+                if(ile.getTuile(tuile[0],tuile[1]).getEtat()==EtatC.innondée){
+                    casesAssechable.add(ile.getTuile(tuile[0],tuile[1]));
+                }
+            }     
+            return casesAssechable;
+        }
+        
 }
