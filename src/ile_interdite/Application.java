@@ -23,7 +23,7 @@ public class Application {
             
             //Le Joueur tire deux cartes trésor
             for (int i =0;i<2;i++){
-                j.
+                
             }
             //Le joueur tire un nombre de carte innondation égale au nombre de niveau d'eau
             
