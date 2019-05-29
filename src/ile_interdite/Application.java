@@ -97,6 +97,8 @@ public class Application {
         }
         
         
+        
+        
     public void deplacement(Joueur j, Tuile tuile){  //Deplacement d'un joueur
         j.getRoleJoueur().setEmplacement(tuile.getEmplacementX(), tuile.getEmplacementY());//On set l'emplacement du joueur à la nouvelle case            
     }
