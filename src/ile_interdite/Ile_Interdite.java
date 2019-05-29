@@ -29,8 +29,7 @@ public class Ile_Interdite {
     private static Application application = new Application();
     private static int etatJeu=1;
     private static int debut=0;
-    private static int xsouris;
-    private static int ysouris;
+    private static int [] emplacementsouris={0,0};
     private static boolean presse=false;
     private static int joueurcourant=1;
     public static class MyCanvas extends JPanel {
@@ -59,11 +58,13 @@ public class Ile_Interdite {
                     if(application.getIle().getTuile(i+1,j+1).getEtat()==EtatC.sombrée){
                         g2d.setColor(new Color(0,0,255));
                     }
-                    if(xsouris<=8+2*(i+1)+(i+1)*(int)((int) (size.getWidth()-30)*7/8)/6 && xsouris>=8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6 && ysouris<=8+2*(j+1)+(j+1)*(int)((int) size.getHeight()-30)/6 && ysouris>=8+2*j+j*(int)((int) size.getHeight()-30)/6 && application.getIle().getTuile(i+1,j+1).getType()!=TypeC.nulle
-                            && presse){
-                        
-                        g2d.setColor(new Color(255,0,255));
-                    }
+                    //for (int[] tuile : application.getJoueurs().get(0).getRoleJoueur().getPosition().getTuilesAdj()){
+                    //    application.getIle().getTuile(tuile[0], tuile [1]).setSurligné(true);
+                    //}
+                       // if(emplacementsouris[0]==7 && emplacementsouris[1]==2 && application.getIle().getTuile(i+1,j+1).getType()!=TypeC.nulle && application.getIle().getTuile(i+1,j+1)!=application.getIle().getTuile(tuile[0],tuile[1])){
+                         //   g2d.setColor(new Color(255,0,255));
+                        //}
+                    
                     g2d.fillRect(8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) (size.getWidth()-30)*7/8)/6, (int)((int) size.getHeight()-30)/6);
                     
                 }
@@ -140,9 +141,22 @@ public class Ile_Interdite {
                     presse=!presse;
                     application.initPartie();
                 }
-                xsouris=e.getX();
-                ysouris=e.getY();
-                presse=!presse;
+                if(e.getX()<=2*6+6*(int)((int) (1650-30)*7/8)/6){
+                    System.out.println("bite");
+                    emplacementsouris[0]=(int)(e.getX()-8)/(2+((1650-30)*7/8)/6)+1;
+                    emplacementsouris[1]=(int)(e.getY()-8)/(2+((950-30)*7/8)/6)+1;
+                    presse=!presse;
+                }
+                if(e.getX()>=1475 && e.getX()<=1625 && e.getY()>=10 && e.getY()<=85){
+                    System.out.println("Asseché");
+                    emplacementsouris[0]=7;
+                    emplacementsouris[1]=1;
+                }
+                if(e.getX()>=1475 && e.getX()<=1625 && e.getY()>=87 && e.getY()<=162){
+                    System.out.println("Déplacé");
+                    emplacementsouris[0]=7;
+                    emplacementsouris[1]=2;
+                }
                 window.repaint();
             }
             @Override
