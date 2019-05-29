@@ -64,16 +64,19 @@ public abstract class Aventurier {
         return casesDisp;
         }
         
-        public static final Comparator<Aventurier> TriAventurierType = new Comparator<Aventurier>() {
-        @Override
-        public int compare(Aventurier a1, Aventurier a2) {
-            if (a1.getType()==a2.getType()) {
-                return 1;
-            }
-        
-            else {
-                return -1;
-            }
+        public void assecher(Tuile tuile){ //Le joueur assèche une tuile
+            tuile.setEtat(EtatC.normale); //La tuile revient à un état normal
         }
-    };
+        
+        public ArrayList<Tuile> getTuileAssechable(){
+            Ile ile = position.getIledescases();
+            ArrayList<Tuile> casesAssechable = new ArrayList<>();
+            for (int[] tuile: position.getTuilesAdj()) {
+                if(ile.getTuile(tuile[0],tuile[1]).getEtat()==EtatC.innondée){
+                    casesAssechable.add(ile.getTuile(tuile[0],tuile[1]));
+                }
+            }     
+            return casesAssechable;
+        }
+        
 }
