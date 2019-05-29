@@ -18,15 +18,15 @@ public class Application {
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
         
         public void tourDeJeu(Joueur j){
-            j.setPointAction(); //Point d'action du joueur réinitialisé
+            j.initPointAction(); //Point d'action du joueur réinitialisé
             //Le joueur fait trois actions
             
             //Le Joueur tire deux cartes trésor
             for (int i =0;i<2;i++){
-                
+                piocherCarte(j);
             }
             //Le joueur tire un nombre de carte innondation égale au nombre de niveau d'eau
-            
+                innonder(niveaudeau.getNiveauinondation());
         }
         
         public void initJoueurs(int nbJoueurs) {  //Initialisation du joueur==> Nom, Numéro, Couleur, Type d'aventurier et pile de cartes persos(vide)
@@ -73,6 +73,7 @@ public class Application {
                     cartesInondation.remove(cartesInondation.get(i));
                 }
             }
+            niveaudeau.initNiveauDeau(); //Le niveau d'eau est initialisé
         }
         
         public void innonder(int nbtuiles){
