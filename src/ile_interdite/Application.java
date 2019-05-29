@@ -57,14 +57,14 @@ public class Application {
             
         }
         
-        public void initCartes(){
+        public void initCartes(){ //Initialisation des cartes inondations => Ajout de toutes les cartes en fonction du nom des tuiles dans l'ArrayList des cartes inondations
             ArrayList<String> noms = Utils.getNomsTuiles();
             for(int i=0;i<Utils.getNomsTuiles().size();i++){
                 cartesInondation.add(new CarteInondation(noms.get(i)));                
             } 
         }
         
-        public void initPartie(){
+        public void initPartie(){ //Initialisation de la partie : 6 tuiles aléatoires deviennent inondées
             for(int j=0;j<6;j++){
                 int i=(int)((Math.random()*cartesInondation.size()));
                 if(this.getIle().getTuile(cartesInondation.get(i).getNomCarte()).getEtat()==EtatC.normale){
@@ -75,7 +75,7 @@ public class Application {
             }
         }
         
-        public void innonder(int nbtuiles){
+        public void innonder(int nbtuiles){ //Suivant le niveau de montée des eaux, permet de piocher aléatoirement un nombre de cartes inondations, qui inondent ou sombrent une case
             for(int j=0;j<nbtuiles;j++){
                 int i=(int)((Math.random()*cartesInondation.size()));
                 if(this.getIle().getTuile(cartesInondation.get(i).getNomCarte()).getEtat()==EtatC.normale){
@@ -100,7 +100,7 @@ public class Application {
         j.getRoleJoueur().setEmplacement(tuile.getEmplacementX(), tuile.getEmplacementY());//On set l'emplacement du joueur à la nouvelle case            
     }
     
-    public void piocherCarte(Joueur j) {
+    public void piocherCarte(Joueur j) { //Permet de piocher une carte trésor aléatoire
         int i = (int) (Math.random()*cartesTresor.size());
         j.addCarteToJoueur(cartesTresor.get(i));
         cartesTresor.remove(cartesTresor.get(i));

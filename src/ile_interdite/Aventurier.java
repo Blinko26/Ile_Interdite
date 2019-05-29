@@ -64,16 +64,4 @@ public abstract class Aventurier {
         return casesDisp;
         }
         
-        public static final Comparator<Aventurier> TriAventurierType = new Comparator<Aventurier>() {
-        @Override
-        public int compare(Aventurier a1, Aventurier a2) {
-            if (a1.getType()==a2.getType()) {
-                return 1;
-            }
-        
-            else {
-                return -1;
-            }
-        }
-    };
 }

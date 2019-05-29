@@ -60,7 +60,7 @@ public class Ile {
        return null;
    }   
    
-   public ArrayList<Tuile> getMer(){
+   public ArrayList<Tuile> getMer(){ //crée des tuiles dans la mer, qui ne sont pas jouables
        ArrayList<Tuile> mer=new ArrayList<Tuile>();
        for(Tuile tuile: case2ile) {
            if (tuile.getType()==TypeC.nulle){

@@ -74,7 +74,7 @@ public class Joueur {
 		this.cartesT.remove(aDefausseC);
         }
         
-        public void setPointAction(){
+        public void setPointAction(){ 
             this.pointAction = 3;
         }
 }
