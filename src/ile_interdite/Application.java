@@ -83,6 +83,10 @@ public class Application {
             }
         }
         
+        public void piocherCarte() {
+            int i = (int) (Math.random()*cartesTresor.size());
+        }
+        
     public void addJoueur(Joueur j) { //ajoute un joueur dans le jeu
             this.joueurs.add(j);
     }
