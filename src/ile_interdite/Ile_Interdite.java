@@ -32,7 +32,7 @@ public class Ile_Interdite {
     private static int xsouris;
     private static int ysouris;
     private static boolean presse=false;
-    private static int joueur=1;
+    private static int joueurcourant=1;
     public static class MyCanvas extends JPanel {
 
         public MyCanvas () {
@@ -88,7 +88,7 @@ public class Ile_Interdite {
             g2d.fillRect((int)size.width-175,10,150,75);
             g2d.setColor(new Color(0,0,0));
             g2d.drawRect((int)size.width-175,10,150,75);
-            if(application.getIle().getTuile(application.getJoueurs().get(joueur-1).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(joueur).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.normale){
+            if(application.getIle().getTuile(application.getJoueurs().get(joueurcourant-1).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(joueurcourant).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.normale){
                   g2d.setColor(new Color(128,128,128));
             }  
             g2d.drawString("Assecher",(int)size.width-165,50);
@@ -167,7 +167,7 @@ public class Ile_Interdite {
         /****************************************************************/
         
         /* Affichage de la fenetre */
-        window.setSize(1900, 1200);
+        window.setSize(1650, 950);
         window.setVisible(true);        
     }    
     /*
@@ -176,6 +176,7 @@ public class Ile_Interdite {
      */
     private void configureWindow(JFrame window) {
         window.setSize(500, 200);
+        window.setResizable(false);
         window.getContentPane().setLayout(new java.awt.BorderLayout());
         window.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new java.awt.event.WindowListener() {
@@ -195,6 +196,7 @@ public class Ile_Interdite {
         application.initMap();
         application.initJoueurs(6);
         application.initCartes();
+       // application.tourDeJeu(xsouris,ysouris,joueurcourant);
         
             
             //for(int i=0;i<application.getJoueurs().size();i++){
