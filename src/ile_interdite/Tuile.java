@@ -13,6 +13,7 @@ public class Tuile {
         public int tuilesdiag[][]; //position en XY des tuiles nord-est, nord-ouest, sud-est, sud-ouest
 	public Ile iledescases; //ile à laquelle la tuile appartient
 	public ArrayList<Aventurier> aventuriers; //liste des aventuriers présents sur la tuile
+        private boolean surligne=false;
 
         
         
@@ -108,6 +109,10 @@ public class Tuile {
         
         public int[][] getTuilesDiag() { //retourne les position des cases adjacentes diagonales (nord-est, nord-ouest, sud-est, sud-ouest)
             return tuilesdiag;
+        }
+        
+        public void setSurligné(boolean sur){
+            this.surligne= sur;
         }
         
 }

@@ -17,6 +17,18 @@ public class Application {
 	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>(); //liste des cartes trésor poyvant être piochées
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
         
+        public void tourDeJeu(int x,int y,Joueur j){
+            j.initPointAction(); //Point d'action du joueur réinitialisé
+            //Le joueur fait trois actions
+            
+            //Le Joueur tire deux cartes trésor
+            for (int i =0;i<2;i++){
+                piocherCarte(j);
+            }
+            //Le joueur tire un nombre de carte innondation égale au nombre de niveau d'eau
+                innonder(niveaudeau.getNiveauinondation());
+        }
+        
         public void initJoueurs(int nbJoueurs) {  //Initialisation du joueur==> Nom, Numéro, Couleur, Type d'aventurier et pile de cartes persos(vide)
             if(nbJoueurs>4){
                 nbJoueurs=4;
@@ -45,14 +57,14 @@ public class Application {
             
         }
         
-        public void initCartes(){
+        public void initCartes(){ //Initialisation des cartes inondations => Ajout de toutes les cartes en fonction du nom des tuiles dans l'ArrayList des cartes inondations
             ArrayList<String> noms = Utils.getNomsTuiles();
             for(int i=0;i<Utils.getNomsTuiles().size();i++){
                 cartesInondation.add(new CarteInondation(noms.get(i)));                
             } 
         }
         
-        public void initPartie(){
+        public void initPartie(){ //Initialisation de la partie : 6 tuiles aléatoires deviennent inondées
             for(int j=0;j<6;j++){
                 int i=(int)((Math.random()*cartesInondation.size()));
                 if(this.getIle().getTuile(cartesInondation.get(i).getNomCarte()).getEtat()==EtatC.normale){
@@ -61,9 +73,10 @@ public class Application {
                     cartesInondation.remove(cartesInondation.get(i));
                 }
             }
+            niveaudeau.initNiveauDeau(); //Le niveau d'eau est initialisé
         }
         
-        public void innonder(int nbtuiles){
+        public void innonder(int nbtuiles){ //Suivant le niveau de montée des eaux, permet de piocher aléatoirement un nombre de cartes inondations, qui inondent ou sombrent une case
             for(int j=0;j<nbtuiles;j++){
                 int i=(int)((Math.random()*cartesInondation.size()));
                 if(this.getIle().getTuile(cartesInondation.get(i).getNomCarte()).getEtat()==EtatC.normale){
@@ -82,6 +95,18 @@ public class Application {
                 }
             }
         }
+        
+        
+        
+    public void deplacement(Joueur j, Tuile tuile){  //Deplacement d'un joueur
+        j.getRoleJoueur().setEmplacement(tuile.getEmplacementX(), tuile.getEmplacementY());//On set l'emplacement du joueur à la nouvelle case            
+    }
+    
+    public void piocherCarte(Joueur j) { //Permet de piocher une carte trésor aléatoire
+        int i = (int) (Math.random()*cartesTresor.size());
+        j.addCarteToJoueur(cartesTresor.get(i));
+        cartesTresor.remove(cartesTresor.get(i));
+    }
         
     public void addJoueur(Joueur j) { //ajoute un joueur dans le jeu
             this.joueurs.add(j);
@@ -109,6 +134,15 @@ public class Application {
 
     public ArrayList<Joueur> getJoueurs() { //retourne les joueurs de la partie
         return joueurs;
+    }
+    
+    public Joueur getJoueur(String nomjoueur){ //Retourne le Joueur en fonction de son nom
+        for (Joueur j : getJoueurs()){
+            if(j.getNomJoueur().equals(nomjoueur)){
+                return j;
+            }
+        } 
+        return null;
     }
 
     public ArrayList<CarteTresor> getCartesTresor() { //retourne la pile des cartes trésor

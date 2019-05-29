@@ -10,6 +10,7 @@ public class Joueur {
 	private String nomJoueur; //nom du joueur
 	public ArrayList<CarteTresor> cartesT; //inventaire de cartes trésor du joueur
 	public Aventurier roleJoueur; //aventurier associé au joueur
+        public int pointAction = 3;
         
         public Joueur(int numJoueur, String nomJoueur, Aventurier roleJoueur){
             this.numJoueur= numJoueur;
@@ -61,8 +62,8 @@ public class Joueur {
                 return cartesS;
 	}
 
-	public void addCarteToJoueur(Joueur aJ, CarteTresor aCartepioche) { //permet de rajouter une carte à l'inventaire du joueur
-		aJ.cartesT.add(aCartepioche);
+	public void addCarteToJoueur(CarteTresor aCartepioche) { //permet de rajouter une carte à l'inventaire du joueur
+		this.cartesT.add(aCartepioche);
 	}
 
 	public int getNombreCartesJoueur(Joueur aJ) { //permet de connaitre le nombre de cartes du joueur
@@ -71,5 +72,13 @@ public class Joueur {
 
 	public void removeCarte(CarteTresor aDefausseC) { //permet de retirer une carte de l'inventaire du joueur
 		this.cartesT.remove(aDefausseC);
+        }
+        
+        public void initPointAction(){
+            this.pointAction = 3;
+        }
+        
+        public void removePA(int pa){
+            this.pointAction = this.pointAction-pa;
         }
 }

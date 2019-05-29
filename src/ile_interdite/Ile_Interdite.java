@@ -29,10 +29,9 @@ public class Ile_Interdite {
     private static Application application = new Application();
     private static int etatJeu=1;
     private static int debut=0;
-    private static int xsouris;
-    private static int ysouris;
+    private static int [] emplacementsouris={0,0};
     private static boolean presse=false;
-    private static int joueur=1;
+    private static int joueurcourant=1;
     public static class MyCanvas extends JPanel {
 
         public MyCanvas () {
@@ -59,11 +58,13 @@ public class Ile_Interdite {
                     if(application.getIle().getTuile(i+1,j+1).getEtat()==EtatC.sombrée){
                         g2d.setColor(new Color(0,0,255));
                     }
-                    if(xsouris<=8+2*(i+1)+(i+1)*(int)((int) (size.getWidth()-30)*7/8)/6 && xsouris>=8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6 && ysouris<=8+2*(j+1)+(j+1)*(int)((int) size.getHeight()-30)/6 && ysouris>=8+2*j+j*(int)((int) size.getHeight()-30)/6 && application.getIle().getTuile(i+1,j+1).getType()!=TypeC.nulle
-                            && presse){
-                        
-                        g2d.setColor(new Color(255,0,255));
-                    }
+                    //for (int[] tuile : application.getJoueurs().get(0).getRoleJoueur().getPosition().getTuilesAdj()){
+                    //    application.getIle().getTuile(tuile[0], tuile [1]).setSurligné(true);
+                    //}
+                       // if(emplacementsouris[0]==7 && emplacementsouris[1]==2 && application.getIle().getTuile(i+1,j+1).getType()!=TypeC.nulle && application.getIle().getTuile(i+1,j+1)!=application.getIle().getTuile(tuile[0],tuile[1])){
+                         //   g2d.setColor(new Color(255,0,255));
+                        //}
+                    
                     g2d.fillRect(8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) (size.getWidth()-30)*7/8)/6, (int)((int) size.getHeight()-30)/6);
                     
                 }
@@ -84,10 +85,21 @@ public class Ile_Interdite {
                     g2d.drawString("Coord : "+application.getIle().getTuile(i+1, j+1).getEmplacementX()+", "+application.getIle().getTuile(i+1, j+1).getEmplacementY(), 8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+45);
                 }
             }
+            g2d.setColor(new Color(196,196,196));
+            g2d.fillRect((int)size.width-175,10,150,75);
+            g2d.setColor(new Color(0,0,0));
+            g2d.drawRect((int)size.width-175,10,150,75);
+            if(application.getIle().getTuile(application.getJoueurs().get(joueurcourant-1).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(joueurcourant).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.normale){
+                  g2d.setColor(new Color(128,128,128));
+            }  
+            g2d.drawString("Assecher",(int)size.width-165,50);
             
-            if(application.getJoueurs().get(joueur).getNumJoueur()==1){
-                
-            }
+            g2d.setColor(new Color(196,196,196));
+            g2d.fillRect((int)size.width-175,87,150,75);
+            g2d.setColor(new Color(0,0,0));
+            g2d.drawRect((int)size.width-175,87,150,75);
+            g2d.drawString("Y aller",(int)size.width-165,127);
+            
             for(int i=0;i<application.getJoueurs().size();i++){
                 if(application.getIle().getTuile(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.sombrée ||application.getIle().getTuile("Heliport").getEtat()==EtatC.sombrée){
                     g2d.setColor(new Color(0,0,255));
@@ -129,9 +141,22 @@ public class Ile_Interdite {
                     presse=!presse;
                     application.initPartie();
                 }
-                xsouris=e.getX();
-                ysouris=e.getY();
-                presse=!presse;
+                if(e.getX()<=2*6+6*(int)((int) (1650-30)*7/8)/6){
+                    System.out.println("bite");
+                    emplacementsouris[0]=(int)(e.getX()-8)/(2+((1650-30)*7/8)/6)+1;
+                    emplacementsouris[1]=(int)(e.getY()-8)/(2+((950-30)*7/8)/6)+1;
+                    presse=!presse;
+                }
+                if(e.getX()>=1475 && e.getX()<=1625 && e.getY()>=10 && e.getY()<=85){
+                    System.out.println("Asseché");
+                    emplacementsouris[0]=7;
+                    emplacementsouris[1]=1;
+                }
+                if(e.getX()>=1475 && e.getX()<=1625 && e.getY()>=87 && e.getY()<=162){
+                    System.out.println("Déplacé");
+                    emplacementsouris[0]=7;
+                    emplacementsouris[1]=2;
+                }
                 window.repaint();
             }
             @Override
@@ -156,7 +181,7 @@ public class Ile_Interdite {
         /****************************************************************/
         
         /* Affichage de la fenetre */
-        window.setSize(1900, 1200);
+        window.setSize(1650, 950);
         window.setVisible(true);        
     }    
     /*
@@ -165,6 +190,7 @@ public class Ile_Interdite {
      */
     private void configureWindow(JFrame window) {
         window.setSize(500, 200);
+        window.setResizable(false);
         window.getContentPane().setLayout(new java.awt.BorderLayout());
         window.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new java.awt.event.WindowListener() {
@@ -184,6 +210,7 @@ public class Ile_Interdite {
         application.initMap();
         application.initJoueurs(6);
         application.initCartes();
+       // application.tourDeJeu(xsouris,ysouris,joueurcourant);
         
             
             //for(int i=0;i<application.getJoueurs().size();i++){
