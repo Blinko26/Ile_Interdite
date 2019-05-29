@@ -17,6 +17,18 @@ public class Application {
 	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>(); //liste des cartes trésor poyvant être piochées
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
         
+        public void tourDeJeu(Joueur j){
+            j.setPointAction(); //Point d'action du joueur réinitialisé
+            //Le joueur fait trois actions
+            
+            //Le Joueur tire deux cartes trésor
+            for (int i =0;i<2;i++){
+                
+            }
+            //Le joueur tire un nombre de carte innondation égale au nombre de niveau d'eau
+            
+        }
+        
         public void initJoueurs(int nbJoueurs) {  //Initialisation du joueur==> Nom, Numéro, Couleur, Type d'aventurier et pile de cartes persos(vide)
             if(nbJoueurs>4){
                 nbJoueurs=4;

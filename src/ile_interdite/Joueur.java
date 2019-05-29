@@ -10,6 +10,7 @@ public class Joueur {
 	private String nomJoueur; //nom du joueur
 	public ArrayList<CarteTresor> cartesT; //inventaire de cartes trésor du joueur
 	public Aventurier roleJoueur; //aventurier associé au joueur
+        public int pointAction = 3;
         
         public Joueur(int numJoueur, String nomJoueur, Aventurier roleJoueur){
             this.numJoueur= numJoueur;
@@ -71,5 +72,9 @@ public class Joueur {
 
 	public void removeCarte(CarteTresor aDefausseC) { //permet de retirer une carte de l'inventaire du joueur
 		this.cartesT.remove(aDefausseC);
+        }
+        
+        public void setPointAction(){
+            this.pointAction = 3;
         }
 }
