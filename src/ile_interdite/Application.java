@@ -17,6 +17,10 @@ public class Application {
 	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>(); //liste des cartes trésor poyvant être piochées
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
         
+        public void tourDeJeu(){
+            
+        }
+        
         public void initJoueurs(int nbJoueurs) {  //Initialisation du joueur==> Nom, Numéro, Couleur, Type d'aventurier et pile de cartes persos(vide)
             if(nbJoueurs>4){
                 nbJoueurs=4;
