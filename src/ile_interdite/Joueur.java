@@ -61,8 +61,8 @@ public class Joueur {
                 return cartesS;
 	}
 
-	public void addCarteToJoueur(Joueur aJ, CarteTresor aCartepioche) { //permet de rajouter une carte à l'inventaire du joueur
-		aJ.cartesT.add(aCartepioche);
+	public void addCarteToJoueur(CarteTresor aCartepioche) { //permet de rajouter une carte à l'inventaire du joueur
+		this.cartesT.add(aCartepioche);
 	}
 
 	public int getNombreCartesJoueur(Joueur aJ) { //permet de connaitre le nombre de cartes du joueur
