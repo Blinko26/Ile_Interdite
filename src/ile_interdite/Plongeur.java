@@ -19,15 +19,15 @@ public class Plongeur extends Aventurier {
     }
     
     
-    public ArrayList<Tuile> getCasesAdjacentes(){
+    public ArrayList<Tuile> getCasesAdjacentes(){ //retourne les cases adjacentes à la case où le plongeur se trouve
         return casesAdjacentes;   
     }
     
-    public ArrayList<Tuile> getCasesInondees(){
+    public ArrayList<Tuile> getCasesInondees(){ //retourne les cases inondées
         return casesInondees;      
     }
     
-    public void addTuileContiguë(Tuile tu){
+    public void addTuileContiguë(Tuile tu){ 
         
         //Avoir la position tu du plongeur
         tu = this.getPosition();
