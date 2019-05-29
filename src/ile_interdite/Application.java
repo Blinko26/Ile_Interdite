@@ -17,7 +17,15 @@ public class Application {
 	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>(); //liste des cartes trésor poyvant être piochées
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
         
-        public void tourDeJeu(){
+        public void tourDeJeu(Joueur j){
+            j.setPointAction(); //Point d'action du joueur réinitialisé
+            //Le joueur fait trois actions
+            
+            //Le Joueur tire deux cartes trésor
+            for (int i =0;i<2;i++){
+                j.
+            }
+            //Le joueur tire un nombre de carte innondation égale au nombre de niveau d'eau
             
         }
         
@@ -92,7 +100,7 @@ public class Application {
             j.getRoleJoueur().setEmplacement(tuile.getEmplacementX(), tuile.getEmplacementY());//On set l'emplacement du joueur à la nouvelle case            
     }
     
-    public void piocherCarte() {
+    public void piocherCarte() {    
         int i = (int) (Math.random()*cartesTresor.size());
     }
         
