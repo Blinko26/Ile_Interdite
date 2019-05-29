@@ -83,6 +83,17 @@ public class Application {
             }
         }
         
+        
+    public void deplacement(Joueur j, Tuile tuile){  //Deplacement d'un joueur
+        j.getRoleJoueur().setEmplacement(tuile.getEmplacementX(), tuile.getEmplacementY());//On set l'emplacement du joueur à la nouvelle case            
+    }
+    
+    public void piocherCarte(Joueur j) {
+        int i = (int) (Math.random()*cartesTresor.size());
+        j.addCarteToJoueur(cartesTresor.get(i));
+        cartesTresor.remove(cartesTresor.get(i));
+    }
+        
     public void addJoueur(Joueur j) { //ajoute un joueur dans le jeu
             this.joueurs.add(j);
     }
@@ -109,6 +120,15 @@ public class Application {
 
     public ArrayList<Joueur> getJoueurs() { //retourne les joueurs de la partie
         return joueurs;
+    }
+    
+    public Joueur getJoueur(String nomjoueur){ //Retourne le Joueur en fonction de son nom
+        for (Joueur j : getJoueurs()){
+            if(j.getNomJoueur().equals(nomjoueur)){
+                return j;
+            }
+        } 
+        return null;
     }
 
     public ArrayList<CarteTresor> getCartesTresor() { //retourne la pile des cartes trésor
