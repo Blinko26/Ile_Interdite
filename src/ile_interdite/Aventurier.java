@@ -10,7 +10,7 @@ public abstract class Aventurier {
 	private int [] emplacement={0,0}; //emplacement de l'aventurier sur l'ile
         private final Utils.Pion cPion; //pion associé à l'aventurier
         private String tuiledepart; //tuile sur laquelle commence l'aventurier
-        public Tuile position; //tuile laquelle l'aventurier se trouve
+        public Tuile position; //tuile laquelle l'aventurier se trouv
         
         public Aventurier(TypeAventurier type,Utils.Pion pion,String depart) {
             this.type = type;
@@ -50,33 +50,31 @@ public abstract class Aventurier {
         this.position = position;
     }
 
-	public ArrayList<Tuile> PossibleMouvement() { //retourne les cases sur lequelles l'aventurier peut se déplacer
+    public ArrayList<Tuile> PossibleMouvement() { //retourne les cases sur lequelles l'aventurier peut se déplacer
         ArrayList<Tuile> casesDisp = new ArrayList<>();
         Tuile tu = this.getPosition();
-        Ile ile = tu.getIledescases();
         for(int i[] : tu.getTuilesAdj()) {
-            Tuile t = ile.getTuile(i[0],i[1]);
+            Tuile t = tu.getIledescases().getTuile(i[0],i[1]);
             if(t.getEtat() != EtatC.sombrée) {
                 casesDisp.add(t);
             }
-            
 	}
         return casesDisp;
-        }
+    }
         
-        public void assecher(Tuile tuile){ //Le joueur assèche une tuile
-            tuile.setEtat(EtatC.normale); //La tuile revient à un état normal
-        }
+    public void assecher(Tuile tuile){ //Le joueur assèche une tuile
+        tuile.setEtat(EtatC.normale); //La tuile revient à un état normal
+    }
         
-        public ArrayList<Tuile> getTuileAssechable(){
-            Ile ile = position.getIledescases();
-            ArrayList<Tuile> casesAssechable = new ArrayList<>();
-            for (int[] tuile: position.getTuilesAdj()) {
-                if(ile.getTuile(tuile[0],tuile[1]).getEtat()==EtatC.innondée){
-                    casesAssechable.add(ile.getTuile(tuile[0],tuile[1]));
-                }
-            }     
-            return casesAssechable;
-        }
+    public ArrayList<Tuile> getTuileAssechable(){
+        Ile ile = position.getIledescases();
+        ArrayList<Tuile> casesAssechable = new ArrayList<>();
+        for (int[] tuile: position.getTuilesAdj()) {
+            if(ile.getTuile(tuile[0],tuile[1]).getEtat()==EtatC.innondée){
+                casesAssechable.add(ile.getTuile(tuile[0],tuile[1]));
+            }
+        }     
+        return casesAssechable;
+    }
         
 }

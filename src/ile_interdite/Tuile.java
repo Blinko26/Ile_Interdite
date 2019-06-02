@@ -17,7 +17,7 @@ public class Tuile {
 
         
         
-        public Tuile(int numcase, TypeC type, EtatC etat/*, int emplacement*/) { 
+        public Tuile(int numcase, TypeC type, EtatC etat) { 
             this.numcase = numcase; //Numero d'identification de la tuile
             this.type = type; // Type de la tuile (normal, héliport, calice, cristal, pierre, statue, null)
             this.etat = etat; // Etat de la tuile (Normale, innondée, sombrée)
@@ -36,8 +36,9 @@ public class Tuile {
             this.emplacementY = emplacement[1]; //Emplacement en Y de la tuile sur l'ile (La map)
             this.aventuriers = new ArrayList<>(); // Liste des aventuriers sur cette tuile
             this.nomcase = null; //nom de la case
-            int adjacentes[][] = {{emplacement[0]-1,emplacement[1]},{emplacement[0],emplacement[1]-1},{emplacement[0]+1,emplacement[1]},{emplacement[0],emplacement[1]+1}};
-            this.tuilesadj=adjacentes;
+            //int adjacentes[][] = {{emplacement[0]-1,emplacement[1]},{emplacement[0],emplacement[1]-1},{emplacement[0]+1,emplacement[1]},{emplacement[0],emplacement[1]+1}};
+            //this.tuilesadj=adjacentes;
+            this.setTuilesAdj();
             int diagonales[][] = {{emplacement[0]-1,emplacement[1]-1},{emplacement[0]+1,emplacement[1]-1},{emplacement[0]+1,emplacement[1]+1},{emplacement[0]-1,emplacement[1]+1}};
             this.tuilesdiag=diagonales;
         }  
@@ -104,7 +105,33 @@ public class Tuile {
         }
         
         public int[][] getTuilesAdj() { //retourne les position des cases adjacentes (nord, sud, est, ouest)
+            //int adjacentes[][] = {{this.emplacementX-1,emplacementY},{emplacementX,emplacementY-1},{emplacementX+1,emplacementY},{emplacementX,emplacementY+1}};
+            //this.tuilesadj=adjacentes;
+            this.setTuilesAdj();
             return tuilesadj;
+        }
+        
+        public void setTuilesAdj() { //retourne les position des cases adjacentes (nord, sud, est, ouest)
+            if (emplacementX==1){
+                int adjacentes[][] = {{emplacementX,emplacementY-1},{emplacementX+1,emplacementY},{emplacementX,emplacementY+1}};
+                this.tuilesadj=adjacentes;
+            }
+            else if (emplacementY==1){
+                int adjacentes[][] = {{this.emplacementX-1,emplacementY},{emplacementX+1,emplacementY},{emplacementX,emplacementY+1}};
+                this.tuilesadj=adjacentes;
+            }
+            else if (emplacementX==6){
+                int adjacentes[][] = {{this.emplacementX-1,emplacementY},{emplacementX,emplacementY-1},{emplacementX,emplacementY+1}};
+                this.tuilesadj=adjacentes;
+            }
+            else if (emplacementY==6){
+                int adjacentes[][] = {{this.emplacementX-1,emplacementY},{emplacementX,emplacementY-1},{emplacementX+1,emplacementY}};
+                this.tuilesadj=adjacentes;
+            }
+            else {
+                int adjacentes[][] = {{this.emplacementX-1,emplacementY},{emplacementX,emplacementY-1},{emplacementX+1,emplacementY},{emplacementX,emplacementY+1}};
+                this.tuilesadj=adjacentes;
+            }
         }
         
         public int[][] getTuilesDiag() { //retourne les position des cases adjacentes diagonales (nord-est, nord-ouest, sud-est, sud-ouest)

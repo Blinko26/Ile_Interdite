@@ -81,4 +81,17 @@ public class Joueur {
         public void removePA(int pa){
             this.pointAction = this.pointAction-pa;
         }
+        
+        public int getPA(){
+            return pointAction;
+        }
+        
+        public boolean peutJouer(){
+            if (getPA()>0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
 }

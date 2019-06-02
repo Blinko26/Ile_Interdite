@@ -9,13 +9,14 @@ import java.util.List;
 
 public class Application {
 	public Ile ile; //ile contenant les tuiles du jeu
-	public Niveaudo niveaudeau; //niveau de l'eau   
+	public Niveaudo niveaudeau = new Niveaudo(); //niveau de l'eau   
 	public ArrayList<Tresor> trésors = new ArrayList<Tresor>(); //liste des trésors de l'ile
 	public ArrayList<CarteInondation> cartesInondation = new ArrayList<CarteInondation>(); //liste des cartes inondation pouvant être piochées
         public ArrayList<CarteInondation> defausseInondation = new ArrayList<>(); //liste des cartes inondation défaussées
 	public ArrayList<Joueur> joueurs = new ArrayList<Joueur>(); //liste des joueurs
 	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>(); //liste des cartes trésor poyvant être piochées
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
+        
         
         public void tourDeJeu(int x,int y,Joueur j){
             j.initPointAction(); //Point d'action du joueur réinitialisé
@@ -53,6 +54,10 @@ public class Application {
                 this.getJoueurs().get(j).getRoleJoueur().setEmplacement(this.getIle().getTuile(this.getJoueurs().get(j).getRoleJoueur().getDepart()).getEmplacementX(),this.getIle().getTuile(this.getJoueurs().get(j).getRoleJoueur().getDepart()).getEmplacementY());
                 roles.remove(i);
                 j++;
+            }
+            
+            for (Joueur js : this.getJoueurs()){
+                js.getRoleJoueur().setPosition(this.getIle().getTuile(js.getRoleJoueur().getDepart()));
             }
             
         }
@@ -99,7 +104,14 @@ public class Application {
         
         
     public void deplacement(Joueur j, Tuile tuile){  //Deplacement d'un joueur
-        j.getRoleJoueur().setEmplacement(tuile.getEmplacementX(), tuile.getEmplacementY());//On set l'emplacement du joueur à la nouvelle case            
+        j.getRoleJoueur().setEmplacement(tuile.getEmplacementX(), tuile.getEmplacementY());//On set l'emplacement du joueur à la nouvelle case
+        j.getRoleJoueur().setPosition(tuile); //Set la position du joueur
+        /*for (int[] i: tuile.getTuilesAdj()) {
+            System.out.println(tuile.getIledescases().getTuile(i[0], i[1]).getNom());
+        }
+        for (int[] i: j.getRoleJoueur().getPosition().getTuilesAdj()) {
+            System.out.println(j.getRoleJoueur().getPosition().getIledescases().getTuile(i[0], i[1]).getNom());
+        }*/
     }
     
     public void piocherCarte(Joueur j) { //Permet de piocher une carte trésor aléatoire

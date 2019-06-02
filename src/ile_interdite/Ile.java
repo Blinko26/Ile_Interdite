@@ -31,6 +31,10 @@ public class Ile {
              //Ajout des tuiles dites Héliport
             case2ile.add(new Tuile(36,TypeC.héliport,EtatC.normale));
             
+            for (Tuile tuile : case2ile){
+                tuile.setIledescases(this);
+            }
+            
         }
 
    public ArrayList<Tuile> getCase2ile() { //retourne les cases de l'ile
