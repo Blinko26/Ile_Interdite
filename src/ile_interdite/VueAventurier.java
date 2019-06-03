@@ -27,10 +27,10 @@ public class VueAventurier{
     private final JFrame window;
     private final JPanel panelAventurier;
     private final JPanel mainPanel;
-    private final JButton btnBouger  ;
-    private final JButton btnAssecher;
-    private final JButton btnAutreAction;
-    private final JButton btnTerminerTour;
+    public final JButton btnBouger  ;
+    public final JButton btnAssecher;
+    public final JButton btnAutreAction;
+    public final JButton btnTerminerTour;
     private JTextField position;
     private JComboBox listeDeroulanteBouger;
 
@@ -44,7 +44,9 @@ public class VueAventurier{
         application.initCartes();
         
         
+        
         this.window = new JFrame();
+        window.setVisible(false);
         window.setSize(350, 200);
         //le titre = nom du joueur 
         window.setTitle(nomJoueur);
@@ -85,6 +87,9 @@ public class VueAventurier{
         this.btnAssecher = new JButton( "Assecher");
         this.btnAutreAction = new JButton("AutreAction") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
+        
+        
+
         
         Joueur jAct = application.getJoueur(nomJoueur); //Retourne le Joueur
         

@@ -4,12 +4,6 @@ import ile_interdite.Aventurier;
 import java.util.ArrayList;
 
 public class Plongeur extends Aventurier {
-
-    
-    ArrayList<Tuile> casesInondees = new ArrayList<>();
-    ArrayList<Tuile> casesSombrees = new ArrayList<>(); 
-    ArrayList<Tuile> casesSeches = new ArrayList<>();
-    ArrayList<Tuile> casesContiguës = new ArrayList<>();
     
     ArrayList<Tuile> casesAdjacentes = new ArrayList<>();
     
@@ -17,17 +11,23 @@ public class Plongeur extends Aventurier {
         super(TypeAventurier.plongeur,Utils.Pion.NOIR,"La Porte de Fer");
         
     }
-    
-    
+  
     public ArrayList<Tuile> getCasesAdjacentes(){ //retourne les cases adjacentes à la case où le plongeur se trouve
         return casesAdjacentes;   
     }
     
-    public ArrayList<Tuile> getCasesInondees(){ //retourne les cases inondées
-        return casesInondees;      
-    }
+        public ArrayList<Tuile> getMouvementPossible() { //retourne les cases sur lesquelles le plongeur peut se déplacer en fonction de sa position
+        ArrayList<Tuile> casesDisp = new ArrayList<>();
+        Tuile tu = this.getPosition();
+        Ile ile = tu.getIledescases();
+        for(int i[] : tu.getTuilesAdj()) {
+            Tuile t = ile.getTuile(i[0],i[1]);
+          
+        }   
+        return casesDisp;
+}
     
-    public void addTuileContiguë(Tuile tu){ 
+   /* public void addTuileContiguë(Tuile tu){ 
         
         //Avoir la position tu du plongeur
         tu = this.getPosition();
@@ -73,6 +73,6 @@ public class Plongeur extends Aventurier {
             System.out.println("Case :" +i +"tuile seche");
             //Envoyer un message au controleur pour les faire changer de couleur ?
         }
-    }
+    }*/
     
 }

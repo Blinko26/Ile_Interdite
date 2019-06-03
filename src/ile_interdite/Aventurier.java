@@ -69,7 +69,7 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getTuileAssechable(){
         Ile ile = position.getIledescases();
         ArrayList<Tuile> casesAssechable = new ArrayList<>();
-        for (int[] tuile: position.getTuilesAdj()) {
+        for (int tuile[]: position.getTuilesAdj()) {
             if(ile.getTuile(tuile[0],tuile[1]).getEtat()==EtatC.innondée){
                 casesAssechable.add(ile.getTuile(tuile[0],tuile[1]));
             }

@@ -144,14 +144,7 @@ public class VueIle extends Observe {
                     g2d.setColor(new Color(255,0,128));
                     g2d.drawString("Perdu !", size.width/2, size.height/2);
                 }
-            }
-            
-            if(debut==0 && !presse){
-                g2d.setColor(Color.white);
-                g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
-                g2d.setColor(new Color(0,0,0));
-                g2d.drawString("Pour commencer cliquer", size.width/2, size.height/2);
-            }
+            } 
         }
     }
     
@@ -185,7 +178,18 @@ public class VueIle extends Observe {
         
         /* Instanciation et configuration du composant fenetre */
         fenetre = new JFrame("Ile interdite");
+        fenetre.setVisible(false);
         this.configureWindow(fenetre);
+        
+        JFrame menu = new JFrame();
+        menu.setSize(500, 500);
+        JPanel panelMenu = new JPanel();
+        JButton boutonJouer = new JButton();
+        boutonJouer.setText("Jouer");
+        menu.add(panelMenu);
+        panelMenu.add(boutonJouer);
+        menu.setVisible(true);
+
 
         panelMap = new JPanel();    //Instanciation de la map
         fenetre.add(panelMap, BorderLayout.WEST);
@@ -203,6 +207,8 @@ public class VueIle extends Observe {
                     debut=1;
                     presse=!presse;
                     application.initPartie();
+                    listeAssecher();
+                    listeDeroulanteAssecher.repaint(); 
                 }
                 if(e.getX()<=2*6+6*(int)((int) (1650-30)*7/8)/6){
                     emplacementsouris[0]=(int)(e.getX()-8)/(2+((1650-30)*7/8)/6)+1;
@@ -264,7 +270,7 @@ public class VueIle extends Observe {
         }
         
         listeDeroulanteBouger = new JComboBox(tuile);   //Instanciation de la liste déroulante
-        
+
         //application.getJoueur("J"+joueurcourant).getRoleJoueur().setPosition(application.getIle().getTuile(application.getJoueur("J"+joueurcourant).getRoleJoueur().getDepart()));
         
         
@@ -327,7 +333,7 @@ public class VueIle extends Observe {
         // Action pour le bouton assecher
         assecher.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    if (application.getJoueur("J"+joueurcourant).peutJouer())
+                    if (application.getJoueur("J"+joueurcourant).peutJouer() && application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable().size()!=0)
                     {
                         Message m = new Message();
                         m.type = TypesMessages.ASSECHER;
@@ -339,7 +345,7 @@ public class VueIle extends Observe {
                         listeAssecher();
                         listeDeroulanteAssecher.repaint();
                     }
-                    else{
+                    else if (application.getJoueur("J"+joueurcourant).peutJouer()){
                         pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
                     }
                 }
@@ -395,8 +401,17 @@ public class VueIle extends Observe {
         /****************************************************************/
         
         /* Affichage de la fenetre */
-        fenetre.setSize(1650, 950);
-        fenetre.setVisible(true);        
+
+        
+            boutonJouer.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                menu.dispose();
+               fenetre.setVisible(true);
+               fenetre.setSize(1650, 950);
+            }
+        });
+        
+                
     }    
     /*
      *   configureWindow
@@ -421,6 +436,7 @@ public class VueIle extends Observe {
     
     
     public void listeAssecher(){
+        System.out.println(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition().getNom()+"MDR");
         listeDeroulanteAssecher.removeAllItems();
         int i = 0;
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable()){           
@@ -433,6 +449,7 @@ public class VueIle extends Observe {
     public void actualiser(){
         fenetre.repaint();
         listeDeroulanteBouger.repaint();
+        listeDeroulanteAssecher.repaint();
         joueurCourant.repaint();
         pa.repaint();
         panelBouton.repaint();

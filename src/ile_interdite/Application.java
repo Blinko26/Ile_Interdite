@@ -110,7 +110,9 @@ public class Application {
         
     public void deplacement(Joueur j, Tuile tuile){  //Deplacement d'un joueur
         j.getRoleJoueur().setEmplacement(tuile.getEmplacementX(), tuile.getEmplacementY());//On set l'emplacement du joueur à la nouvelle case
-        j.getRoleJoueur().setPosition(tuile); //Set la position du joueur
+        j.getRoleJoueur().setPosition(tuile); 
+        
+        //Set la position du joueur
         /*for (int[] i: tuile.getTuilesAdj()) {
             System.out.println(tuile.getIledescases().getTuile(i[0], i[1]).getNom());
         }
