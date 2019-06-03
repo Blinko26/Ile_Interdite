@@ -13,6 +13,8 @@ package Controleur;
 import ile_interdite.Application;
 import ile_interdite.EtatC;
 import ile_interdite.Tuile;
+import ile_interdite.CarteTresor;
+import ile_interdite.TypeCT;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -167,9 +169,11 @@ public class VueIle extends Observe {
     
     private JComboBox listeDeroulanteBouger;
     private JComboBox listeDeroulanteAssecher;
+    private JComboBox listeDeroulanteDonner;
     
     private String[] tuile;
     private String[] tuileA;
+    private TypeCT[] carteD;
     
     public VueIle(Application appli) {
         
@@ -277,7 +281,7 @@ public class VueIle extends Observe {
         
         /*Creation de la liste deroulante avec cases assechables*/
         int j =0;
-        tuileA = new String[4];
+        tuileA = new String[8];
         
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable()){           
             tuileA[j] = tu.getNom(); 
@@ -289,12 +293,22 @@ public class VueIle extends Observe {
         joueurCourant.setForeground(application.getJoueur("J"+joueurcourant).getRoleJoueur().getCouleur()); //Modifie la couleur de l'ecriture en fonction de celle du joueur
         pa = new JLabel("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3"); //Affiche les PA du joueur
         
+        j =0;
+        carteD = new TypeCT[5];
+        
+        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+            carteD[j] = ct.getType(); 
+            j++; 
+        }
+        listeDeroulanteDonner = new JComboBox(carteD);
+        
         panelBouton.add(joueurCourant);
         panelBouton.add(pa);
         panelBouton.add(listeDeroulanteBouger);
         panelBouton.add(deplacer);
         panelBouton.add(listeDeroulanteAssecher);
         panelBouton.add(assecher);
+        panelBouton.add(listeDeroulanteDonner);
         panelBouton.add(donner);
         panelBouton.add(finTour);
         
@@ -322,10 +336,10 @@ public class VueIle extends Observe {
                         //FIN TEST
                         
                         listeAssecher();
-                        listeDeroulanteAssecher.repaint();  
-                    }
-                    else{
-                        pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+                        listeDeroulanteAssecher.repaint();
+                        if (!application.getJoueur("J"+joueurcourant).peutJouer()){
+                            pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+                        }
                     }
                 }
         });
@@ -356,9 +370,10 @@ public class VueIle extends Observe {
                 public void actionPerformed(ActionEvent e) {
                     Message m = new Message();
                     m.type = TypesMessages.DONNER;
-                    m.joueur = application.getJoueur("J"+joueurcourant);
-                    
+                    m.joueur = application.getJoueur("J"+joueurcourant);                    
                     notifierObservateur(m);
+                    pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
+                    listeDeroulanteDonner.repaint();
                 }
         });
         
@@ -381,10 +396,13 @@ public class VueIle extends Observe {
                     pa.setForeground(Color.black);
                     //TEST
                         listeDeroulanteBouger.removeAllItems();
-                        int i = 0;
                         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
-                            listeDeroulanteBouger.addItem(tu.getNom());
-                            i++; 
+                            listeDeroulanteBouger.addItem(tu.getNom()); 
+                        }
+                        
+                        listeDeroulanteDonner.removeAllItems();
+                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                            listeDeroulanteDonner.addItem(ct.getType());
                         }
                         
                         joueurCourant.setForeground(application.getJoueur("J"+joueurcourant).getRoleJoueur().getCouleur()); //Modifie la couleur de l'ecriture en fonction de celle du joueur
@@ -408,6 +426,7 @@ public class VueIle extends Observe {
                 menu.dispose();
                fenetre.setVisible(true);
                fenetre.setSize(1650, 950);
+               application.initPartie();
             }
         });
         
@@ -436,7 +455,6 @@ public class VueIle extends Observe {
     
     
     public void listeAssecher(){
-        System.out.println(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition().getNom()+"MDR");
         listeDeroulanteAssecher.removeAllItems();
         int i = 0;
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable()){           
@@ -450,6 +468,7 @@ public class VueIle extends Observe {
         fenetre.repaint();
         listeDeroulanteBouger.repaint();
         listeDeroulanteAssecher.repaint();
+        listeDeroulanteDonner.repaint();
         joueurCourant.repaint();
         pa.repaint();
         panelBouton.repaint();
