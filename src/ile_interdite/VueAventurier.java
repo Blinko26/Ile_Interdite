@@ -27,10 +27,10 @@ public class VueAventurier{
     private final JFrame window;
     private final JPanel panelAventurier;
     private final JPanel mainPanel;
-    private final JButton btnBouger  ;
-    private final JButton btnAssecher;
-    private final JButton btnAutreAction;
-    private final JButton btnTerminerTour;
+    public final JButton btnBouger  ;
+    public final JButton btnAssecher;
+    public final JButton btnAutreAction;
+    public final JButton btnTerminerTour;
     private JTextField position;
     private JComboBox listeDeroulanteBouger;
 

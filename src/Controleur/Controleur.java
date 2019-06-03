@@ -32,7 +32,24 @@ public class Controleur implements Observateur {
                 System.out.println("Deplacer");
                 joueur = message.joueur;
                 tuile = message.tuile;
-                joueur.removePA(1);
+                if(joueur.getRoleJoueur().getType() == ile_interdite.TypeAventurier.plongeur){
+                    switch(tuile.getEtat()){
+                        case innondée : 
+                            joueur.removePA(0);
+                            break;
+                            
+                        case sombrée :
+                            joueur.removePA(0);
+                            break;
+                            
+                        case normale :
+                            joueur.removePA(1);
+                            break;
+                    }
+                }else{
+                    joueur.removePA(1);
+                }
+                
                 application.deplacement(joueur,tuile);
                 vueIle.actualiser();
                 System.out.println("2"+joueur.getRoleJoueur().getPosition().getNom());//Donne le nom de la position du joueur

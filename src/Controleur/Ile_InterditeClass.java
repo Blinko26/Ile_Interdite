@@ -45,10 +45,10 @@ public class Ile_InterditeClass extends Observe {
     
     private JLabel joueurCourant; //Indique le joueur courant
     
-    private JButton finTour;    //Bouton pour finir son tour
-    private JButton deplacer;   // bouton pour se deplacer
-    private JButton assecher;   // Bouton pour assecher une case
-    private JButton donner; //Bouton pour donner une carte
+    public JButton finTour;    //Bouton pour finir son tour
+    public JButton deplacer;   // bouton pour se deplacer
+    public JButton assecher;   // Bouton pour assecher une case
+    public JButton donner; //Bouton pour donner une carte
     
     public Ile_InterditeClass (){
         fenetre = new JFrame("Ile Interdite");  //Instanciation de la fenetre
