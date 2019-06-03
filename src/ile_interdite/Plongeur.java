@@ -16,15 +16,15 @@ public class Plongeur extends Aventurier {
         return casesAdjacentes;   
     }
     
-        public ArrayList<Tuile> getMouvementPossible() { //retourne les cases sur lesquelles le plongeur peut se déplacer en fonction de sa position
-        ArrayList<Tuile> casesDisp = new ArrayList<>();
-        Tuile tu = this.getPosition();
-        Ile ile = tu.getIledescases();
-        for(int i[] : tu.getTuilesAdj()) {
-            Tuile t = ile.getTuile(i[0],i[1]);
+        //public ArrayList<Tuile> getMouvementPossible() { //retourne les cases sur lesquelles le plongeur peut se déplacer en fonction de sa position
+        //ArrayList<Tuile> casesDisp = new ArrayList<>();
+        //Tuile tu = this.getPosition();
+        //Ile ile = tu.getIledescases();
+        //for(int i[] : tu.getTuilesAdj()) {
+        //    Tuile t = ile.getTuile(i[0],i[1]);
           
-        }   
-        return casesDisp;
+        //}   
+        //return casesDisp;
 }
     
    /* public void addTuileContiguë(Tuile tu){ 
@@ -75,4 +75,4 @@ public class Plongeur extends Aventurier {
         }
     }*/
     
-}
+//}

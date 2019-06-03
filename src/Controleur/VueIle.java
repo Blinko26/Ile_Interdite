@@ -281,10 +281,11 @@ public class VueIle extends Observe {
         
         /*Creation de la liste deroulante avec cases assechables*/
         int j =0;
-        tuileA = new String[8];
+        tuileA = new String[application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable().size()];
         
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable()){           
             tuileA[j] = tu.getNom(); 
+            System.out.println(tu.getNom());
             j++; 
         }      
         listeDeroulanteAssecher = new JComboBox(tuileA);   //Instanciation de la liste déroulante      
@@ -294,7 +295,7 @@ public class VueIle extends Observe {
         pa = new JLabel("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3"); //Affiche les PA du joueur
         
         j =0;
-        carteD = new TypeCT[5];
+        carteD = new TypeCT[application.getJoueur("J"+joueurcourant).getCartesT().size()];
         
         for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
             carteD[j] = ct.getType(); 
@@ -326,10 +327,8 @@ public class VueIle extends Observe {
                         pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant                        
                         //Actualisation de la liste déroulante
                         listeDeroulanteBouger.removeAllItems();
-                        int i = 0;
                         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
                             listeDeroulanteBouger.addItem(tu.getNom());
-                            i++; 
                         }
                                               
                         listeDeroulanteBouger.repaint();
@@ -358,9 +357,9 @@ public class VueIle extends Observe {
                         pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
                         listeAssecher();
                         listeDeroulanteAssecher.repaint();
-                    }
-                    else if (application.getJoueur("J"+joueurcourant).peutJouer()){
-                        pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+                        if (!application.getJoueur("J"+joueurcourant).peutJouer()){
+                            pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+                        }
                     }
                 }
         });
@@ -368,13 +367,26 @@ public class VueIle extends Observe {
         // Action pour le bouton donner
         donner.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    Message m = new Message();
-                    m.type = TypesMessages.DONNER;
-                    m.joueur = application.getJoueur("J"+joueurcourant);                    
-                    notifierObservateur(m);
-                    pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
-                    listeDeroulanteDonner.repaint();
-                }
+                    if (application.getJoueur("J"+joueurcourant).peutJouer() && application.getJoueur("J"+joueurcourant).getCartesT().size()!=0){
+                        Message m = new Message();
+                        m.type = TypesMessages.DONNER;
+                        m.joueur = application.getJoueur("J"+joueurcourant);
+                        m.carte = application.getJoueur("J"+joueurcourant).getCartesT().get(listeDeroulanteDonner.getSelectedIndex());
+
+                        notifierObservateur(m);
+                        listeDeroulanteDonner.removeAllItems();
+                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                            listeDeroulanteDonner.addItem(ct.getType());
+                        }                    
+                        listeDeroulanteBouger.repaint();
+                        pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
+                        listeDeroulanteDonner.repaint();
+                        if (!application.getJoueur("J"+joueurcourant).peutJouer()){
+                            pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+                        }
+                    }
+                }    
+                
         });
         
         // Action pour le bouton finTour
@@ -427,6 +439,7 @@ public class VueIle extends Observe {
                fenetre.setVisible(true);
                fenetre.setSize(1650, 950);
                application.initPartie();
+
             }
         });
         

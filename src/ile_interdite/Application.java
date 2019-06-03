@@ -58,6 +58,10 @@ public class Application {
             
             for (Joueur js : this.getJoueurs()){
                 js.getRoleJoueur().setPosition(this.getIle().getTuile(js.getRoleJoueur().getDepart()));
+                for(int i=0;i<2;i++){
+                    js.getCartesT().add(cartesTresor.get(i));
+                    cartesTresor.remove(i);        
+                }
             }
             
         }
@@ -66,7 +70,34 @@ public class Application {
             ArrayList<String> noms = Utils.getNomsTuiles();
             for(int i=0;i<Utils.getNomsTuiles().size();i++){
                 cartesInondation.add(new CarteInondation(noms.get(i)));                
-            } 
+            }
+            
+            int cal=5;
+            int cri=5;
+            int pie=5;
+            int sta=5;
+            for(int j=0;j<20;j++){
+                int i=(int)((Math.random()*4));
+                while(i==0 && cal==0 || i==1 && cri==0 || i==2 && pie==0 || i==3 && sta==0){
+                    i=(int)((Math.random()*3));
+                }
+                if(i==0){
+                    cartesTresor.add(new CarteTresor(TypeCT.calice));
+                    cal--;
+                }
+                if(i==1){
+                    cartesTresor.add(new CarteTresor(TypeCT.cristal));
+                    cri--;
+                }
+                if(i==2){
+                    cartesTresor.add(new CarteTresor(TypeCT.pierre));
+                    pie--;
+                }
+                if(i==3){
+                    cartesTresor.add(new CarteTresor(TypeCT.statue));
+                    sta--;
+                }
+            }
         }
         
         public void initPartie(){ //Initialisation de la partie : 6 tuiles aléatoires deviennent inondées
@@ -78,7 +109,7 @@ public class Application {
                     cartesInondation.remove(cartesInondation.get(i));
                 }
             }
-            niveaudeau.initNiveauDeau(); //Le niveau d'eau est initialisé
+            niveaudeau.initNiveauDeau(); //Le niveau d'eau est initialisé 
             
             trésors.add(new Tresor(TypeT.calice,EtatT.nontrouvé));
             trésors.add(new Tresor(TypeT.cristal,EtatT.nontrouvé));
