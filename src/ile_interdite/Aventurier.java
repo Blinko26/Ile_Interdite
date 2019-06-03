@@ -73,7 +73,12 @@ public abstract class Aventurier {
             if(ile.getTuile(tuile[0],tuile[1]).getEtat()==EtatC.innondée){
                 casesAssechable.add(ile.getTuile(tuile[0],tuile[1]));
             }
-        }     
+        }
+        
+        if(position.getEtat()==EtatC.innondée){
+            casesAssechable.add(position);
+        }
+        
         return casesAssechable;
     }
         

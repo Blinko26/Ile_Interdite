@@ -29,7 +29,7 @@ public class Controleur implements Observateur {
                 break;
             
             case DEPLACER:  //Clic sur deplacer
-                System.out.println("Controleur");
+                System.out.println("Deplacer");
                 joueur = message.joueur;
                 tuile = message.tuile;
                 joueur.removePA(1);
@@ -39,7 +39,12 @@ public class Controleur implements Observateur {
                 break;
                 
             case ASSECHER: //Clic pour assécher
-                
+                System.out.println("Assecher");
+                joueur = message.joueur;
+                tuile = message.tuile;
+                joueur.removePA(1);
+                joueur.getRoleJoueur().assecher(tuile);//La tuile selectionnée est assechée
+                vueIle.actualiser();
                 break;
             case DONNER:    //Clic pour donner une carte
                 
@@ -47,6 +52,7 @@ public class Controleur implements Observateur {
             case TERMINER_TOUR: //Clic pour finir son tour
                 joueur = message.joueur;
                 joueur.initPointAction(); //Réinitialise les points d'action du joueur
+                application.innonder(application.getNiveaudeau().getNiveauinondation()); //Innonde un nombre de case en fonction du niveau d'eau
                 vueIle.actualiser();
                 break;
                 
