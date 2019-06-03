@@ -86,7 +86,47 @@ public class VueIle extends Observe {
                 g2d.fillOval(xjoueur,8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)*(int)((int) size.getHeight()-30)/6+(int)((int) size.getHeight()-30)/12 -10, 20, 20);
                 g2d.setColor(new Color(0,0,0));
                 g2d.drawOval(xjoueur,8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)*(int)((int) size.getHeight()-30)/6+(int)((int) size.getHeight()-30)/12 -10, 20, 20);
-                placement=placement+20;
+                placement=placement+10;
+            }
+            
+            int ex1=0;
+            int ey1=0;
+            int ex2=0;
+            int ey2=0;
+            for(int i=0;i<application.getTrésors().size();i++){
+                if(application.getTrésors().get(i).getNom()==ile_interdite.TypeT.calice){
+                    g2d.setColor(new Color(0,192,255));
+                    ex1=application.getIle().getTuile("Le Palais de Corail").getEmplacementX()-1;
+                    ey1=application.getIle().getTuile("Le Palais de Corail").getEmplacementY()-1;
+                    ex2=application.getIle().getTuile("Le Palais des Marees").getEmplacementX()-1;
+                    ey2=application.getIle().getTuile("Le Palais des Marees").getEmplacementY()-1;
+                }
+                if(application.getTrésors().get(i).getNom()==ile_interdite.TypeT.cristal){
+                    g2d.setColor(new Color(255,64,0));
+                    ex1=application.getIle().getTuile("La Caverne du Brasier").getEmplacementX()-1;
+                    ey1=application.getIle().getTuile("La Caverne du Brasier").getEmplacementY()-1;
+                    ex2=application.getIle().getTuile("La Caverne des Ombres").getEmplacementX()-1;
+                    ey2=application.getIle().getTuile("La Caverne des Ombres").getEmplacementY()-1;
+                }
+                if(application.getTrésors().get(i).getNom()==ile_interdite.TypeT.pierre){
+                    g2d.setColor(new Color(128,0,200));
+                    ex1=application.getIle().getTuile("Le Temple de La Lune").getEmplacementX()-1;
+                    ey1=application.getIle().getTuile("Le Temple de La Lune").getEmplacementY()-1;
+                    ex2=application.getIle().getTuile("Le Temple du Soleil").getEmplacementX()-1;
+                    ey2=application.getIle().getTuile("Le Temple du Soleil").getEmplacementY()-1;
+                }
+                if(application.getTrésors().get(i).getNom()==ile_interdite.TypeT.statue){
+                    g2d.setColor(new Color(255,200,0));
+                    ex1=application.getIle().getTuile("Le Jardin des Murmures").getEmplacementX()-1;
+                    ey1=application.getIle().getTuile("Le Jardin des Murmures").getEmplacementY()-1;
+                    ex2=application.getIle().getTuile("Le Jardin des Hurlements").getEmplacementX()-1;
+                    ey2=application.getIle().getTuile("Le Jardin des Hurlements").getEmplacementY()-1;
+                }
+                g2d.fillOval(8+2*ex1+ex1*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey1+ey1*(int)((int) (size.getWidth()-30)*7/8)/6+(int)((int) size.getHeight()-30)/12,10, 15); 
+                g2d.fillOval(8+2*ex2+ex2*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey2+ey2*(int)((int) (size.getWidth()-30)*7/8)/6+(int)((int) size.getHeight()-30)/12,10, 15);
+                g2d.setColor(new Color(0,0,0));
+                g2d.drawOval(8+2*ex1+ex1*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey1+ey1*(int)((int) (size.getWidth()-30)*7/8)/6+(int)((int) size.getHeight()-30)/12,10, 15);
+                g2d.drawOval(8+2*ex2+ex2*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey2+ey2*(int)((int) (size.getWidth()-30)*7/8)/6+(int)((int) size.getHeight()-30)/12,10, 15);
             }
             
             g2d.setColor(new Color(255,0,0));
@@ -220,7 +260,6 @@ public class VueIle extends Observe {
         /*Rempli la liste déroulante avec les cases où le joueur peut se déplacer*/
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
             tuile[i] = tu.getNom(); 
-            System.out.println(tu.getNom());
             i++; 
         }
         
@@ -236,7 +275,6 @@ public class VueIle extends Observe {
         
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable()){           
             tuileA[j] = tu.getNom(); 
-            System.out.println(tu.getNom());
             j++; 
         }      
         listeDeroulanteAssecher = new JComboBox(tuileA);   //Instanciation de la liste déroulante      
@@ -259,26 +297,18 @@ public class VueIle extends Observe {
         deplacer.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (application.getJoueur("J"+joueurcourant).peutJouer())
-                    {
-                        System.out.println("1"+application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition().getNom());//Donne le nom de la position du joueur
-                        
+                    {                        
                         Message m = new Message();
-                        System.out.println("Vue");
-
                         m.type = TypesMessages.DEPLACER;
                         m.joueur = application.getJoueur("J"+joueurcourant);    //Joueur courant
                         m.tuile = application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement().get(listeDeroulanteBouger.getSelectedIndex()); //Position du joueur courant
                         notifierObservateur(m);
-                        pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
-                        
-                        System.out.println("1.5"+application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition().getNom());//Donne le nom de la position du joueur
-                        
+                        pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant                        
                         //Actualisation de la liste déroulante
                         listeDeroulanteBouger.removeAllItems();
                         int i = 0;
                         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
                             listeDeroulanteBouger.addItem(tu.getNom());
-                            System.out.println(tu.getNom());
                             i++; 
                         }
                                               
@@ -333,7 +363,7 @@ public class VueIle extends Observe {
                     m.type = TypesMessages.TERMINER_TOUR;
                     m.joueur = application.getJoueur("J"+joueurcourant);
                     /*Modifie le joueur courant*/
-                    if (joueurcourant==3){
+                    if (joueurcourant==4){
                         joueurcourant=1;
                     }
                     else {
@@ -348,7 +378,6 @@ public class VueIle extends Observe {
                         int i = 0;
                         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
                             listeDeroulanteBouger.addItem(tu.getNom());
-                            System.out.println(tu.getNom());
                             i++; 
                         }
                         
@@ -396,7 +425,6 @@ public class VueIle extends Observe {
         int i = 0;
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable()){           
             listeDeroulanteAssecher.addItem(tu.getNom());
-            System.out.println(tu.getNom());
             i++; 
         }
         listeDeroulanteAssecher.repaint();

@@ -2,6 +2,10 @@ package ile_interdite;
 public class Tresor {
 	private TypeT nom; //nom du trésor
 	private EtatT etat; //etat du trésor
+        Tresor(TypeT nom,EtatT etat){
+            this.nom=nom;
+            this.etat=etat;
+        }
 
     public TypeT getNom() { //retourne le nom du trésor
         return nom;

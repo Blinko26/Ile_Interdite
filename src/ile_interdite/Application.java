@@ -79,6 +79,11 @@ public class Application {
                 }
             }
             niveaudeau.initNiveauDeau(); //Le niveau d'eau est initialisé
+            
+            trésors.add(new Tresor(TypeT.calice,EtatT.nontrouvé));
+            trésors.add(new Tresor(TypeT.cristal,EtatT.nontrouvé));
+            trésors.add(new Tresor(TypeT.pierre,EtatT.nontrouvé));
+            trésors.add(new Tresor(TypeT.statue,EtatT.nontrouvé));
         }
         
         public void innonder(int nbtuiles){ //Suivant le niveau de montée des eaux, permet de piocher aléatoirement un nombre de cartes inondations, qui inondent ou sombrent une case

@@ -29,17 +29,13 @@ public class Controleur implements Observateur {
                 break;
             
             case DEPLACER:  //Clic sur deplacer
-                System.out.println("Deplacer");
                 joueur = message.joueur;
                 tuile = message.tuile;
                 joueur.removePA(1);
                 application.deplacement(joueur,tuile);
-                vueIle.actualiser();
-                System.out.println("2"+joueur.getRoleJoueur().getPosition().getNom());//Donne le nom de la position du joueur
-                break;
+                vueIle.actualiser();                break;
                 
             case ASSECHER: //Clic pour assécher
-                System.out.println("Assecher");
                 joueur = message.joueur;
                 tuile = message.tuile;
                 joueur.removePA(1);
