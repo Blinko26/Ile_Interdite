@@ -44,7 +44,9 @@ public class VueAventurier{
         application.initCartes();
         
         
+        
         this.window = new JFrame();
+        window.setVisible(false);
         window.setSize(350, 200);
         //le titre = nom du joueur 
         window.setTitle(nomJoueur);
@@ -85,6 +87,9 @@ public class VueAventurier{
         this.btnAssecher = new JButton( "Assecher");
         this.btnAutreAction = new JButton("AutreAction") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
+        
+        
+
         
         Joueur jAct = application.getJoueur(nomJoueur); //Retourne le Joueur
         

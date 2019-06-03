@@ -14,14 +14,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.util.Scanner;
-import javax.swing.JButton;
 
 
 /**
@@ -112,12 +109,12 @@ public class Ile_Interdite {
                 }
             }
             
-            /*if(debut==0 && !presse){
+            if(debut==0 && !presse){
                 g2d.setColor(Color.white);
                 g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
                 g2d.setColor(new Color(0,0,0));
                 g2d.drawString("Pour commencer cliquer", size.width/2, size.height/2);
-            }*/
+            }
         }
     }
     
@@ -126,14 +123,13 @@ public class Ile_Interdite {
     private MyCanvas canvas;
 
     public Ile_Interdite() {
-    
+        
 
         
         /* Instanciation et configuration du composant fenetre */
         window = new JFrame("Ile interdite");
-        
-        window.setVisible(false);
-    
+        this.configureWindow(window);
+
         /****************************************************************/
         canvas = new MyCanvas();
         window.add(canvas);
@@ -181,31 +177,13 @@ public class Ile_Interdite {
         }
 
 );
-    
         
         /****************************************************************/
         
         /* Affichage de la fenetre */
         window.setSize(1650, 950);
-        
-        JFrame windowMenu = new JFrame();
-        JPanel menu = new JPanel();
-        JButton boutonJouer = new JButton();
-        boutonJouer.setText("Jouer");
-       
-        windowMenu.add(menu);
-        menu.add(boutonJouer);
-        
-        boutonJouer.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                 windowMenu.dispose();
-                window.setVisible(true); 
-            }
-        });
-           
-    } 
-               
-        
+        window.setVisible(true);        
+    }    
     /*
      *   configureWindow
      *   Configurer de la fenêtre : taille et action à la fermeture
@@ -246,5 +224,4 @@ public class Ile_Interdite {
             //}
         }   
     
-    }
-                
+}

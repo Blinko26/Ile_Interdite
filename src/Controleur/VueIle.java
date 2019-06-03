@@ -104,14 +104,7 @@ public class VueIle extends Observe {
                     g2d.setColor(new Color(255,0,128));
                     g2d.drawString("Perdu !", size.width/2, size.height/2);
                 }
-            }
-            
-            if(debut==0 && !presse){
-                g2d.setColor(Color.white);
-                g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
-                g2d.setColor(new Color(0,0,0));
-                g2d.drawString("Pour commencer cliquer", size.width/2, size.height/2);
-            }
+            } 
         }
     }
     
@@ -145,7 +138,18 @@ public class VueIle extends Observe {
         
         /* Instanciation et configuration du composant fenetre */
         fenetre = new JFrame("Ile interdite");
+        fenetre.setVisible(false);
         this.configureWindow(fenetre);
+        
+        JFrame menu = new JFrame();
+        menu.setSize(500, 500);
+        JPanel panelMenu = new JPanel();
+        JButton boutonJouer = new JButton();
+        boutonJouer.setText("Jouer");
+        menu.add(panelMenu);
+        panelMenu.add(boutonJouer);
+        menu.setVisible(true);
+
 
         panelMap = new JPanel();    //Instanciation de la map
         fenetre.add(panelMap, BorderLayout.WEST);
@@ -356,8 +360,17 @@ public class VueIle extends Observe {
         /****************************************************************/
         
         /* Affichage de la fenetre */
-        fenetre.setSize(1650, 950);
-        fenetre.setVisible(true);        
+
+        
+            boutonJouer.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                menu.dispose();
+               fenetre.setVisible(true);
+               fenetre.setSize(1650, 950);
+            }
+        });
+        
+                
     }    
     /*
      *   configureWindow
