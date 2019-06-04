@@ -1,4 +1,3 @@
-
 package ile_interdite;
 
 import java.awt.Color;
@@ -293,4 +292,3 @@ public class Application {
         }
     }
 }
-
