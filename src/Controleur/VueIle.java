@@ -124,11 +124,11 @@ public class VueIle extends Observe {
                     ex2=application.getIle().getTuile("Le Jardin des Hurlements").getEmplacementX()-1;
                     ey2=application.getIle().getTuile("Le Jardin des Hurlements").getEmplacementY()-1;
                 }
-                g2d.fillOval(8+2*ex1+ex1*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey1+ey1*(int)((int) (size.getWidth()-30)*7/8)/6+(int)((int) size.getHeight()-30)/12,10, 15); 
-                g2d.fillOval(8+2*ex2+ex2*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey2+ey2*(int)((int) (size.getWidth()-30)*7/8)/6+(int)((int) size.getHeight()-30)/12,10, 15);
+                g2d.fillOval(8+2*ex1+ex1*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey1+ey1*(int)((int) (size.getHeight()-30))/6+(int) ((size.getHeight()/6)*3/4),10, 15); 
+                g2d.fillOval(8+2*ex2+ex2*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey2+ey2*(int)((int) (size.getHeight()-30))/6+(int) ((size.getHeight()/6)*3/4),10, 15);
                 g2d.setColor(new Color(0,0,0));
-                g2d.drawOval(8+2*ex1+ex1*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey1+ey1*(int)((int) (size.getWidth()-30)*7/8)/6+(int)((int) size.getHeight()-30)/12,10, 15);
-                g2d.drawOval(8+2*ex2+ex2*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey2+ey2*(int)((int) (size.getWidth()-30)*7/8)/6+(int)((int) size.getHeight()-30)/12,10, 15);
+                g2d.drawOval(8+2*ex1+ex1*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey1+ey1*(int)((int) (size.getHeight()-30))/6+(int) ((size.getHeight()/6)*3/4),10, 15);
+                g2d.drawOval(8+2*ex2+ex2*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey2+ey2*(int)((int) (size.getHeight()-30))/6+(int) ((size.getHeight()/6)*3/4),10, 15);
             }
             
             g2d.setColor(new Color(255,0,0));
@@ -439,6 +439,7 @@ public class VueIle extends Observe {
                fenetre.setVisible(true);
                fenetre.setSize(1650, 950);
                application.initPartie();
+               listeAssecher();
 
             }
         });
