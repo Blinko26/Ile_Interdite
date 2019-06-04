@@ -26,7 +26,7 @@ public class Pilote extends Aventurier {
         if(this.getPtActionSpeciale() == 1) {
             Tuile tu = this.getPosition();
             Ile ile = tu.getIledescases();
-            for(Tuile t : ile.getTuilesNonInondees()) {
+            for(Tuile t : ile.getTuilesNonSombrees()) {
                 casesDispo.add(t);
             }
         }

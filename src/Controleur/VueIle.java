@@ -14,6 +14,7 @@ import ile_interdite.Application;
 import ile_interdite.EtatC;
 import ile_interdite.Tuile;
 import ile_interdite.CarteTresor;
+import ile_interdite.TypeAventurier;
 import ile_interdite.TypeCT;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -166,14 +167,17 @@ public class VueIle extends Observe {
     private JButton deplacer;   // bouton pour se deplacer
     private JButton assecher;   // Bouton pour assecher une case
     private JButton donner; //Bouton pour donner une carte
+    private JButton voler;
     
     private JComboBox listeDeroulanteBouger;
     private JComboBox listeDeroulanteAssecher;
     private JComboBox listeDeroulanteDonner;
+    private JComboBox listeDeroulantePilote;
     
     private String[] tuile;
     private String[] tuileA;
     private TypeCT[] carteD;
+    private String[] tuileP;
     
     public VueIle(Application appli) {
         
@@ -261,10 +265,11 @@ public class VueIle extends Observe {
         deplacer = new JButton("Se Deplacer");
         assecher = new JButton("Assecher une Case");
         donner = new JButton("Donner une carte");
+        voler = new JButton("S'envoler");
         
         /*Creation de la liste deroulante avec les deplacements possible*/
         int i =0;
-        tuile = new String[4];
+        tuile = new String[application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement().size()];
         
         //application.getJoueur("J"+joueurcourant).getRoleJoueur().setPosition(application.getIle().getTuile(application.getJoueur("J"+joueurcourant).getRoleJoueur().getDepart()));
         /*Rempli la liste déroulante avec les cases où le joueur peut se déplacer*/
@@ -285,10 +290,10 @@ public class VueIle extends Observe {
         
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable()){           
             tuileA[j] = tu.getNom(); 
-            System.out.println(tu.getNom());
             j++; 
         }      
         listeDeroulanteAssecher = new JComboBox(tuileA);   //Instanciation de la liste déroulante      
+        
         
         joueurCourant = new JLabel("Joueur Courant :"+joueurcourant);   //Affiche le joueur dont c'est le tour
         joueurCourant.setForeground(application.getJoueur("J"+joueurcourant).getRoleJoueur().getCouleur()); //Modifie la couleur de l'ecriture en fonction de celle du joueur
@@ -302,6 +307,8 @@ public class VueIle extends Observe {
             j++; 
         }
         listeDeroulanteDonner = new JComboBox(carteD);
+        
+        
         
         panelBouton.add(joueurCourant);
         panelBouton.add(pa);
@@ -396,7 +403,7 @@ public class VueIle extends Observe {
                     m.type = TypesMessages.TERMINER_TOUR;
                     m.joueur = application.getJoueur("J"+joueurcourant);
                     /*Modifie le joueur courant*/
-                    if (joueurcourant==4){
+                    if (joueurcourant==application.getJoueurs().size()){
                         joueurcourant=1;
                     }
                     else {
@@ -421,6 +428,8 @@ public class VueIle extends Observe {
                         listeAssecher();
                         listeDeroulanteAssecher.repaint();
                         listeDeroulanteBouger.repaint();
+                        
+                        boutonsPilote();
                     //FIN TEST
                     actualiser();
                     notifierObservateur(m);
@@ -476,6 +485,36 @@ public class VueIle extends Observe {
             i++; 
         }
         listeDeroulanteAssecher.repaint();
+    }
+    
+    public void boutonsPilote(){
+        int j=0;
+        int joueurprecedent;
+        if(joueurcourant==1)
+            joueurprecedent=4;
+        else{
+            joueurprecedent=joueurcourant-1;
+        }
+        
+        if(application.getJoueur("J"+joueurprecedent).getRoleJoueur().getType()==TypeAventurier.pilote){
+            panelBouton.remove(listeDeroulantePilote);
+            panelBouton.remove(voler);
+        }
+        
+        if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()==TypeAventurier.pilote){
+            tuileP = new String[application.getIle().getTuilesNonSombrees().size()];
+            for (Tuile tu : application.getIle().getTuilesNonSombrees()){           
+                tuileP[j] = tu.getNom(); 
+                j++; 
+            }      
+            listeDeroulantePilote = new JComboBox(tuileP);
+            
+            panelBouton.remove(finTour);
+            panelBouton.add(listeDeroulantePilote);
+            panelBouton.add(voler);
+            panelBouton.add(finTour);
+            
+        }
     }
     
     public void actualiser(){

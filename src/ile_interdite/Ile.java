@@ -102,11 +102,17 @@ public class Ile {
     //    this.tuilesadj = tuilesadj;
     //}
 
-    public ArrayList<Tuile> getTuilesNonInondees() { //retourne les tuiles non sombrées de l'ile
-        return tuilesJouables;
+    public ArrayList<Tuile> getTuilesNonSombrees() { //retourne les tuiles non sombrées de l'ile
+        ArrayList<Tuile> terre=new ArrayList<Tuile>();
+        for(Tuile tuile: case2ile) {
+            if (tuile.getType()!=TypeC.nulle){
+                terre.add(tuile);
+            }
+        }
+        return terre;
     }
 
-    public void setTuilesNonInondees(ArrayList<Tuile> tuilesNonSombrées) { //associe des cases non sombrées à l'ile
+    public void setTuilesNonSombrees(ArrayList<Tuile> tuilesNonSombrées) { //associe des cases non sombrées à l'ile
        this.tuilesJouables = tuilesNonSombrées;
     }
 
