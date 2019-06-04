@@ -31,6 +31,10 @@ public class Ile {
              //Ajout des tuiles dites Héliport
             case2ile.add(new Tuile(36,TypeC.héliport,EtatC.normale));
             
+            for (Tuile tuile : case2ile){
+                tuile.setIledescases(this);
+            }
+            
         }
 
    public ArrayList<Tuile> getCase2ile() { //retourne les cases de l'ile
@@ -59,6 +63,16 @@ public class Ile {
        }
        return null;
    }   
+   
+   public ArrayList<Tuile> getMer(){ //crée des tuiles dans la mer, qui ne sont pas jouables
+       ArrayList<Tuile> mer=new ArrayList<Tuile>();
+       for(Tuile tuile: case2ile) {
+           if (tuile.getType()==TypeC.nulle){
+               mer.add(tuile);
+           }
+       }
+       return mer;
+   }
    
     //public ArrayList<Tuile> getTuilesDispoAutourJoueurClassique(){ //Retourne toutes les cases adjacentes n'ayant pas sombrées
     //    for (Tuile tuile : tuilesadj) {

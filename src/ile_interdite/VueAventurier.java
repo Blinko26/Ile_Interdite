@@ -1,11 +1,16 @@
-package view;
+package ile_interdite;
 
-import ile_interdite.Utils;
+import ile_interdite.Utils.Pion;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,25 +20,33 @@ import static javax.swing.SwingConstants.CENTER;
 import javax.swing.border.MatteBorder;
 
  
-public class VueAventurier  {
+public class VueAventurier{
      
     private final JPanel panelBoutons ;
     private final JPanel panelCentre ;
     private final JFrame window;
     private final JPanel panelAventurier;
     private final JPanel mainPanel;
-    private final JButton btnBouger  ;
-    private final JButton btnAssecher;
-    private final JButton btnAutreAction;
-    private final JButton btnTerminerTour;
+    public final JButton btnBouger  ;
+    public final JButton btnAssecher;
+    public final JButton btnAutreAction;
+    public final JButton btnTerminerTour;
     private JTextField position;
-   
-   
+    private JComboBox listeDeroulanteBouger;
+
    
     
-    public VueAventurier(String nomJoueur, String nomAventurier, Color couleur){
+    
+    public VueAventurier(String nomJoueur, String nomAventurier, Color couleur,Application application){
 
+        application.initMap();
+        application.initJoueurs(6);
+        application.initCartes();
+        
+        
+        
         this.window = new JFrame();
+        window.setVisible(false);
         window.setSize(350, 200);
         //le titre = nom du joueur 
         window.setTitle(nomJoueur);
@@ -59,9 +72,9 @@ public class VueAventurier  {
         mainPanel.add(this.panelCentre, BorderLayout.CENTER);
         
         panelCentre.add(new JLabel ("Position", SwingConstants.CENTER));
-        position = new  JTextField(30); 
-        position.setHorizontalAlignment(CENTER);
-        panelCentre.add(position);
+        //position = new  JTextField(30); 
+        //position.setHorizontalAlignment(CENTER);
+        //panelCentre.add(position);
 
 
         // =================================================================================
@@ -75,11 +88,61 @@ public class VueAventurier  {
         this.btnAutreAction = new JButton("AutreAction") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
         
+        
+
+        
+        Joueur jAct = application.getJoueur(nomJoueur); //Retourne le Joueur
+        
+        btnBouger.addActionListener( 
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Bouton Bouger");
+                        
+                        
+                    }
+                }    
+        );
+        
+        btnAssecher.addActionListener( 
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Bouton Assecher");
+                        
+                    }
+                }    
+        );
+        
+        btnAutreAction.addActionListener( 
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Bouton Autre");
+                        
+                    }
+                }    
+        );
+        
+        btnTerminerTour.addActionListener( 
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Bouton TerminerTour");
+                        
+                    }
+                }    
+        );
+        
+        
+   
         this.panelBoutons.add(btnBouger);
         this.panelBoutons.add(btnAssecher);
         this.panelBoutons.add(btnAutreAction);
         this.panelBoutons.add(btnTerminerTour);
-
+        
+        
+        
         this.window.setVisible(true);
     } 
     
@@ -109,9 +172,6 @@ public class VueAventurier  {
  
      public static void main(String [] args) {
         // Instanciation de la fenêtre 
-        VueAventurier vueAventurier = new VueAventurier("Manon", "Explorateur",Utils.Pion.ROUGE.getCouleur() );
-    }
+        VueAventurier vueAventurier = new VueAventurier("Calvin", "Pilote",Pion.BLEU.getCouleur(),new Application() );
+    } 
 }
-
- 
-
