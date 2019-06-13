@@ -291,4 +291,21 @@ public class Application {
             defausseInondation.remove(ci);
         }
     }
+    
+    public ArrayList<Tuile> getCasesDeplacementPilote(){
+        ArrayList tuilesPilote= new ArrayList<Tuile>(); 
+        tuilesPilote = this.getIle().getTuilesNonSombrees();
+        Joueur j=null;
+        for(Joueur joueur:this.getJoueurs()){
+            if(joueur.getRoleJoueur().getType()==TypeAventurier.pilote){
+                j=joueur;
+            }
+        }
+        for(Tuile tu:j.getRoleJoueur().PossibleMouvement()){
+            tuilesPilote.remove(tu);
+        }
+        tuilesPilote.remove(j.getRoleJoueur().getPosition());  
+    
+        return tuilesPilote;
+        }
 }
