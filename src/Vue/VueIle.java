@@ -8,8 +8,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleur;
+package Vue;
 
+import Controleur.Message;
+import Controleur.Message;
+import Controleur.Observe;
+import Controleur.Observe;
+import Controleur.TypesMessages;
+import Controleur.TypesMessages;
 import ile_interdite.Application;
 import ile_interdite.EtatC;
 import ile_interdite.Tuile;
@@ -153,12 +159,25 @@ public class VueIle extends Observe {
         }
     }
     
+    public static class CanvasT extends JPanel {
+
+        @Override
+        public void paintComponent (Graphics g) {  //permet de dessiner la carte de l'ile
+            Graphics2D g2d = (Graphics2D) g;
+            Dimension size = getSize();
+            
+            g2d.setColor(Color.white);
+            g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
+        }
+    }
+    
      /*Déclaration des éléments de la fenetre*/
     private JFrame fenetre;
     private JPanel panelMap;
     private JPanel panelBouton;
     
     private MyCanvas canvas;
+    private CanvasT canvasTresor;
     
     // private VueIle.MyCanvas ile;
     
@@ -172,6 +191,7 @@ public class VueIle extends Observe {
     private JButton voirdeck;
     private JButton voler;
     private JButton gagnerTresor;
+    private JButton defausser;
     
     private JComboBox listeDeroulanteBouger;
     private JComboBox listeDeroulanteAssecher;
@@ -278,6 +298,9 @@ public class VueIle extends Observe {
         donner = new JButton("Donner une carte");
         voler = new JButton("S'envoler");
         gagnerTresor = new JButton("Gagner le trésor");
+        defausser = new JButton("Défausser une carte trésor");
+        gagnerTresor = new JButton("Gagner le tresor");
+        canvasTresor= new CanvasT();
         
         /*Creation de la liste deroulante avec les deplacements possible*/
         int i =0;
@@ -472,6 +495,52 @@ public class VueIle extends Observe {
                 
         });
         
+        if (application.getJoueur("J"+joueurcourant).getNombreCartesJoueur()>5) {
+            
+            System.out.println("oui");
+            panelBouton.add(listeDeroulanteDonner);
+            System.out.println("oui");
+            panelBouton.add(defausser);
+            System.out.println("oui");
+            panelBouton.remove(listeDeroulanteBouger);
+            System.out.println("oui");
+            panelBouton.remove(deplacer);
+            System.out.println("oui");
+            panelBouton.remove(listeDeroulanteAssecher);
+            System.out.println("oui");
+            panelBouton.remove(assecher);
+            System.out.println("oui");
+            panelBouton.remove(finTour);
+            
+            
+            /*defausser.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Message m = new Message();
+                    m.type = TypesMessages.DEFAUSSER;
+                    m.joueur=application.getJoueur("J"+joueurcourant);
+                    
+                    m.carte = application.getJoueur("J"+joueurcourant).getCartesT().get(listeDeroulanteDonner.getSelectedIndex());
+                    
+                    notifierObservateur(m);
+                    
+                    listeDeroulanteDonner.removeAllItems();
+                    for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                        listeDeroulanteDonner.addItem(ct.getType());
+                    }                    
+                    listeDeroulanteDonner.repaint();
+                    
+                    panelBouton.remove(listeDeroulanteDonner);
+                    panelBouton.remove(defausser);
+                    panelBouton.add(listeDeroulanteBouger);
+                    panelBouton.add(deplacer);
+                    panelBouton.add(listeDeroulanteAssecher);
+                    panelBouton.add(assecher);
+                    panelBouton.add(finTour);
+                }
+            });*/
+            
+        }
+        
         voler.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (application.getJoueur("J"+joueurcourant).peutJouer())
@@ -512,12 +581,10 @@ public class VueIle extends Observe {
                     Message m = new Message();
                     m.type = TypesMessages.TERMINER_TOUR;
                     m.joueur = application.getJoueur("J"+joueurcourant);
-                    if(application.getCartesTresor().size()>0){
-                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                        application.getCartesTresor().remove(0);
-                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                        application.getCartesTresor().remove(0);
-                    }
+                    application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
+                    application.getCartesTresor().remove(0);
+                    application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
+                    application.getCartesTresor().remove(0);
                     /*Modifie le joueur courant*/
                     if (joueurcourant==application.getJoueurs().size()){
                         joueurcourant=1;
@@ -700,20 +767,47 @@ public class VueIle extends Observe {
     }
     
     public void boutonsTresor(){
-        if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple de La Lune") 
-        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple du Soleil")){
+        int calice=0;
+        int cristal=0;
+        int pierre=0;
+        int statue=0;
+        for(CarteTresor c:application.getJoueur("J"+joueurcourant).getCartesT()){
+           if(c.getType()==TypeCT.calice){
+               calice++;
+           } else if(c.getType()==TypeCT.cristal){
+               cristal++;
+           } else if(c.getType()==TypeCT.pierre){
+               pierre++;
+           } else if(c.getType()==TypeCT.statue){
+               statue++;
+           }
+        }
+        if((application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Palais de Corail") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Palais des Marees"))
+        && calice>=4){
+            gagnerTresor.setBackground(new Color(0,192,255));
+            panelBouton.add(gagnerTresor);
+        } else if((application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("La Caverne du Brasier") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("La Caverne des Ombres"))
+        && cristal>=4){
+            gagnerTresor.setBackground(new Color(255,64,0));
+            panelBouton.add(gagnerTresor);
+        } else if((application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple de La Lune") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple du Soleil"))
+        && pierre>=4){
             gagnerTresor.setBackground(new Color(128,0,200));
-            panelBouton.add(gagnerTresor); 
-        } else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Murmures") 
-        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Hurlements")){
+            panelBouton.add(gagnerTresor);
+        } else if((application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Murmures") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Hurlements"))
+        && statue>=4){
             gagnerTresor.setBackground(new Color(255,200,0));
-            panelBouton.add(gagnerTresor); 
-        } else{
+            panelBouton.add(gagnerTresor);
+        }
+        else{
             panelBouton.remove(gagnerTresor);
         }
     }
-        
-    
+
     public void actualiser(){
         fenetre.repaint();
         listeDeroulanteBouger.repaint();
