@@ -10,6 +10,9 @@
  */
 package Controleur;
 
+import Controleur.Message;
+import Controleur.Observe;
+import Controleur.TypesMessages;
 import ile_interdite.Application;
 import ile_interdite.EtatC;
 import ile_interdite.Tuile;
@@ -171,7 +174,6 @@ public class VueIle extends Observe {
     private JButton donner; //Bouton pour donner une carte
     private JButton voirdeck;
     private JButton voler;
-    private JButton gagnerTresor;
     
     private JComboBox listeDeroulanteBouger;
     private JComboBox listeDeroulanteAssecher;
@@ -277,7 +279,6 @@ public class VueIle extends Observe {
         voirdeck = new JButton("Voir le deck");
         donner = new JButton("Donner une carte");
         voler = new JButton("S'envoler");
-        gagnerTresor = new JButton("Gagner le trésor");
         
         /*Creation de la liste deroulante avec les deplacements possible*/
         int i =0;
@@ -373,7 +374,6 @@ public class VueIle extends Observe {
                             pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
                         }
                         boutonsDonner();
-                        boutonsTresor();
                     }
                 }
         });
@@ -501,7 +501,6 @@ public class VueIle extends Observe {
                             pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
                         }
                         boutonsDonner();
-                        boutonsTresor();
                     }
                 }
         });
@@ -512,12 +511,10 @@ public class VueIle extends Observe {
                     Message m = new Message();
                     m.type = TypesMessages.TERMINER_TOUR;
                     m.joueur = application.getJoueur("J"+joueurcourant);
-                    if(application.getCartesTresor().size()>0){
-                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                        application.getCartesTresor().remove(0);
-                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                        application.getCartesTresor().remove(0);
-                    }
+                    application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
+                    application.getCartesTresor().remove(0);
+                    application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
+                    application.getCartesTresor().remove(0);
                     /*Modifie le joueur courant*/
                     if (joueurcourant==application.getJoueurs().size()){
                         joueurcourant=1;
@@ -541,7 +538,6 @@ public class VueIle extends Observe {
                         
                         boutonsDonner();
                         boutonsPilote();
-                        boutonsTresor();
                     //FIN TEST
                     actualiser();
                     notifierObservateur(m);
@@ -698,21 +694,6 @@ public class VueIle extends Observe {
             adonné=false;
         }
     }
-    
-    public void boutonsTresor(){
-        if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple de La Lune") 
-        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple du Soleil")){
-            gagnerTresor.setBackground(new Color(128,0,200));
-            panelBouton.add(gagnerTresor); 
-        } else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Murmures") 
-        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Hurlements")){
-            gagnerTresor.setBackground(new Color(255,200,0));
-            panelBouton.add(gagnerTresor); 
-        } else{
-            panelBouton.remove(gagnerTresor);
-        }
-    }
-        
     
     public void actualiser(){
         fenetre.repaint();
