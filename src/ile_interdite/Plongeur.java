@@ -19,7 +19,7 @@ public class Plongeur extends Aventurier {
     }
          
         public ArrayList<Tuile> PossibleMouvement() { //retourne les cases sur lesquelles le plongeur peut se déplacer en fonction de sa position
-        
+       
         //On get la position du plongeur
         Tuile tu = this.getPosition();
         Ile ile = tu.getIledescases();
@@ -36,7 +36,7 @@ public class Plongeur extends Aventurier {
             }
             
             //On parcourt l'arrayList casesContigues et pour chaque cases on refais l'etape d'avant
-            for(Tuile j : casesContigues){
+           /* for(Tuile j : casesContigues){
                 for(int y[] : j.getTuilesAdj()){
                     Tuile p = ile.getTuile(i[0],i[1]);
                     if(p.getEtat() == EtatC.sombrée) {
@@ -46,15 +46,12 @@ public class Plongeur extends Aventurier {
                         casesContigues.add(p);
                     }
                }
-            } 
+            } */
             
+        } 
+        return casesDisp;
+       
         }
-        return casesDisp;
-        
-         
-        }/*   
-        return casesDisp;
-    }*/
 }
     
    /* public void addTuileContiguë(Tuile tu){ 
