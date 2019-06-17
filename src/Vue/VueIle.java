@@ -34,10 +34,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -54,7 +57,7 @@ public class VueIle extends Observe {
     private static int [] emplacementsouris={0,0};
     private static boolean presse=false;
     private static int joueurcourant=1;
-    
+    private VueNiveauDo vueEau = new VueNiveauDo(1);
     
     public static class MyCanvas extends JPanel {
 
@@ -159,12 +162,26 @@ public class VueIle extends Observe {
         }
     }
     
+    public static class CanvasT extends JPanel {
+
+        @Override
+        public void paintComponent (Graphics g) {  //permet de dessiner la carte de l'ile
+            Graphics2D g2d = (Graphics2D) g;
+            Dimension size = getSize();
+            
+            g2d.setColor(Color.white);
+            g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
+        }
+    }
+    
      /*Déclaration des éléments de la fenetre*/
     private JFrame fenetre;
     private JPanel panelMap;
     private JPanel panelBouton;
+    private JPanel panelNiveauEau;
     
     private MyCanvas canvas;
+    private CanvasT canvasTresor;
     
     // private VueIle.MyCanvas ile;
     
@@ -195,7 +212,7 @@ public class VueIle extends Observe {
     
     private boolean adonné=false;
     
-    public VueIle(Application appli) {
+    public VueIle(Application appli) throws IOException {
         
         application = appli;
         
@@ -216,10 +233,13 @@ public class VueIle extends Observe {
 
 
         panelMap = new JPanel();    //Instanciation de la map
-        fenetre.add(panelMap, BorderLayout.WEST);
+        fenetre.add(panelMap, BorderLayout.CENTER);
         
         panelBouton = new JPanel(new GridLayout(6,1));
         fenetre.add(panelBouton, BorderLayout.EAST);
+        
+        panelNiveauEau = vueEau;
+        fenetre.add(panelNiveauEau, BorderLayout.WEST);
         /****************************************************************/
         canvas = new MyCanvas();
         fenetre.add(canvas);
@@ -284,6 +304,8 @@ public class VueIle extends Observe {
         donner = new JButton("Donner une carte");
         voler = new JButton("S'envoler");
         gagnerTresor = new JButton("Gagner le tresor");
+        
+        canvasTresor= new CanvasT();
         
         /*Creation de la liste deroulante avec les deplacements possible*/
         int i =0;
@@ -523,8 +545,10 @@ public class VueIle extends Observe {
                     application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
                     application.getCartesTresor().remove(0);
                     /*Modifie le joueur courant*/
+                    System.out.println(joueurcourant);
                     if (joueurcourant==application.getJoueurs().size()){
                         joueurcourant=1;
+                        application.setEtatTour(true);
                     }
                     else {
                         joueurcourant = joueurcourant+1;
@@ -708,37 +732,65 @@ public class VueIle extends Observe {
         int cristal=0;
         int pierre=0;
         int statue=0;
-        for(int i=0;i<application.getJoueur("J"+joueurcourant).getCartesT().size();i++){
-               
+        for(CarteTresor c:application.getJoueur("J"+joueurcourant).getCartesT()){
+           if(c.getType()==TypeCT.calice){
+               calice++;
+           } else if(c.getType()==TypeCT.cristal){
+               cristal++;
+           } else if(c.getType()==TypeCT.pierre){
+               pierre++;
+           } else if(c.getType()==TypeCT.statue){
+               statue++;
+           }
         }
-        if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Palais de Corail") 
-        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Palais des Marees")){
+        if((application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Palais de Corail") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Palais des Marees"))
+        && calice>=4){
             gagnerTresor.setBackground(new Color(0,192,255));
-        } else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("La Caverne du Brasier") 
-        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("La Caverne des Ombres")){
+            panelBouton.add(gagnerTresor);
+        } else if((application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("La Caverne du Brasier") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("La Caverne des Ombres"))
+        && cristal>=4){
             gagnerTresor.setBackground(new Color(255,64,0));
-        } else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple de La Lune") 
-        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple du Soleil")){
+            panelBouton.add(gagnerTresor);
+        } else if((application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple de La Lune") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple du Soleil"))
+        && pierre>=4){
             gagnerTresor.setBackground(new Color(128,0,200));
-        } else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Murmures") 
-        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Hurlements")){
+            panelBouton.add(gagnerTresor);
+        } else if((application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Murmures") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Hurlements"))
+        && statue>=4){
             gagnerTresor.setBackground(new Color(255,200,0));
+            panelBouton.add(gagnerTresor);
         }
-        
-        
-        
         else{
             panelBouton.remove(gagnerTresor);
         }
     }
 
     public void actualiser(){
+        monterEau();
         fenetre.repaint();
         listeDeroulanteBouger.repaint();
         listeDeroulanteAssecher.repaint();
         joueurCourant.repaint();
         pa.repaint();
         panelBouton.repaint();
+        
+
+    }
+    
+    public void monterEau(){
+        
+        try {
+            vueEau.monteDesEaux(application.getNiveaudeau().getNiveau());
+        } catch (IOException ex) {
+            Logger.getLogger(VueIle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        panelNiveauEau = vueEau;
+        
+        panelNiveauEau.repaint();
     }
   
 }

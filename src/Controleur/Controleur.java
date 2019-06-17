@@ -5,9 +5,11 @@ import ile_interdite.Joueur;
 import ile_interdite.Tuile;
 import java.io.IOException;
 import Vue.VueIle;
+import Vue.VueNiveauDo;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;
+    private VueNiveauDo vueNiveauDo;
     private Application application;
     
     public Controleur() throws IOException {
@@ -15,8 +17,8 @@ public class Controleur implements Observateur {
         application.initMap();
         application.initCartes();
         application.initJoueurs(6);
+        //vueNiveauDo = new VueNiveauDo(application.getNiveaudeau().getNiveau());
         vueIle = new VueIle(application);
-        
         vueIle.addObservateur(this);  
     }  
     @Override
@@ -81,7 +83,11 @@ public class Controleur implements Observateur {
                 joueur = message.joueur;
                 joueur.initPointAction(); //Réinitialise les points d'action du joueur
                 application.innonder(application.getNiveaudeau().getNiveauinondation()); //Innonde un nombre de case en fonction du niveau d'eau
-                vueIle.actualiser();
+                if (application.getEtatTour()){
+                    application.getNiveaudeau().monterEau();
+                    application.setEtatTour(false);
+                }
+                
                 break;
                 
                 

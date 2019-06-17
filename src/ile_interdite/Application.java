@@ -17,7 +17,7 @@ public class Application {
 	public ArrayList<Joueur> joueurs = new ArrayList<Joueur>(); //liste des joueurs
 	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>(); //liste des cartes trésor poyvant être piochées
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
-        
+        private boolean finTour = false;
         
         public void tourDeJeu(int x,int y,Joueur j){
             j.initPointAction(); //Point d'action du joueur réinitialisé
@@ -311,5 +311,13 @@ public class Application {
     
         return tuilesPilote;
         }
+    
+    public boolean getEtatTour(){
+        return finTour;
+    }
+    
+    public void setEtatTour(boolean tour){
+        this.finTour = tour;
+    }
 }
 
