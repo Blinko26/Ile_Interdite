@@ -1,5 +1,7 @@
-package ile_interdite;
+package Vue;
 
+import ile_interdite.Application;
+import ile_interdite.Joueur;
 import ile_interdite.Utils.Pion;
 import java.awt.BorderLayout;
 import java.awt.Color;

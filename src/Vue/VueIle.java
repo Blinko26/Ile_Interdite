@@ -8,8 +8,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleur;
+package Vue;
 
+import Controleur.Message;
+import Controleur.Message;
+import Controleur.Observe;
+import Controleur.Observe;
+import Controleur.TypesMessages;
+import Controleur.TypesMessages;
 import ile_interdite.Application;
 import ile_interdite.EtatC;
 import ile_interdite.Tuile;
@@ -277,7 +283,7 @@ public class VueIle extends Observe {
         voirdeck = new JButton("Voir le deck");
         donner = new JButton("Donner une carte");
         voler = new JButton("S'envoler");
-        gagnerTresor = new JButton("Gagner le trésor");
+        gagnerTresor = new JButton("Gagner le tresor");
         
         /*Creation de la liste deroulante avec les deplacements possible*/
         int i =0;
@@ -512,12 +518,10 @@ public class VueIle extends Observe {
                     Message m = new Message();
                     m.type = TypesMessages.TERMINER_TOUR;
                     m.joueur = application.getJoueur("J"+joueurcourant);
-                    if(application.getCartesTresor().size()>0){
-                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                        application.getCartesTresor().remove(0);
-                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                        application.getCartesTresor().remove(0);
-                    }
+                    application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
+                    application.getCartesTresor().remove(0);
+                    application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
+                    application.getCartesTresor().remove(0);
                     /*Modifie le joueur courant*/
                     if (joueurcourant==application.getJoueurs().size()){
                         joueurcourant=1;
@@ -700,9 +704,15 @@ public class VueIle extends Observe {
     }
     
     public void boutonsTresor(){
+        int calice=0;
+        int cristal=0;
+        int pierre=0;
+        int statue=0;
+        for(int i=0;i<application.getJoueur("J"+joueurcourant).getCartesT().size();i++){
+           if     
+        }
         if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Palais de Corail") 
-        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Palais des Marees")
-                ){
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Palais des Marees")){
             gagnerTresor.setBackground(new Color(0,192,255));
         } else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("La Caverne du Brasier") 
         || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("La Caverne des Ombres")){
@@ -715,12 +725,13 @@ public class VueIle extends Observe {
             gagnerTresor.setBackground(new Color(255,200,0));
         }
         
+        
+        
         else{
             panelBouton.remove(gagnerTresor);
         }
     }
-        
-    
+
     public void actualiser(){
         fenetre.repaint();
         listeDeroulanteBouger.repaint();
