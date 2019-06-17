@@ -435,7 +435,7 @@ public class VueIle extends Observe {
         
             boutonJouer.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                menu.dispose();
+               menu.dispose();
                fenetre.setVisible(true);
                fenetre.setSize(1650, 950);
                application.initPartie();
