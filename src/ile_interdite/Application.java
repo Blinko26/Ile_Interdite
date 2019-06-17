@@ -24,7 +24,9 @@ public class Application {
             
             //Le Joueur tire deux cartes trésor
             for (int i =0;i<2;i++){
-                piocherCarte(j);
+                if(cartesTresor.size()>0){
+                    piocherCarte(j);                    
+                }
             }
             //Le joueur tire un nombre de carte innondation égale au nombre de niveau d'eau
                 innonder(niveaudeau.getNiveauinondation());
