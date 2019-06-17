@@ -8,10 +8,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleur;
+package Vue;
 
 import Controleur.Message;
+import Controleur.Message;
 import Controleur.Observe;
+import Controleur.Observe;
+import Controleur.TypesMessages;
 import Controleur.TypesMessages;
 import ile_interdite.Application;
 import ile_interdite.EtatC;
@@ -174,6 +177,7 @@ public class VueIle extends Observe {
     private JButton donner; //Bouton pour donner une carte
     private JButton voirdeck;
     private JButton voler;
+    private JButton gagnerTresor;
     
     private JComboBox listeDeroulanteBouger;
     private JComboBox listeDeroulanteAssecher;
@@ -279,6 +283,7 @@ public class VueIle extends Observe {
         voirdeck = new JButton("Voir le deck");
         donner = new JButton("Donner une carte");
         voler = new JButton("S'envoler");
+        gagnerTresor = new JButton("Gagner le tresor");
         
         /*Creation de la liste deroulante avec les deplacements possible*/
         int i =0;
@@ -374,6 +379,7 @@ public class VueIle extends Observe {
                             pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
                         }
                         boutonsDonner();
+                        boutonsTresor();
                     }
                 }
         });
@@ -501,6 +507,7 @@ public class VueIle extends Observe {
                             pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
                         }
                         boutonsDonner();
+                        boutonsTresor();
                     }
                 }
         });
@@ -538,6 +545,7 @@ public class VueIle extends Observe {
                         
                         boutonsDonner();
                         boutonsPilote();
+                        boutonsTresor();
                     //FIN TEST
                     actualiser();
                     notifierObservateur(m);
@@ -695,6 +703,35 @@ public class VueIle extends Observe {
         }
     }
     
+    public void boutonsTresor(){
+        int calice=0;
+        int cristal=0;
+        int pierre=0;
+        int statue=0;
+        for(int i=0;i<application.getJoueur("J"+joueurcourant).getCartesT().size();i++){
+           if     
+        }
+        if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Palais de Corail") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Palais des Marees")){
+            gagnerTresor.setBackground(new Color(0,192,255));
+        } else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("La Caverne du Brasier") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("La Caverne des Ombres")){
+            gagnerTresor.setBackground(new Color(255,64,0));
+        } else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple de La Lune") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple du Soleil")){
+            gagnerTresor.setBackground(new Color(128,0,200));
+        } else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Murmures") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Hurlements")){
+            gagnerTresor.setBackground(new Color(255,200,0));
+        }
+        
+        
+        
+        else{
+            panelBouton.remove(gagnerTresor);
+        }
+    }
+
     public void actualiser(){
         fenetre.repaint();
         listeDeroulanteBouger.repaint();
