@@ -10,49 +10,46 @@ public class Explorateur extends Aventurier {
         super(TypeAventurier.explorateur,Utils.Pion.VERT,"La Porte de Cuivre");
     }
 
-    
-    public ArrayList<Tuile> getMouvementPossible() { //retourne les cases sur lesquelles l'explorateur peut se déplacer en fonction de sa position
+    @Override
+    public ArrayList<Tuile> PossibleMouvement() { //retourne les cases sur lesquelles l'explorateur peut se déplacer en fonction de sa position
         ArrayList<Tuile> casesDisp = new ArrayList<>();
         Tuile tu = this.getPosition();
-        Ile ile = tu.getIledescases();
         for(int i[] : tu.getTuilesAdj()) {
-            Tuile t = ile.getTuile(i[0],i[1]);
+            Tuile t = tu.getIledescases().getTuile(i[0],i[1]);
             if(t.getEtat() != EtatC.sombrée) {
                 casesDisp.add(t);
             }
-        for(int j[] : tu.getTuilesDiag()) {
-            Tuile t2 = ile.getTuile(j[0],j[1]);
+	}
+        for(int i[] : tu.getTuilesDiag()) {
+            Tuile t = tu.getIledescases().getTuile(i[0],i[1]);
             if(t.getEtat() != EtatC.sombrée) {
-                casesDisp.add(t2);
+                casesDisp.add(t);
             }
-        
-        }
-    }
+	}
         return casesDisp;
-
-
-}
-    public ArrayList<Tuile> CasesAssechables() { //retourne les cases asséchables par l'explorateur
-            ArrayList<Tuile> casesAsech = new ArrayList<>();
-            Tuile tu = this.getPosition();
-            if(tu.getEtat() == EtatC.innondée) {
-                casesAsech.add(tu);
+    }
+    
+    @Override
+    public ArrayList<Tuile> getTuileAssechable(){
+        Ile ile = position.getIledescases();
+        ArrayList<Tuile> casesAssechable = new ArrayList<>();
+        for (int tuile[]: position.getTuilesAdj()) {
+            if(ile.getTuile(tuile[0],tuile[1]).getEtat()==EtatC.innondée){
+                casesAssechable.add(ile.getTuile(tuile[0],tuile[1]));
             }
-            Ile ile = tu.getIledescases();
-            for(int i[] : tu.getTuilesAdj()) {
-                Tuile t = ile.getTuile(i[0],i[1]);
-                if(t.getEtat() == EtatC.innondée) {
-                    casesAsech.add(t);
-                }
-            }
-            for(int j[] : tu.getTuilesDiag()) {
-                Tuile t2 = ile.getTuile(j[0],j[1]);
-                if(t2.getEtat() != EtatC.innondée) {
-                    casesAsech.add(t2);
-                }
+        }
         
+        for (int tuile[]: position.getTuilesDiag()) {
+            if(ile.getTuile(tuile[0],tuile[1]).getEtat()==EtatC.innondée){
+                casesAssechable.add(ile.getTuile(tuile[0],tuile[1]));
             }
-        return casesAsech;
-}
+        }
+        
+        if(position.getEtat()==EtatC.innondée){
+            casesAssechable.add(position);
+        }
+        
+        return casesAssechable;
+    }
 
 }
