@@ -1,5 +1,6 @@
 package Controleur;
 
+import Vue.VueIle;
 import ile_interdite.Application;
 import ile_interdite.Joueur;
 import ile_interdite.Tuile;
