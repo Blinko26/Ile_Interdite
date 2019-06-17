@@ -1,8 +1,12 @@
 package Controleur;
 
 import ile_interdite.Application;
+import ile_interdite.EtatT;
 import ile_interdite.Joueur;
+import ile_interdite.Tresor;
 import ile_interdite.Tuile;
+import ile_interdite.TypeT;
+import ile_interdite.CarteTresor;
 import java.io.IOException;
 import Vue.VueIle;
 import Vue.VueNiveauDo;
@@ -25,6 +29,7 @@ public class Controleur implements Observateur {
     public void traiterMessage(Message message) {
         Joueur joueur;
         Tuile tuile;
+        CarteTresor carte;
         int no_joueur = 0, suivant;
 
         switch(message.type) {
@@ -79,6 +84,54 @@ public class Controleur implements Observateur {
 
                 vueIle.actualiser();
                 break;
+            case GAGNER_TRESOR:
+                tuile=message.tuile;
+                if(tuile==application.getIle().getTuile("Le Palais de Corail") 
+                || tuile==application.getIle().getTuile("Le Palais des Marees")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.calice){
+                            t.setEtat(EtatT.trouvé);
+                            System.out.println("Calice"+t.getEtat());
+                        }
+                    }
+                } else if(tuile==application.getIle().getTuile("La Caverne du Brasier") 
+                || tuile==application.getIle().getTuile("La Caverne des Ombres")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.cristal){
+                            t.setEtat(EtatT.trouvé);
+                            System.out.println("Cristal"+t.getEtat());
+                        }
+                    }
+                } else if(tuile==application.getIle().getTuile("Le Temple de La Lune") 
+                || tuile==application.getIle().getTuile("Le Temple du Soleil")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.pierre){
+                            t.setEtat(EtatT.trouvé);
+                            System.out.println("Pierre"+t.getEtat());
+                        }
+                    }
+                } else if(tuile==application.getIle().getTuile("Le Jardin des Murmures") 
+                || tuile==application.getIle().getTuile("Le Jardin des Hurlements")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.statue){
+                            t.setEtat(EtatT.trouvé);
+                        }
+                    }
+                }
+                break;
+                
+            case DEFAUSSER:
+                joueur = message.joueur;
+                carte = message.carte;
+                
+                for (int i = joueur.getCartesT().size(); i>5; i--) {
+                    application.defausserCarteTresor(carte);
+                    joueur.removeCarte(carte);
+                }
+                
+                vueIle.actualiser();
+                break;
+                
             case TERMINER_TOUR: //Clic pour finir son tour
                 joueur = message.joueur;
                 joueur.initPointAction(); //Réinitialise les points d'action du joueur

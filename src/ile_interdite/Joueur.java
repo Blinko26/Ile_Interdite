@@ -66,8 +66,8 @@ public class Joueur {
 		this.cartesT.add(aCartepioche);
 	}
 
-	public int getNombreCartesJoueur(Joueur aJ) { //permet de connaitre le nombre de cartes du joueur
-            return aJ.getCartesT().size();
+	public int getNombreCartesJoueur() { //permet de connaitre le nombre de cartes du joueur
+            return this.getCartesT().size();
 	}
 
 	public void removeCarte(CarteTresor aDefausseC) { //permet de retirer une carte de l'inventaire du joueur
