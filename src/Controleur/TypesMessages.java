@@ -15,5 +15,6 @@ public enum TypesMessages {
     DEPLACER,
     ASSECHER,
     DONNER,
+    GAGNER_TRESOR,
     TERMINER_TOUR
 }

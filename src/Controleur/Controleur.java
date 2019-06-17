@@ -2,8 +2,11 @@ package Controleur;
 
 import Vue.VueIle;
 import ile_interdite.Application;
+import ile_interdite.EtatT;
 import ile_interdite.Joueur;
+import ile_interdite.Tresor;
 import ile_interdite.Tuile;
+import ile_interdite.TypeT;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;
@@ -75,6 +78,41 @@ public class Controleur implements Observateur {
                 joueur.getCartesT().remove(index);
 
                 vueIle.actualiser();
+                break;
+            case GAGNER_TRESOR:
+                tuile=message.tuile;
+                if(tuile==application.getIle().getTuile("Le Palais de Corail") 
+                || tuile==application.getIle().getTuile("Le Palais des Marees")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.calice){
+                            t.setEtat(EtatT.trouvé);
+                            System.out.println("Calice"+t.getEtat());
+                        }
+                    }
+                } else if(tuile==application.getIle().getTuile("La Caverne du Brasier") 
+                || tuile==application.getIle().getTuile("La Caverne des Ombres")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.cristal){
+                            t.setEtat(EtatT.trouvé);
+                            System.out.println("Cristal"+t.getEtat());
+                        }
+                    }
+                } else if(tuile==application.getIle().getTuile("Le Temple de La Lune") 
+                || tuile==application.getIle().getTuile("Le Temple du Soleil")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.pierre){
+                            t.setEtat(EtatT.trouvé);
+                            System.out.println("Pierre"+t.getEtat());
+                        }
+                    }
+                } else if(tuile==application.getIle().getTuile("Le Jardin des Murmures") 
+                || tuile==application.getIle().getTuile("Le Jardin des Hurlements")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.statue){
+                            t.setEtat(EtatT.trouvé);
+                        }
+                    }
+                }
                 break;
             case TERMINER_TOUR: //Clic pour finir son tour
                 joueur = message.joueur;
