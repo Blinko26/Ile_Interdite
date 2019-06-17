@@ -1,4 +1,3 @@
-
 package ile_interdite;
 
 import java.awt.Color;
@@ -6,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Application {
@@ -312,4 +312,3 @@ public class Application {
         return tuilesPilote;
         }
 }
-

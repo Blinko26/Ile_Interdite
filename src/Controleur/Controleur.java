@@ -7,6 +7,7 @@ import ile_interdite.Joueur;
 import ile_interdite.Tresor;
 import ile_interdite.Tuile;
 import ile_interdite.TypeT;
+import ile_interdite.CarteTresor;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;
@@ -25,6 +26,7 @@ public class Controleur implements Observateur {
     public void traiterMessage(Message message) {
         Joueur joueur;
         Tuile tuile;
+        CarteTresor carte;
         int no_joueur = 0, suivant;
 
         switch(message.type) {
@@ -114,6 +116,19 @@ public class Controleur implements Observateur {
                     }
                 }
                 break;
+                
+            case DEFAUSSER:
+                joueur = message.joueur;
+                carte = message.carte;
+                
+                for (int i = joueur.getCartesT().size(); i>5; i--) {
+                    application.defausserCarteTresor(carte);
+                    joueur.removeCarte(carte);
+                }
+                
+                vueIle.actualiser();
+                break;
+                
             case TERMINER_TOUR: //Clic pour finir son tour
                 joueur = message.joueur;
                 joueur.initPointAction(); //Réinitialise les points d'action du joueur

@@ -227,6 +227,7 @@ public class VueIle extends Observe {
     private JButton voirdeck;
     private JButton voler;
     private JButton gagnerTresor;
+    private JButton defausser;
     
     private JComboBox listeDeroulanteBouger;
     private JComboBox listeDeroulanteAssecher;
@@ -332,8 +333,9 @@ public class VueIle extends Observe {
         voirdeck = new JButton("Voir le deck");
         donner = new JButton("Donner une carte");
         voler = new JButton("S'envoler");
+        gagnerTresor = new JButton("Gagner le trésor");
+        defausser = new JButton("Défausser une carte trésor");
         gagnerTresor = new JButton("Gagner le tresor");
-        
         canvasTresor= new CanvasT();
         
         /*Creation de la liste deroulante avec les deplacements possible*/
@@ -534,6 +536,52 @@ public class VueIle extends Observe {
                 }    
                 
         });
+        
+        if (application.getJoueur("J"+joueurcourant).getCartesT().size()>5) {
+            
+            System.out.println("oui");
+            panelBouton.add(listeDeroulanteDonner);
+            System.out.println("oui");
+            panelBouton.add(defausser);
+            System.out.println("oui");
+            panelBouton.remove(listeDeroulanteBouger);
+            System.out.println("oui");
+            panelBouton.remove(deplacer);
+            System.out.println("oui");
+            panelBouton.remove(listeDeroulanteAssecher);
+            System.out.println("oui");
+            panelBouton.remove(assecher);
+            System.out.println("oui");
+            panelBouton.remove(finTour);
+            
+            
+            defausser.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Message m = new Message();
+                    m.type = TypesMessages.DEFAUSSER;
+                    m.joueur=application.getJoueur("J"+joueurcourant);
+                    
+                    m.carte = application.getJoueur("J"+joueurcourant).getCartesT().get(listeDeroulanteDonner.getSelectedIndex());
+                    
+                    notifierObservateur(m);
+                    
+                    listeDeroulanteDonner.removeAllItems();
+                    for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                        listeDeroulanteDonner.addItem(ct.getType());
+                    }                    
+                    listeDeroulanteDonner.repaint();
+                    
+                    panelBouton.remove(listeDeroulanteDonner);
+                    panelBouton.remove(defausser);
+                    panelBouton.add(listeDeroulanteBouger);
+                    panelBouton.add(deplacer);
+                    panelBouton.add(listeDeroulanteAssecher);
+                    panelBouton.add(assecher);
+                    panelBouton.add(finTour);
+                }
+            });
+            
+        }
         
         voler.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
