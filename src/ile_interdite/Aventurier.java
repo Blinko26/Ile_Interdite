@@ -1,3 +1,4 @@
+
 package ile_interdite;
 
 import java.awt.Color;
@@ -98,5 +99,4 @@ public abstract class Aventurier {
         }
     }
     
-    
-}
+  }
