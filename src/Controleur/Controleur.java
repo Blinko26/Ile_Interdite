@@ -1,15 +1,15 @@
 package Controleur;
 
-import Vue.VueIle;
 import ile_interdite.Application;
 import ile_interdite.Joueur;
 import ile_interdite.Tuile;
+import java.io.IOException;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;
     private Application application;
     
-    public Controleur() {
+    public Controleur() throws IOException {
         application = new Application();
         application.initMap();
         application.initCartes();

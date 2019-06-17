@@ -13,6 +13,7 @@ package Controleur;
 import Controleur.Message;
 import Controleur.Observe;
 import Controleur.TypesMessages;
+import Vue.VueNiveauDo;
 import ile_interdite.Application;
 import ile_interdite.EtatC;
 import ile_interdite.Tuile;
@@ -31,6 +32,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -160,6 +162,7 @@ public class VueIle extends Observe {
     private JFrame fenetre;
     private JPanel panelMap;
     private JPanel panelBouton;
+    private JPanel panelNiveauEau;
     
     private MyCanvas canvas;
     
@@ -191,7 +194,7 @@ public class VueIle extends Observe {
     
     private boolean adonné=false;
     
-    public VueIle(Application appli) {
+    public VueIle(Application appli) throws IOException {
         
         application = appli;
         
@@ -212,13 +215,16 @@ public class VueIle extends Observe {
 
 
         panelMap = new JPanel();    //Instanciation de la map
-        fenetre.add(panelMap, BorderLayout.WEST);
+        fenetre.add(panelMap, BorderLayout.CENTER);
         
         panelBouton = new JPanel(new GridLayout(6,1));
         fenetre.add(panelBouton, BorderLayout.EAST);
         /****************************************************************/
         canvas = new MyCanvas();
         fenetre.add(canvas);
+        
+        panelNiveauEau = new VueNiveauDo(1);
+        fenetre.add(panelNiveauEau,BorderLayout.WEST);
         
         canvas.addMouseListener(new MouseListener(){
             @Override
