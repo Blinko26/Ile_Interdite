@@ -290,7 +290,7 @@ public class VueIle extends Observe {
         tuile = new String[application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement().size()];
         
         //application.getJoueur("J"+joueurcourant).getRoleJoueur().setPosition(application.getIle().getTuile(application.getJoueur("J"+joueurcourant).getRoleJoueur().getDepart()));
-        /*Rempli la liste déroulante avec les cases où le joueur peut se déplacer*/
+        /*Rempli la liste déroulante JFrameavec les cases où le joueur peut se déplacer*/
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
             tuile[i] = tu.getNom(); 
             i++; 
@@ -455,7 +455,7 @@ public class VueIle extends Observe {
                         for (Joueur joueur : application.getJoueurs()){
                                 if(joueur.getRoleJoueur().getPosition()==application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()&& joueur!=application.getJoueur("J"+joueurcourant)){
                                     if(listeDeroulanteJoueurs.getSelectedIndex()==j){
-                                        m.receveur = joueur;
+                                        m.receveur=joueur;
                                     }
                                     j=j+1;
                                 }

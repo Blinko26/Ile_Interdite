@@ -18,7 +18,7 @@ public class TestVue {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        new VueNiveauDo(1);
+        new VueDébut();
         
     }
     
