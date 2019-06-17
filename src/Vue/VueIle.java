@@ -455,7 +455,7 @@ public class VueIle extends Observe {
                         for (Joueur joueur : application.getJoueurs()){
                                 if(joueur.getRoleJoueur().getPosition()==application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()&& joueur!=application.getJoueur("J"+joueurcourant)){
                                     if(listeDeroulanteJoueurs.getSelectedIndex()==j){
-                                        m.receveur=joueur;
+                                        m.receveur = joueur;
                                     }
                                     j=j+1;
                                 }

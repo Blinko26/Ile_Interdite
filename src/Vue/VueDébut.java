@@ -38,7 +38,7 @@ import javax.swing.JLabel;
  *
  * @author bihanb
  */
-public class VueDebut extends Observe {
+public class VueDébut extends Observe {
     
     private JFrame fenetre;
     private JLabel titre;
@@ -48,7 +48,7 @@ public class VueDebut extends Observe {
     private JPanel panelMilieu;
     private JPanel panelBas;
     
-        public VueDebut() {
+        public VueDébut() {
             
             fenetre = new JFrame("Début");
             this.configureWindow(fenetre);
@@ -91,9 +91,3 @@ public class VueDebut extends Observe {
             }
         });
     }
-    
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
-    
-}
