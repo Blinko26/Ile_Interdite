@@ -65,23 +65,18 @@ public class Controleur implements Observateur {
                 break;
             case DONNER:    //Clic pour donner une carte
                 joueur=message.joueur;
-                Joueur joueur2=null;
-                for(Joueur j:application.getJoueurs()){
-                    if (joueur!=j && joueur.getRoleJoueur().getEmplacement()[0]==j.getRoleJoueur().getEmplacement()[0] && joueur.getRoleJoueur().getEmplacement()[1]==j.getRoleJoueur().getEmplacement()[1]){
-                        joueur2=j;
+                Joueur joueur2=message.receveur;
+                int index=-1;
+                for(int i=0;i<joueur.getCartesT().size();i++){
+                    if(joueur.getCartesT().get(i)== message.carte){
+                        joueur.removePA(1);
+                        index=i;
+                        break;
                     }
                 }
-                if (joueur2!=null){
-                    int index=-1;
-                    for(int i=0;i<joueur.getCartesT().size();i++){
-                        if(joueur.getCartesT().get(i)== message.carte){
-                            joueur.removePA(1);
-                            index=i;
-                        }
-                    }
-                    joueur2.getCartesT().add(joueur.getCartesT().get(index));
-                    joueur.getCartesT().remove(index);
-                }
+                joueur2.getCartesT().add(joueur.getCartesT().get(index));
+                joueur.getCartesT().remove(index);
+
                 vueIle.actualiser();
                 break;
             case TERMINER_TOUR: //Clic pour finir son tour

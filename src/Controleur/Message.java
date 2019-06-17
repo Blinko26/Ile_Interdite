@@ -19,5 +19,6 @@ public class Message {
     public TypesMessages type;  // type de message
     public Joueur joueur;  // Champ utilisé pour le message DEMARRER_PARTIE
     public Tuile tuile; //Champ Utilisé pour Deplacer et assecher
+    public Joueur receveur;
     public CarteTresor carte; //Champ Utilisé pour Donner
 }

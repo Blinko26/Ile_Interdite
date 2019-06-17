@@ -81,5 +81,22 @@ public abstract class Aventurier {
         
         return casesAssechable;
     }
-        
+    
+    public String getRoleToString(){
+        if (type==TypeAventurier.explorateur){
+            return "Explorateur (Vert)";
+        } else if (type==TypeAventurier.ingénieur){
+            return "Ingénieur (Rouge)";
+        } else if (type==TypeAventurier.messager){
+            return "Messager (Blanc)";
+        } else if (type==TypeAventurier.navigateur){
+            return "Navigateur (Jaune)";
+        } else if (type==TypeAventurier.pilote){
+            return "Pilote (Bleu)";
+        } else {
+            return "Plongeur (Noir)";
+        }
+    }
+    
+    
 }

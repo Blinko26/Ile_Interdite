@@ -24,7 +24,9 @@ public class Application {
             
             //Le Joueur tire deux cartes trésor
             for (int i =0;i<2;i++){
-                piocherCarte(j);
+                if(cartesTresor.size()>0){
+                    piocherCarte(j);                    
+                }
             }
             //Le joueur tire un nombre de carte innondation égale au nombre de niveau d'eau
                 innonder(niveaudeau.getNiveauinondation());
@@ -291,4 +293,21 @@ public class Application {
             defausseInondation.remove(ci);
         }
     }
+    
+    public ArrayList<Tuile> getCasesDeplacementPilote(){
+        ArrayList tuilesPilote= new ArrayList<Tuile>(); 
+        tuilesPilote = this.getIle().getTuilesNonSombrees();
+        Joueur j=null;
+        for(Joueur joueur:this.getJoueurs()){
+            if(joueur.getRoleJoueur().getType()==TypeAventurier.pilote){
+                j=joueur;
+            }
+        }
+        for(Tuile tu:j.getRoleJoueur().PossibleMouvement()){
+            tuilesPilote.remove(tu);
+        }
+        tuilesPilote.remove(j.getRoleJoueur().getPosition());  
+    
+        return tuilesPilote;
+        }
 }

@@ -39,8 +39,7 @@ public class Tuile {
             //int adjacentes[][] = {{emplacement[0]-1,emplacement[1]},{emplacement[0],emplacement[1]-1},{emplacement[0]+1,emplacement[1]},{emplacement[0],emplacement[1]+1}};
             //this.tuilesadj=adjacentes;
             this.setTuilesAdj();
-            int diagonales[][] = {{emplacement[0]-1,emplacement[1]-1},{emplacement[0]+1,emplacement[1]-1},{emplacement[0]+1,emplacement[1]+1},{emplacement[0]-1,emplacement[1]+1}};
-            this.tuilesdiag=diagonales;
+            this.setTuilesDiag();
         }  
         
     public int getNumcase() { //retourne le numéro de la case
@@ -135,7 +134,31 @@ public class Tuile {
         }
         
         public int[][] getTuilesDiag() { //retourne les position des cases adjacentes diagonales (nord-est, nord-ouest, sud-est, sud-ouest)
+            this.setTuilesDiag();
             return tuilesdiag;
+        }
+        
+        public void setTuilesDiag() { //retourne les position des cases adjacentes (nord, sud, est, ouest)
+            if (emplacementX==1){
+                int diagonales[][] = {{emplacementX+1,emplacementY-1},{emplacementX+1,emplacementY+1}};
+                this.tuilesdiag=diagonales;
+            }
+            else if (emplacementY==1){
+                int diagonales[][] = {{emplacementX-1,emplacementY+1},{emplacementX+1,emplacementY+1}};
+                this.tuilesdiag=diagonales;
+            }
+            else if (emplacementX==6){
+                int diagonales[][] = {{emplacementX-1,emplacementY-1},{emplacementX-1,emplacementY+1}};
+                this.tuilesdiag=diagonales;
+            }
+            else if (emplacementY==6){
+                int diagonales[][] = {{this.emplacementX-1,emplacementY-1},{emplacementX+1,emplacementY-1}};
+                this.tuilesdiag=diagonales;
+            }
+            else {
+                int diagonales[][] = {{this.emplacementX-1,emplacementY-1},{emplacementX-1,emplacementY+1},{emplacementX+1,emplacementY+1},{emplacementX+1,emplacementY-1}};
+                this.tuilesdiag=diagonales;
+            }
         }
         
         public void setSurligné(boolean sur){

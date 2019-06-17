@@ -14,7 +14,9 @@ import ile_interdite.Application;
 import ile_interdite.EtatC;
 import ile_interdite.Tuile;
 import ile_interdite.CarteTresor;
+import ile_interdite.TypeAventurier;
 import ile_interdite.TypeCT;
+import ile_interdite.Joueur;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.util.Scanner;
@@ -166,14 +169,25 @@ public class VueIle extends Observe {
     private JButton deplacer;   // bouton pour se deplacer
     private JButton assecher;   // Bouton pour assecher une case
     private JButton donner; //Bouton pour donner une carte
+    private JButton voirdeck;
+    private JButton voler;
+    private JButton gagnerTresor;
     
     private JComboBox listeDeroulanteBouger;
     private JComboBox listeDeroulanteAssecher;
+    private JComboBox listeDeroulanteJoueurs;
+    private JComboBox listeDeroulanteDeck;
     private JComboBox listeDeroulanteDonner;
+    private JComboBox listeDeroulantePilote;
     
     private String[] tuile;
     private String[] tuileA;
+    private String[] joueursdispo;
+    private TypeCT[] carteJD;
     private TypeCT[] carteD;
+    private String[] tuileP;
+    
+    private boolean adonné=false;
     
     public VueIle(Application appli) {
         
@@ -257,14 +271,17 @@ public class VueIle extends Observe {
         
         
         
-        finTour = new JButton("Fin du Tour");
-        deplacer = new JButton("Se Deplacer");
-        assecher = new JButton("Assecher une Case");
+        finTour = new JButton("Fin du tour");
+        deplacer = new JButton("Se deplacer");
+        assecher = new JButton("Assecher une case");
+        voirdeck = new JButton("Voir le deck");
         donner = new JButton("Donner une carte");
+        voler = new JButton("S'envoler");
+        gagnerTresor = new JButton("Gagner le trésor");
         
         /*Creation de la liste deroulante avec les deplacements possible*/
         int i =0;
-        tuile = new String[4];
+        tuile = new String[application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement().size()];
         
         //application.getJoueur("J"+joueurcourant).getRoleJoueur().setPosition(application.getIle().getTuile(application.getJoueur("J"+joueurcourant).getRoleJoueur().getDepart()));
         /*Rempli la liste déroulante avec les cases où le joueur peut se déplacer*/
@@ -285,23 +302,16 @@ public class VueIle extends Observe {
         
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable()){           
             tuileA[j] = tu.getNom(); 
-            System.out.println(tu.getNom());
             j++; 
         }      
         listeDeroulanteAssecher = new JComboBox(tuileA);   //Instanciation de la liste déroulante      
         
-        joueurCourant = new JLabel("Joueur Courant :"+joueurcourant);   //Affiche le joueur dont c'est le tour
-        joueurCourant.setForeground(application.getJoueur("J"+joueurcourant).getRoleJoueur().getCouleur()); //Modifie la couleur de l'ecriture en fonction de celle du joueur
+        
+        joueurCourant = new JLabel("Joueur Courant :"+application.getJoueur("J"+joueurcourant).getRoleJoueur().getRoleToString());   //Affiche le joueur dont c'est le tour
         pa = new JLabel("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3"); //Affiche les PA du joueur
         
-        j =0;
-        carteD = new TypeCT[application.getJoueur("J"+joueurcourant).getCartesT().size()];
         
-        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
-            carteD[j] = ct.getType(); 
-            j++; 
-        }
-        listeDeroulanteDonner = new JComboBox(carteD);
+        
         
         panelBouton.add(joueurCourant);
         panelBouton.add(pa);
@@ -309,9 +319,32 @@ public class VueIle extends Observe {
         panelBouton.add(deplacer);
         panelBouton.add(listeDeroulanteAssecher);
         panelBouton.add(assecher);
-        panelBouton.add(listeDeroulanteDonner);
-        panelBouton.add(donner);
         panelBouton.add(finTour);
+        
+        if(application.getJoueur("J1").getRoleJoueur().getType()==TypeAventurier.pilote){
+            j=0;
+            tuileP = new String[application.getIle().getTuilesNonSombrees().size()-1-application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement().size()];
+            
+            for (Tuile tu : application.getIle().getTuilesNonSombrees()){
+                boolean nonadj=true;
+                for(Tuile tuadj : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){
+                    if(tu==tuadj){
+                        nonadj=false;
+                    }
+                }
+                if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()!=tu && nonadj){
+                    tuileP[j] = tu.getNom();
+                    j++; 
+                }
+                
+            }
+            listeDeroulantePilote = new JComboBox(tuileP);
+            
+            panelBouton.remove(finTour);
+            panelBouton.add(listeDeroulantePilote);
+            panelBouton.add(voler);
+            panelBouton.add(finTour);
+        }    
         
 
         // Action pour le bouton deplacer
@@ -339,6 +372,8 @@ public class VueIle extends Observe {
                         if (!application.getJoueur("J"+joueurcourant).peutJouer()){
                             pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
                         }
+                        boutonsDonner();
+                        boutonsTresor();
                     }
                 }
         });
@@ -364,13 +399,61 @@ public class VueIle extends Observe {
                 }
         });
         
+        /*voirdeck.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("voirdeck");
+                    Joueur joueurdeck=null;
+                    int joueur;   
+                    joueur=listeDeroulanteJoueurs.getSelectedIndex();
+                    int j=0;
+                    for(Joueur jo:application.getJoueurs()){
+                        if(jo!=application.getJoueur("J"+joueurcourant)){
+                            if(joueur==j){
+                                joueurdeck=jo;
+                            }
+                            j++;
+                        }
+                    }
+                    
+                    j=0;
+                    carteJD = new TypeCT[joueurdeck.getCartesT().size()];
+
+                    for (CarteTresor ct : joueurdeck.getCartesT()){           
+                        carteJD[j] = ct.getType(); 
+                        j++; 
+                    }
+                    listeDeroulanteDeck = new JComboBox(carteJD);
+                    
+                    panelBouton.remove(finTour);
+                    panelBouton.remove(listeDeroulanteDonner);
+                    panelBouton.remove(donner);
+                    panelBouton.add(listeDeroulanteDeck);
+                    panelBouton.add(listeDeroulanteDonner);
+                    panelBouton.add(donner);
+                    panelBouton.add(finTour);
+                    actualiser();
+                }
+        });
+        */
+        
         // Action pour le bouton donner
         donner.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (application.getJoueur("J"+joueurcourant).peutJouer() && application.getJoueur("J"+joueurcourant).getCartesT().size()!=0){
+                        
                         Message m = new Message();
                         m.type = TypesMessages.DONNER;
                         m.joueur = application.getJoueur("J"+joueurcourant);
+                        int j=0;
+                        int i=listeDeroulanteJoueurs.getSelectedIndex();
+                        for (Joueur joueur : application.getJoueurs()){
+                                if(joueur.getRoleJoueur().getPosition()==application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()&& joueur!=application.getJoueur("J"+joueurcourant)){
+                                    if(listeDeroulanteJoueurs.getSelectedIndex()==j){
+                                        m.receveur=joueur;
+                                    }
+                                    j=j+1;
+                                }
+                        }
                         m.carte = application.getJoueur("J"+joueurcourant).getCartesT().get(listeDeroulanteDonner.getSelectedIndex());
 
                         notifierObservateur(m);
@@ -389,21 +472,61 @@ public class VueIle extends Observe {
                 
         });
         
+        voler.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (application.getJoueur("J"+joueurcourant).peutJouer())
+                    {            
+                        Message m = new Message();
+                        m.type = TypesMessages.DEPLACER;
+                        m.joueur = application.getJoueur("J"+joueurcourant);    //Joueur courant
+                        m.tuile = application.getCasesDeplacementPilote().get(listeDeroulantePilote.getSelectedIndex()); //Position du joueur courant
+                        notifierObservateur(m);
+                        pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant                        
+                        
+                        panelBouton.remove(listeDeroulantePilote);
+                        panelBouton.remove(voler);
+                        
+                        //Actualisation de la liste déroulante
+                        listeDeroulanteBouger.removeAllItems();
+                        for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
+                            listeDeroulanteBouger.addItem(tu.getNom());
+                        }
+                                              
+                        listeDeroulanteBouger.repaint();
+                        //FIN TEST
+                        
+                        listeAssecher();
+                        listeDeroulanteAssecher.repaint();
+                        if (!application.getJoueur("J"+joueurcourant).peutJouer()){
+                            pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+                        }
+                        boutonsDonner();
+                        boutonsTresor();
+                    }
+                }
+        });
+        
         // Action pour le bouton finTour
         finTour.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     Message m = new Message();
                     m.type = TypesMessages.TERMINER_TOUR;
                     m.joueur = application.getJoueur("J"+joueurcourant);
+                    if(application.getCartesTresor().size()>0){
+                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
+                        application.getCartesTresor().remove(0);
+                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
+                        application.getCartesTresor().remove(0);
+                    }
                     /*Modifie le joueur courant*/
-                    if (joueurcourant==4){
+                    if (joueurcourant==application.getJoueurs().size()){
                         joueurcourant=1;
                     }
                     else {
                         joueurcourant = joueurcourant+1;
                     }
                     //Actualiser les ecritures
-                    joueurCourant.setText("Joueur Courant :"+joueurcourant);
+                    joueurCourant.setText("Joueur Courant :"+application.getJoueur("J"+joueurcourant).getRoleJoueur().getRoleToString());
                     pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");
                     pa.setForeground(Color.black);
                     //TEST
@@ -412,15 +535,13 @@ public class VueIle extends Observe {
                             listeDeroulanteBouger.addItem(tu.getNom()); 
                         }
                         
-                        listeDeroulanteDonner.removeAllItems();
-                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
-                            listeDeroulanteDonner.addItem(ct.getType());
-                        }
-                        
-                        joueurCourant.setForeground(application.getJoueur("J"+joueurcourant).getRoleJoueur().getCouleur()); //Modifie la couleur de l'ecriture en fonction de celle du joueur
                         listeAssecher();
                         listeDeroulanteAssecher.repaint();
                         listeDeroulanteBouger.repaint();
+                        
+                        boutonsDonner();
+                        boutonsPilote();
+                        boutonsTresor();
                     //FIN TEST
                     actualiser();
                     notifierObservateur(m);
@@ -478,11 +599,125 @@ public class VueIle extends Observe {
         listeDeroulanteAssecher.repaint();
     }
     
+    public void boutonsPilote(){
+        int j=0;
+        int joueurprecedent;
+        if(joueurcourant==1)
+            joueurprecedent=4;
+        else{
+            joueurprecedent=joueurcourant-1;
+        }
+        
+        if(application.getJoueur("J"+joueurprecedent).getRoleJoueur().getType()==TypeAventurier.pilote){
+            panelBouton.remove(listeDeroulantePilote);
+            panelBouton.remove(voler);
+            panelBouton.remove(voler);
+        }
+        
+        if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()==TypeAventurier.pilote){
+            tuileP = new String[application.getIle().getTuilesNonSombrees().size()-1-application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement().size()];
+            
+            for (Tuile tu : application.getIle().getTuilesNonSombrees()){
+                boolean nonadj=true;
+                for(Tuile tuadj : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){
+                    if(tu==tuadj){
+                        nonadj=false;
+                    }
+                }
+                if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()!=tu && nonadj){
+                    tuileP[j] = tu.getNom();
+                    j++; 
+                }
+            }      
+            listeDeroulantePilote = new JComboBox(tuileP);
+            
+            panelBouton.remove(finTour);
+            panelBouton.add(listeDeroulantePilote);
+            panelBouton.add(voler);
+            panelBouton.add(finTour);
+            
+        }
+    }
+    
+    public void boutonsDonner(){
+        boolean seul=true;
+        int nbjoueurs=0;
+        for (Joueur joueur : application.getJoueurs()){           
+            if(joueur.getRoleJoueur().getPosition()==application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()&& joueur!=application.getJoueur("J"+joueurcourant)){ 
+                seul=false;
+                nbjoueurs++;
+            }
+        }
+        
+        int joueurprecedent;
+        if(joueurcourant==1){
+            joueurprecedent=4;
+        }else{
+            joueurprecedent=joueurcourant-1;
+        }
+        
+        if(application.getJoueur("J"+joueurprecedent).getRoleJoueur().getPosition()==application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()&& adonné){
+            panelBouton.remove(listeDeroulanteJoueurs);
+            panelBouton.remove(listeDeroulanteDonner);
+            panelBouton.remove(donner);
+            adonné=false;
+        }
+        
+        if(!seul){
+            adonné=true;
+            int j =0;
+            joueursdispo = new String[nbjoueurs];
+
+            for (Joueur joueur : application.getJoueurs()){           
+                if(joueur.getRoleJoueur().getPosition()==application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()&& joueur!=application.getJoueur("J"+joueurcourant)){ 
+                    joueursdispo[j] = joueur.getNomJoueur();
+                    j++;
+                }
+            }
+            listeDeroulanteJoueurs = new JComboBox(joueursdispo);
+
+            j=0;
+            carteD = new TypeCT[application.getJoueur("J"+joueurcourant).getCartesT().size()];
+
+            for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                carteD[j] = ct.getType(); 
+                j++; 
+            }
+            listeDeroulanteDonner = new JComboBox(carteD);
+
+            panelBouton.remove(finTour);
+            panelBouton.add(listeDeroulanteJoueurs);
+            panelBouton.add(voirdeck);
+            panelBouton.add(listeDeroulanteDonner);
+            panelBouton.add(donner);
+            panelBouton.add(finTour);
+        }else if(adonné){
+            panelBouton.remove(listeDeroulanteJoueurs);
+            panelBouton.remove(listeDeroulanteDonner);
+            panelBouton.remove(donner);
+            adonné=false;
+        }
+    }
+    
+    public void boutonsTresor(){
+        if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple de La Lune") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Temple du Soleil")){
+            gagnerTresor.setBackground(new Color(128,0,200));
+            panelBouton.add(gagnerTresor); 
+        } else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Murmures") 
+        || application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()==application.getIle().getTuile("Le Jardin des Hurlements")){
+            gagnerTresor.setBackground(new Color(255,200,0));
+            panelBouton.add(gagnerTresor); 
+        } else{
+            panelBouton.remove(gagnerTresor);
+        }
+    }
+        
+    
     public void actualiser(){
         fenetre.repaint();
         listeDeroulanteBouger.repaint();
         listeDeroulanteAssecher.repaint();
-        listeDeroulanteDonner.repaint();
         joueurCourant.repaint();
         pa.repaint();
         panelBouton.repaint();
