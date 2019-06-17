@@ -6,12 +6,14 @@
 
 package Controleur;
 
+import java.io.IOException;
+
 /**
  *
  * @author laurillau
  */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
        
         new Controleur();
         

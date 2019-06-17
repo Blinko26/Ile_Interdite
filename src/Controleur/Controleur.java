@@ -4,6 +4,7 @@ import ile_interdite.Application;
 import ile_interdite.Joueur;
 import ile_interdite.Tuile;
 import java.io.IOException;
+import Vue.VueIle;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;

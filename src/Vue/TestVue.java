@@ -6,7 +6,7 @@
 package Vue;
 
 import Controleur.Controleur;
-import Controleur.VueIle;
+import Vue.VueIle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
