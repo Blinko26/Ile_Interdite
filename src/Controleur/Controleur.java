@@ -25,11 +25,11 @@ public class Controleur implements Observateur {
         application.initMap();
         application.initCartes();
         application.initJoueurs(6);
-        //vueNiveauDo = new VueNiveauDo(application.getNiveaudeau().getNiveau());
         vueIle = new VueIle(application);
+        vueIle.addObservateur(this);
+        
         vueDebut = new VuedébutV3();
         vueDebut.addObservateur(this);
-        vueIle.addObservateur(this);  
     }  
     @Override
     public void traiterMessage(Message message) {

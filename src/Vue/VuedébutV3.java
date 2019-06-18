@@ -115,6 +115,7 @@ public class VuedébutV3 extends Observe {
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("3 joueurs");
+        jRadioButton2.setSelected(true);
         
         buttonGroup1.add(jRadioButton3);
         jRadioButton3.setText("4 joueurs");
@@ -191,6 +192,21 @@ public class VuedébutV3 extends Observe {
                fenetre.dispose();
                     Message m = new Message();
                     m.type = TypesMessages.DEMARRER_PARTIE;
+                    if (jRadioButton1.isSelected()){
+                        m.nbJoueurs = 2;
+                    }
+                    else if (jRadioButton2.isSelected()){
+                        m.nbJoueurs = 3;
+                    }
+                    else if (jRadioButton1.isSelected()){
+                        m.nbJoueurs = 4;
+                    }
+                    
+                    m.nj1 = nomjoueur1.getText();
+                    m.nj2= nomJoueur2.getText();
+                    m.nj3= nomJoueur3.getText();
+                    m.nj4= nomJoueur4.getText();
+                    m.difficulté=choixDifficulté.getSelectedItem().toString();
                     notifierObservateur(m);
            } 
         });       
