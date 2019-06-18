@@ -20,9 +20,11 @@ import ile_interdite.Application;
 import ile_interdite.EtatC;
 import ile_interdite.Tuile;
 import ile_interdite.CarteTresor;
+import ile_interdite.EtatT;
 import ile_interdite.TypeAventurier;
 import ile_interdite.TypeCT;
 import ile_interdite.Joueur;
+import ile_interdite.TypeT;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -34,10 +36,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -54,7 +59,7 @@ public class VueIle extends Observe {
     private static int [] emplacementsouris={0,0};
     private static boolean presse=false;
     private static int joueurcourant=1;
-    
+    private VueNiveauDo vueEau = new VueNiveauDo(1);
     
     public static class MyCanvas extends JPanel {
 
@@ -168,6 +173,39 @@ public class VueIle extends Observe {
             
             g2d.setColor(Color.white);
             g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
+            
+            g2d.setColor(new Color(128,128,128));
+            if(application.getTrésors().get(0).getEtat()==EtatT.trouvé){
+                g2d.setColor(new Color(0,192,255));
+            }
+                g2d.fillOval(size.width/5-10,size.height/2-15,20,30); 
+                g2d.setColor(new Color(0,0,0));
+                g2d.drawOval(size.width/5-10,size.height/2-15,20, 30);
+                
+            g2d.setColor(new Color(128,128,128));
+            if(application.getTrésors().get(1).getEtat()==EtatT.trouvé){
+                g2d.setColor(new Color(255,64,0));
+            }
+                g2d.fillOval(size.width/5*2-10,size.height/2-15,20,30); 
+                g2d.setColor(new Color(0,0,0));
+                g2d.drawOval(size.width/5*2-10,size.height/2-15,20, 30);
+            
+            g2d.setColor(new Color(128,128,128));
+            if(application.getTrésors().get(0).getEtat()==EtatT.trouvé){
+                g2d.setColor(new Color(128,0,200));
+            }
+                g2d.fillOval(size.width/5*3-10,size.height/2-15,20,30); 
+                g2d.setColor(new Color(0,0,0));
+                g2d.drawOval(size.width/5*3-10,size.height/2-15,20, 30);
+                
+            g2d.setColor(new Color(128,128,128));
+            if(application.getTrésors().get(0).getEtat()==EtatT.trouvé){
+                g2d.setColor(new Color(255,200,0));
+            }
+                g2d.fillOval(size.width/5*4-10,size.height/2-15,20,30); 
+                g2d.setColor(new Color(0,0,0));
+                g2d.drawOval(size.width/5*4-10,size.height/2-15,20, 30);
+            
         }
     }
     
@@ -175,6 +213,7 @@ public class VueIle extends Observe {
     private JFrame fenetre;
     private JPanel panelMap;
     private JPanel panelBouton;
+    private JPanel panelNiveauEau;
     
     private MyCanvas canvas;
     private CanvasT canvasTresor;
@@ -183,6 +222,7 @@ public class VueIle extends Observe {
     
     private JLabel joueurCourant; //Indique le joueur courant3
     private JLabel pa; //Indique le joueur courant3
+    private JLabel tr;
 
     private JButton finTour;    //Bouton pour finir son tour
     private JButton deplacer;   // bouton pour se deplacer
@@ -209,7 +249,7 @@ public class VueIle extends Observe {
     
     private boolean adonné=false;
     
-    public VueIle(Application appli) {
+    public VueIle(Application appli) throws IOException {
         
         application = appli;
         
@@ -230,15 +270,18 @@ public class VueIle extends Observe {
 
 
         panelMap = new JPanel();    //Instanciation de la map
-        fenetre.add(panelMap, BorderLayout.WEST);
+        fenetre.add(panelMap, BorderLayout.CENTER);
         
         panelBouton = new JPanel(new GridLayout(6,1));
         fenetre.add(panelBouton, BorderLayout.EAST);
+        
+        panelNiveauEau = vueEau;
+        fenetre.add(panelNiveauEau, BorderLayout.WEST);
         /****************************************************************/
         canvas = new MyCanvas();
         fenetre.add(canvas);
         
-        canvas.addMouseListener(new MouseListener(){
+        /*canvas.addMouseListener(new MouseListener(){
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (debut==0){
@@ -282,7 +325,7 @@ public class VueIle extends Observe {
             }
         }
 
-);
+);*/
         
                /*Panel Bouton*/
         
@@ -332,7 +375,7 @@ public class VueIle extends Observe {
         
         joueurCourant = new JLabel("Joueur Courant :"+application.getJoueur("J"+joueurcourant).getRoleJoueur().getRoleToString());   //Affiche le joueur dont c'est le tour
         pa = new JLabel("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3"); //Affiche les PA du joueur
-        
+        tr = new JLabel("Trésors :");
         
         
         
@@ -343,6 +386,8 @@ public class VueIle extends Observe {
         panelBouton.add(listeDeroulanteAssecher);
         panelBouton.add(assecher);
         panelBouton.add(finTour);
+        panelBouton.add(tr);
+        panelBouton.add(canvasTresor);
         
         if(application.getJoueur("J1").getRoleJoueur().getType()==TypeAventurier.pilote){
             j=0;
@@ -364,9 +409,13 @@ public class VueIle extends Observe {
             listeDeroulantePilote = new JComboBox(tuileP);
             
             panelBouton.remove(finTour);
+            panelBouton.remove(tr);
+            panelBouton.remove(gagnerTresor);
             panelBouton.add(listeDeroulantePilote);
             panelBouton.add(voler);
             panelBouton.add(finTour);
+            panelBouton.add(tr);
+            panelBouton.add(gagnerTresor);
         }    
         
 
@@ -495,7 +544,7 @@ public class VueIle extends Observe {
                 
         });
         
-        if (application.getJoueur("J"+joueurcourant).getNombreCartesJoueur()>5) {
+        if (application.getJoueur("J"+joueurcourant).getCartesT().size()>5) {
             
             System.out.println("oui");
             panelBouton.add(listeDeroulanteDonner);
@@ -513,7 +562,7 @@ public class VueIle extends Observe {
             panelBouton.remove(finTour);
             
             
-            /*defausser.addActionListener(new ActionListener() {
+            defausser.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     Message m = new Message();
                     m.type = TypesMessages.DEFAUSSER;
@@ -537,7 +586,7 @@ public class VueIle extends Observe {
                     panelBouton.add(assecher);
                     panelBouton.add(finTour);
                 }
-            });*/
+            });
             
         }
         
@@ -575,19 +624,22 @@ public class VueIle extends Observe {
                 }
         });
         
-        // Action pour le bouton finTour
         finTour.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     Message m = new Message();
                     m.type = TypesMessages.TERMINER_TOUR;
                     m.joueur = application.getJoueur("J"+joueurcourant);
-                    application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                    application.getCartesTresor().remove(0);
-                    application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                    application.getCartesTresor().remove(0);
+                    if(application.getCartesTresor().size()>0){
+                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
+                        application.getCartesTresor().remove(0);
+                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
+                        application.getCartesTresor().remove(0);
+                    }
                     /*Modifie le joueur courant*/
+                    System.out.println(joueurcourant);
                     if (joueurcourant==application.getJoueurs().size()){
                         joueurcourant=1;
+                        application.setEtatTour(true);
                     }
                     else {
                         joueurcourant = joueurcourant+1;
@@ -612,6 +664,17 @@ public class VueIle extends Observe {
                     //FIN TEST
                     actualiser();
                     notifierObservateur(m);
+                }
+        });
+        
+        // Action pour le bouton finTour
+        gagnerTresor.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Message m = new Message();
+                    m.type = TypesMessages.GAGNER_TRESOR;
+                    m.tuile = application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition();
+                    notifierObservateur(m);
+                    actualiser();
                 }
         });
         
@@ -699,9 +762,13 @@ public class VueIle extends Observe {
             listeDeroulantePilote = new JComboBox(tuileP);
             
             panelBouton.remove(finTour);
+            panelBouton.remove(tr);
+            panelBouton.remove(canvasTresor);
             panelBouton.add(listeDeroulantePilote);
             panelBouton.add(voler);
             panelBouton.add(finTour);
+            panelBouton.add(tr);
+            panelBouton.add(canvasTresor);
             
         }
     }
@@ -753,11 +820,15 @@ public class VueIle extends Observe {
             listeDeroulanteDonner = new JComboBox(carteD);
 
             panelBouton.remove(finTour);
+            panelBouton.remove(tr);
+            panelBouton.remove(canvasTresor);
             panelBouton.add(listeDeroulanteJoueurs);
             panelBouton.add(voirdeck);
             panelBouton.add(listeDeroulanteDonner);
             panelBouton.add(donner);
             panelBouton.add(finTour);
+            panelBouton.add(tr);
+            panelBouton.add(canvasTresor);
         }else if(adonné){
             panelBouton.remove(listeDeroulanteJoueurs);
             panelBouton.remove(listeDeroulanteDonner);
@@ -809,12 +880,28 @@ public class VueIle extends Observe {
     }
 
     public void actualiser(){
+        monterEau();
         fenetre.repaint();
         listeDeroulanteBouger.repaint();
         listeDeroulanteAssecher.repaint();
         joueurCourant.repaint();
         pa.repaint();
+        canvasTresor.repaint();
         panelBouton.repaint();
+        
+
+    }
+    
+    public void monterEau(){
+        
+        try {
+            vueEau.monteDesEaux(application.getNiveaudeau().getNiveau());
+        } catch (IOException ex) {
+            Logger.getLogger(VueIle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        panelNiveauEau = vueEau;
+        
+        panelNiveauEau.repaint();
     }
   
 }

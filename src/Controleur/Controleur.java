@@ -1,22 +1,28 @@
 package Controleur;
 
-import Vue.VueIle;
 import ile_interdite.Application;
+import ile_interdite.EtatT;
 import ile_interdite.Joueur;
+import ile_interdite.Tresor;
 import ile_interdite.Tuile;
+import ile_interdite.TypeT;
 import ile_interdite.CarteTresor;
+import java.io.IOException;
+import Vue.VueIle;
+import Vue.VueNiveauDo;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;
+    private VueNiveauDo vueNiveauDo;
     private Application application;
     
-    public Controleur() {
+    public Controleur() throws IOException {
         application = new Application();
         application.initMap();
         application.initCartes();
         application.initJoueurs(6);
+        //vueNiveauDo = new VueNiveauDo(application.getNiveaudeau().getNiveau());
         vueIle = new VueIle(application);
-        
         vueIle.addObservateur(this);  
     }  
     @Override
@@ -78,7 +84,43 @@ public class Controleur implements Observateur {
 
                 vueIle.actualiser();
                 break;
-            case DEFAUSSER:  //Clic pour défausser une carte
+            case GAGNER_TRESOR:
+                tuile=message.tuile;
+                if(tuile==application.getIle().getTuile("Le Palais de Corail") 
+                || tuile==application.getIle().getTuile("Le Palais des Marees")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.calice){
+                            t.setEtat(EtatT.trouvé);
+                            System.out.println("Calice"+t.getEtat());
+                        }
+                    }
+                } else if(tuile==application.getIle().getTuile("La Caverne du Brasier") 
+                || tuile==application.getIle().getTuile("La Caverne des Ombres")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.cristal){
+                            t.setEtat(EtatT.trouvé);
+                            System.out.println("Cristal"+t.getEtat());
+                        }
+                    }
+                } else if(tuile==application.getIle().getTuile("Le Temple de La Lune") 
+                || tuile==application.getIle().getTuile("Le Temple du Soleil")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.pierre){
+                            t.setEtat(EtatT.trouvé);
+                            System.out.println("Pierre"+t.getEtat());
+                        }
+                    }
+                } else if(tuile==application.getIle().getTuile("Le Jardin des Murmures") 
+                || tuile==application.getIle().getTuile("Le Jardin des Hurlements")){
+                    for(Tresor t:application.getTrésors()){
+                        if(t.getNom()==TypeT.statue){
+                            t.setEtat(EtatT.trouvé);
+                        }
+                    }
+                }
+                break;
+                
+            case DEFAUSSER:
                 joueur = message.joueur;
                 carte = message.carte;
                 
@@ -94,7 +136,11 @@ public class Controleur implements Observateur {
                 joueur = message.joueur;
                 joueur.initPointAction(); //Réinitialise les points d'action du joueur
                 application.innonder(application.getNiveaudeau().getNiveauinondation()); //Innonde un nombre de case en fonction du niveau d'eau
-                vueIle.actualiser();
+                if (application.getEtatTour()){
+                    application.getNiveaudeau().monterEau();
+                    application.setEtatTour(false);
+                }
+                
                 break;
                 
                 
