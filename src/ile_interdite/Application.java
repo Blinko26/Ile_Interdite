@@ -320,5 +320,3 @@ public class Application {
         this.finTour = tour;
     }
 }
-
-

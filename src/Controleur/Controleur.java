@@ -91,7 +91,6 @@ public class Controleur implements Observateur {
                     for(Tresor t:application.getTrésors()){
                         if(t.getNom()==TypeT.calice){
                             t.setEtat(EtatT.trouvé);
-                            System.out.println("Calice"+t.getEtat());
                         }
                     }
                 } else if(tuile==application.getIle().getTuile("La Caverne du Brasier") 
@@ -99,7 +98,6 @@ public class Controleur implements Observateur {
                     for(Tresor t:application.getTrésors()){
                         if(t.getNom()==TypeT.cristal){
                             t.setEtat(EtatT.trouvé);
-                            System.out.println("Cristal"+t.getEtat());
                         }
                     }
                 } else if(tuile==application.getIle().getTuile("Le Temple de La Lune") 
@@ -107,7 +105,6 @@ public class Controleur implements Observateur {
                     for(Tresor t:application.getTrésors()){
                         if(t.getNom()==TypeT.pierre){
                             t.setEtat(EtatT.trouvé);
-                            System.out.println("Pierre"+t.getEtat());
                         }
                     }
                 } else if(tuile==application.getIle().getTuile("Le Jardin des Murmures") 
@@ -123,11 +120,8 @@ public class Controleur implements Observateur {
             case DEFAUSSER:
                 joueur = message.joueur;
                 carte = message.carte;
-                
-                for (int i = joueur.getCartesT().size(); i>5; i--) {
                     application.defausserCarteTresor(carte);
                     joueur.removeCarte(carte);
-                }
                 
                 vueIle.actualiser();
                 break;
@@ -140,7 +134,7 @@ public class Controleur implements Observateur {
                     application.getNiveaudeau().monterEau();
                     application.setEtatTour(false);
                 }
-                
+                vueIle.actualiser();
                 break;
                 
                 
