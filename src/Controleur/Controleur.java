@@ -123,11 +123,8 @@ public class Controleur implements Observateur {
             case DEFAUSSER:
                 joueur = message.joueur;
                 carte = message.carte;
-                
-                for (int i = joueur.getCartesT().size(); i>5; i--) {
                     application.defausserCarteTresor(carte);
                     joueur.removeCarte(carte);
-                }
                 
                 vueIle.actualiser();
                 break;

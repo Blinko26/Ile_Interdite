@@ -543,25 +543,7 @@ public class VueIle extends Observe {
                 }    
                 
         });
-        
-        if (application.getJoueur("J"+joueurcourant).getCartesT().size()>5) {
-            
-            System.out.println("oui");
-            panelBouton.add(listeDeroulanteDonner);
-            System.out.println("oui");
-            panelBouton.add(defausser);
-            System.out.println("oui");
-            panelBouton.remove(listeDeroulanteBouger);
-            System.out.println("oui");
-            panelBouton.remove(deplacer);
-            System.out.println("oui");
-            panelBouton.remove(listeDeroulanteAssecher);
-            System.out.println("oui");
-            panelBouton.remove(assecher);
-            System.out.println("oui");
-            panelBouton.remove(finTour);
-            
-            
+           
             defausser.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     Message m = new Message();
@@ -575,20 +557,11 @@ public class VueIle extends Observe {
                     listeDeroulanteDonner.removeAllItems();
                     for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
                         listeDeroulanteDonner.addItem(ct.getType());
-                    }                    
-                    listeDeroulanteDonner.repaint();
-                    
-                    panelBouton.remove(listeDeroulanteDonner);
-                    panelBouton.remove(defausser);
-                    panelBouton.add(listeDeroulanteBouger);
-                    panelBouton.add(deplacer);
-                    panelBouton.add(listeDeroulanteAssecher);
-                    panelBouton.add(assecher);
-                    panelBouton.add(finTour);
+                    }
+
+                    plusDe5Cartes();
                 }
             });
-            
-        }
         
         voler.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -661,6 +634,7 @@ public class VueIle extends Observe {
                         boutonsDonner();
                         boutonsPilote();
                         boutonsTresor();
+                        plusDe5Cartes();
                     //FIN TEST
                     actualiser();
                     notifierObservateur(m);
@@ -876,6 +850,27 @@ public class VueIle extends Observe {
         }
         else{
             panelBouton.remove(gagnerTresor);
+        }
+    }
+    
+    public void plusDe5Cartes() {
+        if (application.getJoueur("J"+joueurcourant).getCartesT().size()>5) {
+            
+            panelBouton.add(defausser);
+            listeDeroulanteBouger.setEnabled(false);
+            deplacer.setEnabled(false);
+            listeDeroulanteAssecher.setEnabled(false);
+            assecher.setEnabled(false);
+            finTour.setEnabled(false);
+            
+        }
+        else {
+            panelBouton.remove(defausser);
+            listeDeroulanteBouger.setEnabled(true);
+            deplacer.setEnabled(true);
+            listeDeroulanteAssecher.setEnabled(true);
+            assecher.setEnabled(true);
+            finTour.setEnabled(true);
         }
     }
 
