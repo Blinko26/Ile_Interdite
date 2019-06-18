@@ -2,6 +2,7 @@ package ile_interdite;
 
 import ile_interdite.Aventurier;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Plongeur extends Aventurier {
     
@@ -19,36 +20,76 @@ public class Plongeur extends Aventurier {
     }
          
         public ArrayList<Tuile> PossibleMouvement() { //retourne les cases sur lesquelles le plongeur peut se déplacer en fonction de sa position
-       
+        casesDisp.clear();
+        casesContigues.clear();
         //On get la position du plongeur
         Tuile tu = this.getPosition();
         Ile ile = tu.getIledescases();
+        
         for(int i[] : tu.getTuilesAdj()) {
             //On chek ses tuiles adjacentes pour voir si :
             // 1 : si elle est sombrée on ne peut pas s'arreter dessus donc on l'add pas dans casesDisp mais dans casesContigues si
-            // 2 : sinon on add  dans cases dispo et cases contigu.
+            // 2 : si innondée : on peut s'arreter dessus et ça peut servir de chemin donc casesContigues et casesDisp
+            // 3 : si normale : on ne peut que s'arretter dessus
             Tuile t = ile.getTuile(i[0],i[1]);
-            if(t.getEtat() == EtatC.sombrée) {
-                casesContigues.add(t);
-            }else if(t.getEtat() == EtatC.innondée || t.getEtat() == EtatC.normale){
-                casesDisp.add(t);
-                casesContigues.add(t);
-            }
-            
-            //On parcourt l'arrayList casesContigues et pour chaque cases on refais l'etape d'avant
-           /* for(Tuile j : casesContigues){
-                for(int y[] : j.getTuilesAdj()){
-                    Tuile p = ile.getTuile(i[0],i[1]);
-                    if(p.getEtat() == EtatC.sombrée) {
+            switch(t.getEtat()){
+                case sombrée :
                         casesContigues.add(t);
-                    }else if(p.getEtat() == EtatC.innondée || p.getEtat() == EtatC.normale){
-                        casesDisp.add(p);
+                    break;
+                
+                case innondée : 
+                        casesContigues.add(t);
+                        casesDisp.add(t);
+                    break;
+                
+                case normale : 
+                        casesDisp.add(t);
+            }
+        
+            //On parcourt l'arrayList de casesContigues (marche pas car on utilise casescibtuf
+            ArrayList<Tuile> casesContigues2 = new ArrayList<>();
+            casesContigues2 = casesContigues;
+                for(Tuile casesContigue : casesContigues){ 
+                    //Pour chaque cases on regarde ses casesAdjacentes et son Etat
+                   
+                    Ile ile2 = casesContigue.getIledescases();
+                    
+                   for(int j[] : casesContigue.getTuilesAdj()){
+                       Tuile t2 = ile2.getTuile(j[0],j[1]);
+                       switch(t2.getEtat()){
+                           case sombrée :
+                                casesContigues.add(t2);
+                                break;
+                            
+                           case innondée :
+                                casesContigues.add(t2);
+                                casesDisp.add(t2);
+                                break;
+                                
+                           case normale :
+                                 casesDisp.add(t2);
+                                 break;
+                       }
+                    }
+                }
+            
+        }  
+        
+            //On parcourt l'arrayList casesContigues et pour chaque cases on refais l'etape d'avant
+           /*for(Tuile j : casesContigues){
+                Tuile tuile = this.getPosition();
+                Ile ile1 = tuile.getIledescases();
+                for(int y[] : j.getTuilesAdj()){
+                    Tuile p = ile1.getTuile(y[0],y[1]);
+                    if(p.getEtat() == EtatC.sombrée) {
                         casesContigues.add(p);
+                    }else if(p.getEtat() == EtatC.innondée || p.getEtat() == EtatC.normale){
+                        casesContigues.add(p);
+                        casesDisp.add(p);
                     }
                }
-            } */
-            
-        } 
+            }*/
+           
         return casesDisp;
        
         }
