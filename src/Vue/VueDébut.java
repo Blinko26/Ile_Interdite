@@ -8,37 +8,20 @@ package Vue;
 import Controleur.Message;
 import Controleur.Observe;
 import Controleur.TypesMessages;
-import ile_interdite.Application;
-import ile_interdite.EtatC;
-import ile_interdite.Tuile;
-import ile_interdite.CarteTresor;
-import ile_interdite.TypeAventurier;
-import ile_interdite.TypeCT;
-import ile_interdite.Joueur;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.util.Scanner;
-import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
+
 
 /**
  *
@@ -81,7 +64,7 @@ public class VueDébut extends Observe {
             panelHaut.setLayout(new GridLayout(1,3));
             fenetre.add(panelHaut);
             panelMilieu = new JPanel();
-            panelMilieu.setLayout(new GridLayout(10,2));
+            panelMilieu.setLayout(new GridLayout(5,4));
             fenetre.add(panelMilieu);
             panelBas = new JPanel();
             panelBas.setLayout(new GridLayout(3,4));
@@ -97,6 +80,7 @@ public class VueDébut extends Observe {
                     fenetre.dispose();
                     Message m = new Message();
                     m.type = TypesMessages.DEMARRER_PARTIE;
+                    
                     notifierObservateur(m);
                 }
             });
@@ -125,14 +109,10 @@ public class VueDébut extends Observe {
             nj3 = new JTextField("Joueur3");
             nj4 = new JTextField("Joueur4");
             
-            choixNbJoueurs = new JSlider(SwingConstants.HORIZONTAL, 2, 4, 4);
-            choixNbJoueurs.setPaintLabels(true);
-            choixNbJoueurs.setPaintTicks(true);
-            choixNbJoueurs.setMajorTickSpacing(1);
-            choixNbJoueurs.setMinorTickSpacing(1);
-            panelMilieu.add(choixNbJoueurs);
-
-            
+            nbJoueurs = new JComboBox();
+            nbJoueurs.addItem(2);
+            nbJoueurs.addItem(3);
+            nbJoueurs.addItem(4);
             panelMilieu.add(new JLabel("Nombre de joueurs : "));
             panelMilieu.add(nbJoueurs);
             
