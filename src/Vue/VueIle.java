@@ -191,7 +191,7 @@ public class VueIle extends Observe {
                 g2d.drawOval(size.width/5*2-10,size.height/2-15,20, 30);
             
             g2d.setColor(new Color(128,128,128));
-            if(application.getTrésors().get(0).getEtat()==EtatT.trouvé){
+            if(application.getTrésors().get(2).getEtat()==EtatT.trouvé){
                 g2d.setColor(new Color(128,0,200));
             }
                 g2d.fillOval(size.width/5*3-10,size.height/2-15,20,30); 
@@ -199,7 +199,7 @@ public class VueIle extends Observe {
                 g2d.drawOval(size.width/5*3-10,size.height/2-15,20, 30);
                 
             g2d.setColor(new Color(128,128,128));
-            if(application.getTrésors().get(0).getEtat()==EtatT.trouvé){
+            if(application.getTrésors().get(3).getEtat()==EtatT.trouvé){
                 g2d.setColor(new Color(255,200,0));
             }
                 g2d.fillOval(size.width/5*4-10,size.height/2-15,20,30); 
@@ -636,7 +636,6 @@ public class VueIle extends Observe {
                         application.getCartesTresor().remove(0);
                     }
                     /*Modifie le joueur courant*/
-                    System.out.println(joueurcourant);
                     if (joueurcourant==application.getJoueurs().size()){
                         joueurcourant=1;
                         application.setEtatTour(true);
