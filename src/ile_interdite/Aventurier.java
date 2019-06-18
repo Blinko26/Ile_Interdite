@@ -99,4 +99,8 @@ public abstract class Aventurier {
         }
     }
     
+    public boolean getAAsseche(){
+        return false;
+    }
+    
   }

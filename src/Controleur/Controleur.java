@@ -10,6 +10,8 @@ import ile_interdite.CarteTresor;
 import java.io.IOException;
 import Vue.VueIle;
 import Vue.VueNiveauDo;
+import ile_interdite.TypeAventurier;
+import java.util.ArrayList;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;
@@ -40,7 +42,11 @@ public class Controleur implements Observateur {
             case DEPLACER:  //Clic sur deplacer
                 joueur = message.joueur;
                 tuile = message.tuile;
-                //if(joueur.getRoleJoueur().getType() == ile_interdite.TypeAventurier.plongeur){
+                if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && joueur.getRoleJoueur().getAAsseche() == true) {
+                    joueur.removePA(2);
+                }
+                
+                //else if(joueur.getRoleJoueur().getType() == ile_interdite.TypeAventurier.plongeur){
                 //    switch(tuile.getEtat()){
                 //        case innondée : 
                 //            joueur.removePA(0);
@@ -54,9 +60,10 @@ public class Controleur implements Observateur {
                 //            joueur.removePA(1);
                 //            break;
                 //    }
-                //}else{
-                    joueur.removePA(1);
                 //}
+                else{
+                    joueur.removePA(1);
+                }
                 
                 application.deplacement(joueur,tuile);
                 vueIle.actualiser();                break;
@@ -64,20 +71,42 @@ public class Controleur implements Observateur {
             case ASSECHER: //Clic pour assécher
                 joueur = message.joueur;
                 tuile = message.tuile;
-                joueur.removePA(1);
+                if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && joueur.getRoleJoueur().getAAsseche() == true) {
+                    joueur.removePA(1);
+                    
+                }
+                else if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && joueur.getRoleJoueur().getAAsseche() == false) {
+                    joueur.removePA(0);
+                }
+                else {
+                    joueur.removePA(1);
+                }
                 joueur.getRoleJoueur().assecher(tuile);//La tuile selectionnée est assechée
                 vueIle.actualiser();
                 break;
             case DONNER:    //Clic pour donner une carte
                 joueur=message.joueur;
                 Joueur joueur2=message.receveur;
-                int index=-1;
+                int index = 0;
+                if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && joueur.getRoleJoueur().getAAsseche() == true) {
+                    index=-1;
+                for(int i=0;i<joueur.getCartesT().size();i++){
+                    if(joueur.getCartesT().get(i)== message.carte){
+                        joueur.removePA(2);
+                        index=i;
+                        break;
+                    }
+                }
+                }
+                else {
+                    index=-1;
                 for(int i=0;i<joueur.getCartesT().size();i++){
                     if(joueur.getCartesT().get(i)== message.carte){
                         joueur.removePA(1);
                         index=i;
                         break;
                     }
+                }
                 }
                 joueur2.getCartesT().add(joueur.getCartesT().get(index));
                 joueur.getCartesT().remove(index);

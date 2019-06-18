@@ -21,4 +21,10 @@ public class Message {
     public Tuile tuile; //Champ Utilisé pour Deplacer et assecher
     public Joueur receveur;
     public CarteTresor carte; //Champ Utilisé pour Donner
+    public int nbJoueurs;
+    public String nj1;
+    public String nj2;
+    public String nj3;
+    public String nj4;
+    public String difficulté;
 }
