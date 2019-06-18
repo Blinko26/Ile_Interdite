@@ -32,6 +32,7 @@ public class VueNiveauDo extends JPanel{
         JFrame frame = new JFrame("Niveau D'Eau");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         image = ImageIO.read(new File("/users/info/etu-s2/viellarb/Ile_Interdite/Ile_Interdite/src/Image/niveauDesEaux"+niveau+".png"));
+        imgLabel = new JLabel(new ImageIcon(image.getScaledInstance((int) (size.getWidth()*0.15), (int) (size.getHeight()*0.9), Image.SCALE_DEFAULT)));
         mainPanel.add(imgLabel);
 
         // add the Jpanel to the main window

@@ -260,16 +260,6 @@ public class VueIle extends Observe {
         fenetre.setVisible(false);
         this.configureWindow(fenetre);
         
-        JFrame menu = new JFrame();
-        menu.setSize(500, 500);
-        JPanel panelMenu = new JPanel();
-        JButton boutonJouer = new JButton();
-        boutonJouer.setText("Jouer");
-        menu.add(panelMenu);
-        panelMenu.add(boutonJouer);
-        menu.setVisible(true);
-
-
         panelMap = new JPanel();    //Instanciation de la map
         fenetre.add(panelMap, BorderLayout.CENTER);
         
@@ -672,26 +662,7 @@ public class VueIle extends Observe {
                     notifierObservateur(m);
                     actualiser();
                 }
-        });
-        
-        
-        /****************************************************************/
-        
-        /* Affichage de la fenetre */
-
-        
-           boutonJouer.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                menu.dispose();
-               fenetre.setVisible(true);
-               fenetre.setSize(1650, 950);
-               application.initPartie();
-               listeAssecher();
-
-            }
-        });
-        
-                
+        });          
     }    
     /*
      *   configureWindow
@@ -800,7 +771,7 @@ public class VueIle extends Observe {
 
             for (Joueur joueur : application.getJoueurs()){           
                 if(joueur.getRoleJoueur().getPosition()==application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()&& joueur!=application.getJoueur("J"+joueurcourant)){ 
-                    joueursdispo[j] = joueur.getNomJoueur();
+                    joueursdispo[j] = joueur.getRoleJoueur().getRoleToString();
                     j++;
                 }
             }
@@ -925,6 +896,14 @@ public class VueIle extends Observe {
         panelNiveauEau = vueEau;
         
         panelNiveauEau.repaint();
+    }
+    
+    public void start(){
+               fenetre.setVisible(true);
+               fenetre.setSize(1650, 950);
+               application.initPartie();
+               listeAssecher();
+               System.out.println("BUEr");
     }
   
 }

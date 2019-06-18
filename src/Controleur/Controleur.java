@@ -10,11 +10,13 @@ import ile_interdite.CarteTresor;
 import java.io.IOException;
 import Vue.VueIle;
 import Vue.VueNiveauDo;
+import Vue.VuedébutV3;
 import ile_interdite.TypeAventurier;
 import java.util.ArrayList;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;
+    private VuedébutV3 vueDebut;
     private VueNiveauDo vueNiveauDo;
     private Application application;
     
@@ -25,6 +27,8 @@ public class Controleur implements Observateur {
         application.initJoueurs(6);
         //vueNiveauDo = new VueNiveauDo(application.getNiveaudeau().getNiveau());
         vueIle = new VueIle(application);
+        vueDebut = new VuedébutV3();
+        vueDebut.addObservateur(this);
         vueIle.addObservateur(this);  
     }  
     @Override
@@ -36,7 +40,9 @@ public class Controleur implements Observateur {
 
         switch(message.type) {
             case DEMARRER_PARTIE: //Action pour démarrer la partie
-              
+                    System.out.println("TEST");
+                    vueIle.start();
+                    System.out.println("TEST");
                 break;
             
             case DEPLACER:  //Clic sur deplacer
