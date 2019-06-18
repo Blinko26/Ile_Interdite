@@ -191,7 +191,7 @@ public class VueIle extends Observe {
                 g2d.drawOval(size.width/5*2-10,size.height/2-15,20, 30);
             
             g2d.setColor(new Color(128,128,128));
-            if(application.getTrésors().get(0).getEtat()==EtatT.trouvé){
+            if(application.getTrésors().get(2).getEtat()==EtatT.trouvé){
                 g2d.setColor(new Color(128,0,200));
             }
                 g2d.fillOval(size.width/5*3-10,size.height/2-15,20,30); 
@@ -199,7 +199,7 @@ public class VueIle extends Observe {
                 g2d.drawOval(size.width/5*3-10,size.height/2-15,20, 30);
                 
             g2d.setColor(new Color(128,128,128));
-            if(application.getTrésors().get(0).getEtat()==EtatT.trouvé){
+            if(application.getTrésors().get(3).getEtat()==EtatT.trouvé){
                 g2d.setColor(new Color(255,200,0));
             }
                 g2d.fillOval(size.width/5*4-10,size.height/2-15,20,30); 
@@ -350,7 +350,7 @@ public class VueIle extends Observe {
         tuile = new String[application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement().size()];
         
         //application.getJoueur("J"+joueurcourant).getRoleJoueur().setPosition(application.getIle().getTuile(application.getJoueur("J"+joueurcourant).getRoleJoueur().getDepart()));
-        /*Rempli la liste déroulante avec les cases où le joueur peut se déplacer*/
+        /*Rempli la liste déroulante JFrameavec les cases où le joueur peut se déplacer*/
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
             tuile[i] = tu.getNom(); 
             i++; 
@@ -543,25 +543,7 @@ public class VueIle extends Observe {
                 }    
                 
         });
-        
-        if (application.getJoueur("J"+joueurcourant).getCartesT().size()>5) {
-            
-            System.out.println("oui");
-            panelBouton.add(listeDeroulanteDonner);
-            System.out.println("oui");
-            panelBouton.add(defausser);
-            System.out.println("oui");
-            panelBouton.remove(listeDeroulanteBouger);
-            System.out.println("oui");
-            panelBouton.remove(deplacer);
-            System.out.println("oui");
-            panelBouton.remove(listeDeroulanteAssecher);
-            System.out.println("oui");
-            panelBouton.remove(assecher);
-            System.out.println("oui");
-            panelBouton.remove(finTour);
-            
-            
+           
             defausser.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     Message m = new Message();
@@ -575,20 +557,11 @@ public class VueIle extends Observe {
                     listeDeroulanteDonner.removeAllItems();
                     for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
                         listeDeroulanteDonner.addItem(ct.getType());
-                    }                    
-                    listeDeroulanteDonner.repaint();
-                    
-                    panelBouton.remove(listeDeroulanteDonner);
-                    panelBouton.remove(defausser);
-                    panelBouton.add(listeDeroulanteBouger);
-                    panelBouton.add(deplacer);
-                    panelBouton.add(listeDeroulanteAssecher);
-                    panelBouton.add(assecher);
-                    panelBouton.add(finTour);
+                    }
+
+                    plusDe5Cartes();
                 }
             });
-            
-        }
         
         voler.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -636,7 +609,6 @@ public class VueIle extends Observe {
                         application.getCartesTresor().remove(0);
                     }
                     /*Modifie le joueur courant*/
-                    System.out.println(joueurcourant);
                     if (joueurcourant==application.getJoueurs().size()){
                         joueurcourant=1;
                         application.setEtatTour(true);
@@ -661,6 +633,7 @@ public class VueIle extends Observe {
                         boutonsDonner();
                         boutonsPilote();
                         boutonsTresor();
+                        plusDe5Cartes();
                     //FIN TEST
                     actualiser();
                     notifierObservateur(m);
@@ -684,7 +657,7 @@ public class VueIle extends Observe {
         /* Affichage de la fenetre */
 
         
-            boutonJouer.addActionListener(new ActionListener(){
+           boutonJouer.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 menu.dispose();
                fenetre.setVisible(true);
@@ -876,6 +849,27 @@ public class VueIle extends Observe {
         }
         else{
             panelBouton.remove(gagnerTresor);
+        }
+    }
+    
+    public void plusDe5Cartes() {
+        if (application.getJoueur("J"+joueurcourant).getCartesT().size()>5) {
+            
+            panelBouton.add(defausser);
+            listeDeroulanteBouger.setEnabled(false);
+            deplacer.setEnabled(false);
+            listeDeroulanteAssecher.setEnabled(false);
+            assecher.setEnabled(false);
+            finTour.setEnabled(false);
+            
+        }
+        else {
+            panelBouton.remove(defausser);
+            listeDeroulanteBouger.setEnabled(true);
+            deplacer.setEnabled(true);
+            listeDeroulanteAssecher.setEnabled(true);
+            assecher.setEnabled(true);
+            finTour.setEnabled(true);
         }
     }
 
