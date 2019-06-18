@@ -154,7 +154,7 @@ public class VueIle extends Observe {
             } 
             
             for(int i=0;i<application.getJoueurs().size();i++){
-                if(application.getIle().getTuile(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0],application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]).getEtat()==EtatC.sombrée ||application.getIle().getTuile("Heliport").getEtat()==EtatC.sombrée){
+                if(application.getIle().getTuile("Heliport").getEtat()==EtatC.sombrée){
                     g2d.setColor(new Color(0,0,255));
                     g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
                     g2d.setColor(new Color(255,0,128));
@@ -223,6 +223,7 @@ public class VueIle extends Observe {
     private JLabel joueurCourant; //Indique le joueur courant3
     private JLabel pa; //Indique le joueur courant3
     private JLabel tr;
+    private JLabel deck;
 
     private JButton finTour;    //Bouton pour finir son tour
     private JButton deplacer;   // bouton pour se deplacer
@@ -247,7 +248,7 @@ public class VueIle extends Observe {
     private TypeCT[] carteD;
     private String[] tuileP;
     
-    private boolean adonné=false;
+    private boolean defaussé=false;
     
     public VueIle(Application appli) throws IOException {
         
@@ -372,11 +373,17 @@ public class VueIle extends Observe {
         }      
         listeDeroulanteAssecher = new JComboBox(tuileA);   //Instanciation de la liste déroulante      
         
+
+        listeDeroulanteJoueurs = new JComboBox();
+        listeDeroulanteDonner = new JComboBox();
+        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+            listeDeroulanteDonner.addItem(ct.getType());
+        }
         
         joueurCourant = new JLabel("Joueur Courant :"+application.getJoueur("J"+joueurcourant).getRoleJoueur().getRoleToString());   //Affiche le joueur dont c'est le tour
         pa = new JLabel("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3"); //Affiche les PA du joueur
         tr = new JLabel("Trésors :");
-        
+        deck  = new JLabel("Deck :");
         
         
         panelBouton.add(joueurCourant);
@@ -385,7 +392,13 @@ public class VueIle extends Observe {
         panelBouton.add(deplacer);
         panelBouton.add(listeDeroulanteAssecher);
         panelBouton.add(assecher);
+        panelBouton.add(listeDeroulanteJoueurs);
+        panelBouton.add(donner);
+        panelBouton.remove(listeDeroulanteJoueurs);
+        panelBouton.remove(donner);
         panelBouton.add(finTour);
+        panelBouton.add(deck);
+        panelBouton.add(listeDeroulanteDonner);
         panelBouton.add(tr);
         panelBouton.add(canvasTresor);
         
@@ -409,13 +422,17 @@ public class VueIle extends Observe {
             listeDeroulantePilote = new JComboBox(tuileP);
             
             panelBouton.remove(finTour);
+            panelBouton.remove(deck);
+            panelBouton.remove(listeDeroulanteDonner);
             panelBouton.remove(tr);
-            panelBouton.remove(gagnerTresor);
+            panelBouton.remove(canvasTresor);
             panelBouton.add(listeDeroulantePilote);
             panelBouton.add(voler);
             panelBouton.add(finTour);
+            panelBouton.add(deck);
+            panelBouton.add(listeDeroulanteDonner);
             panelBouton.add(tr);
-            panelBouton.add(gagnerTresor);
+            panelBouton.add(canvasTresor);
         }    
         
 
@@ -626,9 +643,15 @@ public class VueIle extends Observe {
                             listeDeroulanteBouger.addItem(tu.getNom()); 
                         }
                         
+                        listeDeroulanteDonner.removeAllItems();
+                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                            listeDeroulanteDonner.addItem(ct.getType());
+                        }
+                        
                         listeAssecher();
                         listeDeroulanteAssecher.repaint();
                         listeDeroulanteBouger.repaint();
+                        listeDeroulanteDonner.repaint();
                         
                         boutonsDonner();
                         boutonsPilote();
@@ -735,11 +758,15 @@ public class VueIle extends Observe {
             listeDeroulantePilote = new JComboBox(tuileP);
             
             panelBouton.remove(finTour);
+            panelBouton.remove(deck);
+            panelBouton.remove(listeDeroulanteDonner);
             panelBouton.remove(tr);
             panelBouton.remove(canvasTresor);
             panelBouton.add(listeDeroulantePilote);
             panelBouton.add(voler);
             panelBouton.add(finTour);
+            panelBouton.add(deck);
+            panelBouton.add(listeDeroulanteDonner);
             panelBouton.add(tr);
             panelBouton.add(canvasTresor);
             
@@ -763,15 +790,11 @@ public class VueIle extends Observe {
             joueurprecedent=joueurcourant-1;
         }
         
-        if(application.getJoueur("J"+joueurprecedent).getRoleJoueur().getPosition()==application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()&& adonné){
-            panelBouton.remove(listeDeroulanteJoueurs);
-            panelBouton.remove(listeDeroulanteDonner);
-            panelBouton.remove(donner);
-            adonné=false;
-        }
+        panelBouton.remove(listeDeroulanteJoueurs);
+        panelBouton.remove(donner);
+        
         
         if(!seul){
-            adonné=true;
             int j =0;
             joueursdispo = new String[nbjoueurs];
 
@@ -783,30 +806,18 @@ public class VueIle extends Observe {
             }
             listeDeroulanteJoueurs = new JComboBox(joueursdispo);
 
-            j=0;
-            carteD = new TypeCT[application.getJoueur("J"+joueurcourant).getCartesT().size()];
-
-            for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
-                carteD[j] = ct.getType(); 
-                j++; 
-            }
-            listeDeroulanteDonner = new JComboBox(carteD);
-
             panelBouton.remove(finTour);
+            panelBouton.remove(deck);
+            panelBouton.remove(listeDeroulanteDonner);
             panelBouton.remove(tr);
             panelBouton.remove(canvasTresor);
             panelBouton.add(listeDeroulanteJoueurs);
-            panelBouton.add(voirdeck);
-            panelBouton.add(listeDeroulanteDonner);
             panelBouton.add(donner);
             panelBouton.add(finTour);
+            panelBouton.add(deck);
+            panelBouton.add(listeDeroulanteDonner);
             panelBouton.add(tr);
             panelBouton.add(canvasTresor);
-        }else if(adonné){
-            panelBouton.remove(listeDeroulanteJoueurs);
-            panelBouton.remove(listeDeroulanteDonner);
-            panelBouton.remove(donner);
-            adonné=false;
         }
     }
     
@@ -854,22 +865,40 @@ public class VueIle extends Observe {
     
     public void plusDe5Cartes() {
         if (application.getJoueur("J"+joueurcourant).getCartesT().size()>5) {
-            
+            defaussé=true;
+            panelBouton.remove(listeDeroulanteBouger);
+            panelBouton.remove(deplacer);
+            panelBouton.remove(listeDeroulanteAssecher);
+            panelBouton.remove(assecher);
+            panelBouton.remove(listeDeroulanteJoueurs);
+            //panelBouton.remove(donner);
+            //panelBouton.remove(listeDeroulantePilote);
+            panelBouton.remove(voler);
+            panelBouton.remove(finTour);
+            panelBouton.remove(tr);
+            panelBouton.remove(canvasTresor);
             panelBouton.add(defausser);
-            listeDeroulanteBouger.setEnabled(false);
-            deplacer.setEnabled(false);
-            listeDeroulanteAssecher.setEnabled(false);
-            assecher.setEnabled(false);
-            finTour.setEnabled(false);
+            panelBouton.add(tr);
+            panelBouton.add(canvasTresor);
             
         }
-        else {
+        else if(defaussé){
+            panelBouton.add(listeDeroulanteDonner);
             panelBouton.remove(defausser);
-            listeDeroulanteBouger.setEnabled(true);
-            deplacer.setEnabled(true);
-            listeDeroulanteAssecher.setEnabled(true);
-            assecher.setEnabled(true);
-            finTour.setEnabled(true);
+            panelBouton.remove(deck);
+            panelBouton.remove(listeDeroulanteDonner);
+            panelBouton.remove(tr);
+            panelBouton.remove(canvasTresor);
+            panelBouton.add(listeDeroulanteBouger);
+            panelBouton.add(deplacer);
+            panelBouton.add(listeDeroulanteAssecher);
+            panelBouton.add(assecher);
+            panelBouton.add(finTour);
+            panelBouton.add(deck);
+            panelBouton.add(listeDeroulanteDonner);
+            panelBouton.add(tr);
+            panelBouton.add(canvasTresor);
+            
         }
     }
 
