@@ -14,7 +14,8 @@ public class Plongeur extends Aventurier {
         super(TypeAventurier.plongeur,Utils.Pion.NOIR,"La Porte de Fer");
         
     }
-  
+}
+  /*
     public ArrayList<Tuile> getCasesAdjacentes(){ //retourne les cases adjacentes à la case où le plongeur se trouve
         return casesAdjacentes;   
     }
@@ -90,10 +91,10 @@ public class Plongeur extends Aventurier {
                }
             }*/
            
-        return casesDisp;
+        /*return casesDisp;
        
         }
-}
+}*/
     
    /* public void addTuileContiguë(Tuile tu){ 
         
@@ -143,4 +144,3 @@ public class Plongeur extends Aventurier {
         }
     }*/
     
-//}

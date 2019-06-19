@@ -10,7 +10,7 @@ import java.io.IOException;
 
 /**
  *
- * @author laurillau
+ * @author moi
  */
 public class Main {
     public static void main(String[] args) throws IOException {

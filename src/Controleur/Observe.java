@@ -7,7 +7,7 @@ package Controleur;
 
 /**
  *
- * @author laurillau
+ * @author moi
  */
 public class Observe {
     private Observateur observateur;

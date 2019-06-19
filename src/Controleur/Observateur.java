@@ -8,7 +8,7 @@ package Controleur;
 
 /**
  *
- * @author laurillau
+ * @author moi
  */
 public interface Observateur {
     public void traiterMessage(Message msg);

@@ -162,10 +162,12 @@ public class Controleur implements Observateur {
                 joueur = message.joueur;
                 joueur.initPointAction(); //Réinitialise les points d'action du joueur
                 application.innonder(application.getNiveaudeau().getNiveauinondation()); //Innonde un nombre de case en fonction du niveau d'eau
+                vueIle.bonhommeSurSombrée();
                 if (application.getEtatTour()){
                     application.getNiveaudeau().monterEau();
                     application.setEtatTour(false);
                 }
+                vueIle.listeAssecher();
                 vueIle.deck();
                 vueIle.actualiser();
                 break;

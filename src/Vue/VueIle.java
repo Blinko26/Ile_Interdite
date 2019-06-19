@@ -38,6 +38,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.util.Scanner;
@@ -969,6 +970,22 @@ public class VueIle extends Observe {
                fenetre.setSize(1650, 950);
                application.initPartie();
                listeAssecher();
+    }
+    
+    public void bonhommeSurSombrée(){
+        for (Joueur joueur : application.getJoueurs()){
+            if(joueur.getRoleJoueur().getPosition().getEtat() == EtatC.sombrée){
+                if (joueur.getRoleJoueur().PossibleMouvement().size()==0){
+                    System.out.println("T MORT");
+                }
+                else { 
+                    ArrayList<Tuile> tuiles = joueur.getRoleJoueur().PossibleMouvement();
+                    Collections.shuffle(tuiles);
+                    System.out.println(joueur.getRoleJoueur().PossibleMouvement().size());
+                    application.deplacement(joueur, tuiles.get(0));
+                }
+            }
+        }
     }
   
 }

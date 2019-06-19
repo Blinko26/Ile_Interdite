@@ -8,7 +8,7 @@ package Controleur;
 
 /**
  *
- * @author laurillau
+ * @author moi
  */
 public enum TypesMessages {
     DEMARRER_PARTIE,

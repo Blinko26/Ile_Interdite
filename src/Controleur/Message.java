@@ -12,7 +12,7 @@ import ile_interdite.CarteTresor;
 
 /**
  *
- * @author laurillau
+ * @author moi
  */
 public class Message {
     // Liste des types de messages
