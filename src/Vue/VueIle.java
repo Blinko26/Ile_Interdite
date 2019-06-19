@@ -24,6 +24,7 @@ import ile_interdite.EtatT;
 import ile_interdite.TypeAventurier;
 import ile_interdite.TypeCT;
 import ile_interdite.Joueur;
+import ile_interdite.TypeC;
 import ile_interdite.TypeT;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -907,8 +908,8 @@ public class VueIle extends Observe {
             panelBouton.remove(listeDeroulanteAssecher);
             panelBouton.remove(assecher);
             panelBouton.remove(listeDeroulanteJoueurs);
-            //panelBouton.remove(donner);
-            //panelBouton.remove(listeDeroulantePilote);
+            panelBouton.remove(donner);
+            panelBouton.remove(listeDeroulantePilote);
             panelBouton.remove(voler);
             panelBouton.remove(finTour);
             panelBouton.remove(tr);
@@ -977,6 +978,9 @@ public class VueIle extends Observe {
             if(joueur.getRoleJoueur().getPosition().getEtat() == EtatC.sombrée){
                 if (joueur.getRoleJoueur().PossibleMouvement().size()==0){
                     System.out.println("T MORT");
+                    Message m = new Message();
+                    m.type = TypesMessages.FIN_PARTIE;
+                    notifierObservateur(m);
                 }
                 else { 
                     ArrayList<Tuile> tuiles = joueur.getRoleJoueur().PossibleMouvement();
@@ -986,6 +990,33 @@ public class VueIle extends Observe {
                 }
             }
         }
+    }
+    public void conditionDefaite(){
+        if(application.getIle().getTuile("Héliport").getEtat()== EtatC.sombrée){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            notifierObservateur(m);}
+        if((EtatC.sombrée==application.getIle().getTuile("Le Palais de Corail").getEtat() 
+        || EtatC.sombrée==application.getIle().getTuile("Le Palais des Marees").getEtat())){
+            gagnerTresor.setBackground(new Color(0,192,255));
+            panelBouton.add(gagnerTresor);
+        } else if((EtatC.sombrée==application.getIle().getTuile("La Caverne du Brasier").getEtat() 
+        || EtatC.sombrée==application.getIle().getTuile("La Caverne des Ombres").getEtat())){
+            gagnerTresor.setBackground(new Color(255,64,0));
+            panelBouton.add(gagnerTresor);
+        } else if((EtatC.sombrée==application.getIle().getTuile("Le Temple de La Lune").getEtat() 
+        || EtatC.sombrée==application.getIle().getTuile("Le Temple du Soleil").getEtat())){
+            gagnerTresor.setBackground(new Color(128,0,200));
+            panelBouton.add(gagnerTresor);
+        } else if((EtatC.sombrée==application.getIle().getTuile("Le Jardin des Murmures").getEtat() 
+        || EtatC.sombrée==application.getIle().getTuile("Le Jardin des Hurlements").getEtat())){
+            gagnerTresor.setBackground(new Color(255,200,0));
+            panelBouton.add(gagnerTresor);
+        }
+    }
+    
+    public void fermerFenetre(){
+        fenetre.dispose();
     }
   
 }

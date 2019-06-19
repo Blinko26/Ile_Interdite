@@ -152,8 +152,8 @@ public class Controleur implements Observateur {
             case DEFAUSSER:
                 joueur = message.joueur;
                 carte = message.carte;
-                    application.defausserCarteTresor(carte);
-                    joueur.removeCarte(carte);
+                application.defausserCarteTresor(carte);
+                joueur.removeCarte(carte);
                 vueIle.deck();
                 vueIle.actualiser();
                 break;
@@ -170,6 +170,10 @@ public class Controleur implements Observateur {
                 vueIle.listeAssecher();
                 vueIle.deck();
                 vueIle.actualiser();
+                break;
+            case FIN_PARTIE:
+                
+                //vueIle.fermerFenetre();
                 break;
                 
                 
