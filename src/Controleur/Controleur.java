@@ -40,9 +40,7 @@ public class Controleur implements Observateur {
 
         switch(message.type) {
             case DEMARRER_PARTIE: //Action pour démarrer la partie
-                    System.out.println("TEST");
                     vueIle.start();
-                    System.out.println("TEST");
                 break;
             
             case DEPLACER:  //Clic sur deplacer
@@ -78,19 +76,16 @@ public class Controleur implements Observateur {
             case ASSECHER: //Clic pour assécher
                 joueur = message.joueur;
                 tuile = message.tuile;
-                if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && joueur.getRoleJoueur().getAAsseche() == true) {
-                    joueur.removePA(1);
-                    
-                }
-                else if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && joueur.getRoleJoueur().getAAsseche() == false) {
+                boolean assecher = message.aasseche;
+                if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && !assecher) {
                     joueur.removePA(0);
                 }
-                else {
+                else if(joueur.getRoleJoueur().getType() != TypeAventurier.ingénieur || assecher){
                     joueur.removePA(1);
                 }
                 joueur.getRoleJoueur().assecher(tuile);//La tuile selectionnée est assechée
                 vueIle.actualiser();
-                break;
+                break;            
             case DONNER:    //Clic pour donner une carte
                 joueur=message.joueur;
                 Joueur joueur2=message.receveur;

@@ -27,4 +27,5 @@ public class Message {
     public String nj3;
     public String nj4;
     public String difficulté;
+    public boolean aasseche;
 }

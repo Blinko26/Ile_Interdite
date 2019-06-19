@@ -252,6 +252,7 @@ public class VueIle extends Observe {
     private String[] tuileP;
     
     private boolean defaussé=false;
+    private boolean aasseche=false;
     
     public VueIle(Application appli) throws IOException {
         
@@ -438,6 +439,8 @@ public class VueIle extends Observe {
             panelBouton.add(canvasTresor);
         }    
         
+        boutonsDonner();
+        
 
         // Action pour le bouton deplacer
         deplacer.addActionListener(new ActionListener() {
@@ -475,12 +478,16 @@ public class VueIle extends Observe {
                 public void actionPerformed(ActionEvent e) {
                     if (application.getJoueur("J"+joueurcourant).peutJouer() && application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable().size()!=0)
                     {
+                        
                         Message m = new Message();
                         m.type = TypesMessages.ASSECHER;
                         m.joueur = application.getJoueur("J"+joueurcourant);
                         m.tuile = application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable().get(listeDeroulanteAssecher.getSelectedIndex()); //Position du joueur courant
+                        m.aasseche=aasseche;
                         
                         notifierObservateur(m);
+                        
+                        aasseche=!aasseche;
                         pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
                         listeAssecher();
                         listeDeroulanteAssecher.repaint();
@@ -532,35 +539,49 @@ public class VueIle extends Observe {
         donner.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (application.getJoueur("J"+joueurcourant).peutJouer() && application.getJoueur("J"+joueurcourant).getCartesT().size()!=0){
-                        
-                        Message m = new Message();
-                        m.type = TypesMessages.DONNER;
-                        m.joueur = application.getJoueur("J"+joueurcourant);
-                        int j=0;
-                        int i=listeDeroulanteJoueurs.getSelectedIndex();
-                        for (Joueur joueur : application.getJoueurs()){
+
+                            Message m = new Message();
+                            m.type = TypesMessages.DONNER;
+                            m.joueur = application.getJoueur("J"+joueurcourant);
+                            int j=0;
+                            int i=listeDeroulanteJoueurs.getSelectedIndex();
+                            for (Joueur joueur : application.getJoueurs()){
                                 if(joueur.getRoleJoueur().getPosition()==application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()&& joueur!=application.getJoueur("J"+joueurcourant)){
                                     if(listeDeroulanteJoueurs.getSelectedIndex()==j){
                                         m.receveur=joueur;
                                     }
                                     j=j+1;
                                 }
-                        }
-                        m.carte = application.getJoueur("J"+joueurcourant).getCartesT().get(listeDeroulanteDonner.getSelectedIndex());
+                            }
+                            
+                            if (application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()==TypeAventurier.messager){
+                                j =0;
+                                for (Joueur joueur : application.getJoueurs()){
+                                if(joueur!=application.getJoueur("J"+joueurcourant)){
+                                    if(listeDeroulanteJoueurs.getSelectedIndex()==j){
+                                        m.receveur=joueur;
+                                    }
+                                    j=j+1;
+                                }
+                            }
+                            }
+                            
+                            m.carte = application.getJoueur("J"+joueurcourant).getCartesT().get(listeDeroulanteDonner.getSelectedIndex());
 
-                        notifierObservateur(m);
-                        listeDeroulanteDonner.removeAllItems();
-                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
-                            listeDeroulanteDonner.addItem(ct.getType());
-                        }                    
-                        listeDeroulanteBouger.repaint();
-                        pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
-                        listeDeroulanteDonner.repaint();
-                        if (!application.getJoueur("J"+joueurcourant).peutJouer()){
-                            pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+                            notifierObservateur(m);
+                            listeDeroulanteDonner.removeAllItems();
+                            for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                                listeDeroulanteDonner.addItem(ct.getType());
+                            }                    
+                            listeDeroulanteBouger.repaint();
+                            pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
+                            listeDeroulanteDonner.repaint();
+                            if (!application.getJoueur("J"+joueurcourant).peutJouer()){
+                                pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+                            }
                         }
-                    }
-                }    
+                        
+                    }  
                 
         });
            
@@ -760,12 +781,16 @@ public class VueIle extends Observe {
     
     public void boutonsDonner(){
         boolean seul=true;
+        boolean messager=false;
         int nbjoueurs=0;
         for (Joueur joueur : application.getJoueurs()){           
             if(joueur.getRoleJoueur().getPosition()==application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition()&& joueur!=application.getJoueur("J"+joueurcourant)){ 
                 seul=false;
                 nbjoueurs++;
             }
+        }
+        if (application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()==TypeAventurier.messager) {
+                messager=true;
         }
         
         int joueurprecedent;
@@ -779,7 +804,7 @@ public class VueIle extends Observe {
         panelBouton.remove(donner);
         
         
-        if(!seul){
+        if(!seul && !messager){
             int j =0;
             joueursdispo = new String[nbjoueurs];
 
@@ -803,7 +828,32 @@ public class VueIle extends Observe {
             panelBouton.add(listeDeroulanteDonner);
             panelBouton.add(tr);
             panelBouton.add(canvasTresor);
+        }      
+        else if(messager) {
+            int j = 0;
+            joueursdispo = new String[application.getJoueurs().size()-1];
+            for (Joueur joueur : application.getJoueurs()){           
+                if(joueur.getRoleJoueur().getType() != TypeAventurier.messager){
+                    joueursdispo[j] = joueur.getRoleJoueur().getRoleToString();
+                    j++;
+                }
+            }
+            listeDeroulanteJoueurs = new JComboBox(joueursdispo);
+
+            panelBouton.remove(finTour);
+            panelBouton.remove(deck);
+            panelBouton.remove(listeDeroulanteDonner);
+            panelBouton.remove(tr);
+            panelBouton.remove(canvasTresor);
+            panelBouton.add(listeDeroulanteJoueurs);
+            panelBouton.add(donner);
+            panelBouton.add(finTour);
+            panelBouton.add(deck);
+            panelBouton.add(listeDeroulanteDonner);
+            panelBouton.add(tr);
+            panelBouton.add(canvasTresor);
         }
+        
     }
     
     public void boutonsTresor(){
@@ -919,7 +969,6 @@ public class VueIle extends Observe {
                fenetre.setSize(1650, 950);
                application.initPartie();
                listeAssecher();
-               System.out.println("BUEr");
     }
   
 }
