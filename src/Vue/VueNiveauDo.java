@@ -8,6 +8,8 @@ package Vue;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.imageio.ImageIO;
 
@@ -22,7 +24,7 @@ public class VueNiveauDo extends JPanel{
     private JLabel imgLabel;
     private BufferedImage image;
     
-    public VueNiveauDo(int niveau) throws IOException {
+    public VueNiveauDo(int niveau) {
         
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         
@@ -31,8 +33,13 @@ public class VueNiveauDo extends JPanel{
         // main window
         JFrame frame = new JFrame("Niveau D'Eau");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        image = ImageIO.read(new File("/users/info/etu-s2/viellarb/Ile_Interdite/Ile_Interdite/src/Image/niveauDesEaux"+niveau+".png"));
+
+        File path = new File("");
+        try {
+            image = ImageIO.read(new File(path.getAbsolutePath()+"/src/Image/niveauDesEaux"+niveau+".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(VueNiveauDo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         imgLabel = new JLabel(new ImageIcon(image.getScaledInstance((int) (size.getWidth()*0.15), (int) (size.getHeight()*0.9), Image.SCALE_DEFAULT)));
         mainPanel.add(imgLabel);
 
@@ -41,10 +48,15 @@ public class VueNiveauDo extends JPanel{
 
     }
     
-    public void monteDesEaux(int niveau) throws IOException {
+    public void monteDesEaux(int niveau){
         this.mainPanel.remove(imgLabel);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        image = ImageIO.read(new File("/users/info/etu-s2/viellarb/Ile_Interdite/Ile_Interdite/src/Image/niveauDesEaux"+niveau+".png"));
+        File path = new File("");
+        try {
+            image = ImageIO.read(new File(path.getAbsolutePath()+"/src/Image/niveauDesEaux"+niveau+".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(VueNiveauDo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         imgLabel = new JLabel(new ImageIcon(image.getScaledInstance((int) (dim.getWidth()*0.15), (int) (dim.getHeight()*0.9), Image.SCALE_DEFAULT)));
         mainPanel.add(imgLabel);
         this.validate();

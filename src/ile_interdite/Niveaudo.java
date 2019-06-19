@@ -37,7 +37,7 @@ public class Niveaudo {
     }
     
     public void initNiveauDeau(){
-        setNiveau(2);
+        setNiveau(1);
         updateInnondation();
     }
 }

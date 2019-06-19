@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 23232b1ff7fc363ecefd35149a5923e01ac095af
 package ile_interdite;
 
 import java.awt.Color;
@@ -5,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Scanner;
+=======
+>>>>>>> 23232b1ff7fc363ecefd35149a5923e01ac095af
 
 
 public class Application {
@@ -17,7 +24,11 @@ public class Application {
 	public ArrayList<Joueur> joueurs = new ArrayList<Joueur>(); //liste des joueurs
 	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>(); //liste des cartes trésor poyvant être piochées
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
+<<<<<<< HEAD
         
+=======
+        private boolean finTour = false;
+>>>>>>> 23232b1ff7fc363ecefd35149a5923e01ac095af
         
         public void tourDeJeu(int x,int y,Joueur j){
             j.initPointAction(); //Point d'action du joueur réinitialisé
@@ -311,5 +322,17 @@ public class Application {
     
         return tuilesPilote;
         }
+<<<<<<< HEAD
 }
 
+=======
+    
+    public boolean getEtatTour(){
+        return finTour;
+    }
+    
+    public void setEtatTour(boolean tour){
+        this.finTour = tour;
+    }
+}
+>>>>>>> 23232b1ff7fc363ecefd35149a5923e01ac095af
