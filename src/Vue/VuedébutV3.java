@@ -20,6 +20,7 @@ import java.awt.Label;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -99,8 +100,8 @@ public class VuedébutV3 extends Observe {
         
         panBack = new JPanel();
         panBack.setOpaque(false);
-        
-        imgBackground = new ImageIcon("/users/info/etu-s2/viellarb/Ile_Interdite/Ile_Interdite/src/Image/fond.png");
+        File path = new File("");
+        imgBackground = new ImageIcon(path.getAbsolutePath()+"/src/Image/fond.png");
         contentPane = new JLabel();
         contentPane.setIcon(imgBackground);
         contentPane.setLayout(new BorderLayout());
