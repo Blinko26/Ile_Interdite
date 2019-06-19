@@ -676,30 +676,7 @@ public class VueIle extends Observe {
                     notifierObservateur(m);
                     actualiser();
                 }
-<<<<<<< HEAD
-        });
-        
-        
-        /****************************************************************/
-        
-        /* Affichage de la fenetre */
-
-        
-            boutonJouer.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-               menu.dispose();
-               fenetre.setVisible(true);
-               fenetre.setSize(1650, 950);
-               application.initPartie();
-               listeAssecher();
-
-            }
-        });
-        
-                
-=======
         });          
->>>>>>> 23232b1ff7fc363ecefd35149a5923e01ac095af
     }    
     /*
      *   configureWindow

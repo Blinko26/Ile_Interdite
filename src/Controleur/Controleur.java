@@ -48,28 +48,6 @@ public class Controleur implements Observateur {
             case DEPLACER:  //Clic sur deplacer
                 joueur = message.joueur;
                 tuile = message.tuile;
-<<<<<<< HEAD
-               /* if(joueur.getRoleJoueur().getType() == ile_interdite.TypeAventurier.plongeur){
-                    switch(tuile.getEtat()){
-                        case innondée : 
-                                if(message.type != message.type.DEPLACER){
-                                    joueur.removePA(1);
-                                }
-                            joueur.removePA(0);
-                             
-                            break;
-                            
-                        case sombrée :
-                            joueur.removePA(0);
-                            break;
-                            
-                        case normale :
-                            joueur.removePA(1);
-                            break;
-                    }*/
-                //}else{
-                    joueur.removePA(1);
-=======
                 if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && joueur.getRoleJoueur().getAAsseche() == true) {
                     joueur.removePA(2);
                 }
@@ -88,14 +66,14 @@ public class Controleur implements Observateur {
                 //            joueur.removePA(1);
                 //            break;
                 //    }
->>>>>>> 23232b1ff7fc363ecefd35149a5923e01ac095af
                 //}
                 else{
                     joueur.removePA(1);
                 }
                 
                 application.deplacement(joueur,tuile);
-                vueIle.actualiser();                break;
+                vueIle.actualiser();                
+                break;
                 
             case ASSECHER: //Clic pour assécher
                 joueur = message.joueur;
