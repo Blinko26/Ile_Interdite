@@ -116,7 +116,7 @@ public class Controleur implements Observateur {
                 }
                 joueur2.getCartesT().add(joueur.getCartesT().get(index));
                 joueur.getCartesT().remove(index);
-
+                vueIle.deck();
                 vueIle.actualiser();
                 break;
             case GAGNER_TRESOR:
@@ -150,6 +150,7 @@ public class Controleur implements Observateur {
                         }
                     }
                 }
+                vueIle.deck();
                 break;
                 
             case DEFAUSSER:
@@ -157,7 +158,7 @@ public class Controleur implements Observateur {
                 carte = message.carte;
                     application.defausserCarteTresor(carte);
                     joueur.removeCarte(carte);
-                
+                vueIle.deck();
                 vueIle.actualiser();
                 break;
                 
@@ -169,6 +170,7 @@ public class Controleur implements Observateur {
                     application.getNiveaudeau().monterEau();
                     application.setEtatTour(false);
                 }
+                vueIle.deck();
                 vueIle.actualiser();
                 break;
                 

@@ -60,6 +60,7 @@ public class VueIle extends Observe {
     private static boolean presse=false;
     private static int joueurcourant=1;
     private VueNiveauDo vueEau = new VueNiveauDo(1);
+    private VueDeck vueDeck;
     
     public static class MyCanvas extends JPanel {
 
@@ -211,9 +212,11 @@ public class VueIle extends Observe {
     
      /*Déclaration des éléments de la fenetre*/
     private JFrame fenetre;
+    private JPanel panelCentrale;
     private JPanel panelMap;
     private JPanel panelBouton;
     private JPanel panelNiveauEau;
+    private JPanel panelDeck;
     
     private MyCanvas canvas;
     private CanvasT canvasTresor;
@@ -260,17 +263,27 @@ public class VueIle extends Observe {
         fenetre.setVisible(false);
         this.configureWindow(fenetre);
         
+        panelCentrale = new JPanel(new BorderLayout());
+        fenetre.add(panelCentrale, BorderLayout.CENTER);
+        panelCentrale.setOpaque(false);
+        
         panelMap = new JPanel();    //Instanciation de la map
-        fenetre.add(panelMap, BorderLayout.CENTER);
+        panelCentrale.add(panelMap, BorderLayout.NORTH);
         
         panelBouton = new JPanel(new GridLayout(6,1));
         fenetre.add(panelBouton, BorderLayout.EAST);
         
+        
         panelNiveauEau = vueEau;
         fenetre.add(panelNiveauEau, BorderLayout.WEST);
+        
+        vueDeck = new VueDeck(application.getJoueur("J"+joueurcourant).cartesT);
+        panelDeck = vueDeck;
+        panelCentrale.add(panelDeck, BorderLayout.SOUTH);
+        
         /****************************************************************/
         canvas = new MyCanvas();
-        fenetre.add(canvas);
+        panelCentrale.add(canvas);
         
         /*canvas.addMouseListener(new MouseListener(){
             @Override
@@ -647,6 +660,7 @@ public class VueIle extends Observe {
                         boutonsPilote();
                         boutonsTresor();
                         plusDe5Cartes();
+                        deck();
                     //FIN TEST
                     actualiser();
                     notifierObservateur(m);
@@ -888,14 +902,16 @@ public class VueIle extends Observe {
     
     public void monterEau(){
         
-        try {
-            vueEau.monteDesEaux(application.getNiveaudeau().getNiveau());
-        } catch (IOException ex) {
-            Logger.getLogger(VueIle.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        vueEau.monteDesEaux(application.getNiveaudeau().getNiveau());
         panelNiveauEau = vueEau;
         
         panelNiveauEau.repaint();
+    }
+    
+    public void deck(){
+        vueDeck.actualiserDeck(application.getJoueur("J"+joueurcourant).cartesT);
+        panelDeck = vueDeck;
+        panelDeck.repaint();
     }
     
     public void start(){

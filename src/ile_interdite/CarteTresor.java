@@ -3,10 +3,10 @@ public class CarteTresor {
 	private TypeCT type; //type de carte trésor
         public Joueur joueur; //joueur possèdant la carte
         
-        CarteTresor(TypeCT type){
+    public CarteTresor(TypeCT type){
             this.type=type;
             this.joueur=null;
-        }
+    }
         
     public TypeCT getType() { //retourne le type de la carte
         return type;
