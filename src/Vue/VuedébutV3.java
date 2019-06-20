@@ -10,29 +10,25 @@ import Controleur.Message;
 import Controleur.Observe;
 import Controleur.TypesMessages;
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.Label;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import javax.swing.BorderFactory;
+import java.io.IOException;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 /**
  *
@@ -46,7 +42,7 @@ import javax.swing.SwingConstants;
 public class VuedébutV3 extends Observe {
     
     private JFrame fenetre;
-    private JButton Aide;
+    private JButton Regles;
     private JButton Jouer;
     private ButtonGroup buttonGroup1;
     private JRadioButton jRadioButton1;
@@ -94,7 +90,7 @@ public class VuedébutV3 extends Observe {
         nomJoueur4 = new JTextField();     
         Jouer = new JButton();
        
-        Aide = new JButton("Aide");
+        Regles = new JButton("Regles");
         difficulté = new JLabel("Choisissez la diffculté");
         choixDifficulté = new JComboBox<>();
         
@@ -166,7 +162,7 @@ public class VuedébutV3 extends Observe {
         }
         panelBas.add(Jouer);
         panelBas.add(new JLabel());
-        panelBas.add(Aide);
+        panelBas.add(Regles);
         for(int i = 0; i<6; i++){
            panelBas.add(new JLabel()); 
         }
@@ -210,7 +206,20 @@ public class VuedébutV3 extends Observe {
                     m.difficulté=choixDifficulté.getSelectedItem().toString();
                     notifierObservateur(m);
            } 
-        });       
+        });   
+        
+              Regles.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               try{
+                   //Bug mais pas notre faute
+               Desktop.getDesktop().open(new File(path.getAbsolutePath()+"/src/File/Ile_Interdite-regles.pdf"));
+               }catch (IOException ex){
+                   System.out.println("Pas de fichier pdf");
+               }
+            }
+            
+        });
         
         choixDifficulté.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Novice", "Normale", "Elite", "Légendaire" }));
 

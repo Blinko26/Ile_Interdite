@@ -16,7 +16,7 @@ public class Application {
 	public ArrayList<CarteInondation> cartesInondation = new ArrayList<CarteInondation>(); //liste des cartes inondation pouvant être piochées
         public ArrayList<CarteInondation> defausseInondation = new ArrayList<>(); //liste des cartes inondation défaussées
 	public ArrayList<Joueur> joueurs = new ArrayList<Joueur>(); //liste des joueurs
-	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>(); //liste des cartes trésor poyvant être piochées
+	public ArrayList<CarteTresor> cartesTresor = new ArrayList<CarteTresor>(); //liste des cartes trésor pouvants être piochées
         public ArrayList<CarteTresor> defausseTresor = new ArrayList<>(); //liste des cartes trésor défaussées
         private boolean finTour = false;
 
@@ -178,6 +178,7 @@ public class Application {
     public ArrayList<Tresor> getTrésors() { //retourne les trésors
         return trésors;
     }
+    
 
     public ArrayList<CarteInondation> getCartesInondation() { //retourne la pile de cartes inondation
         return cartesInondation;

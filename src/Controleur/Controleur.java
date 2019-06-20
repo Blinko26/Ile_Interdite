@@ -50,21 +50,7 @@ public class Controleur implements Observateur {
                     joueur.removePA(2);
                 }
                 
-                //else if(joueur.getRoleJoueur().getType() == ile_interdite.TypeAventurier.plongeur){
-                //    switch(tuile.getEtat()){
-                //        case innondée : 
-                //            joueur.removePA(0);
-                //            break;
-                //            
-                //        case sombrée :
-                //            joueur.removePA(0);
-                //            break;
-                //            
-                //        case normale :
-                //            joueur.removePA(1);
-                //            break;
-                //    }
-                //}
+
                 else{
                     joueur.removePA(1);
                 }
@@ -167,15 +153,24 @@ public class Controleur implements Observateur {
                     application.getNiveaudeau().monterEau();
                     application.setEtatTour(false);
                 }
+                vueIle.conditionVictoire();
                 vueIle.listeAssecher();
                 vueIle.deck();
                 vueIle.actualiser();
+               
                 break;
             case FIN_PARTIE:
                 
                 //vueIle.fermerFenetre();
                 break;
                 
+          
+            case VICTOIRE:
+                System.out.println("Vous avez gagné");
+                vueIle.fermerFenetre();
+                break;
+                
+               
                 
             
         }

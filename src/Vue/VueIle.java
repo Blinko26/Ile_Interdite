@@ -24,6 +24,7 @@ import ile_interdite.EtatT;
 import ile_interdite.TypeAventurier;
 import ile_interdite.TypeCT;
 import ile_interdite.Joueur;
+import ile_interdite.Tresor;
 import ile_interdite.TypeC;
 import ile_interdite.TypeT;
 import java.awt.BorderLayout;
@@ -451,6 +452,7 @@ public class VueIle extends Observe {
                     {                        
                         Message m = new Message();
                         m.type = TypesMessages.DEPLACER;
+                        
                         m.joueur = application.getJoueur("J"+joueurcourant);    //Joueur courant
                         m.tuile = application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement().get(listeDeroulanteBouger.getSelectedIndex()); //Position du joueur courant
                         notifierObservateur(m);
@@ -1014,6 +1016,51 @@ public class VueIle extends Observe {
             panelBouton.add(gagnerTresor);
         }
     }
+    
+
+    public void conditionVictoire(){
+        int nbJoueurSurCaseHeliport = 1;
+        int nbTresorTrouve = 0;
+        int nbJoueurPartie = application.getJoueurs().size();
+        int nbTresorPartie = application.getTrésors().size();
+        
+        //On verifie si les trésors ont été trouvé si oui alors le tresorTrouve = tresorTrouve +1
+        for(Tresor tresor :application.getTrésors()){
+            if(tresor.getEtat() == tresor.getEtat().trouvé){//Pourquoi je peux pas if(tresor.getEtat().trouvé) ?????!!!!!
+                System.out.println("Vous avez trouvé ce trésor");
+                nbTresorTrouve++;
+            }
+        }
+            //On regarde si le nombre de trésor trouvé = nombre de trésors totaux
+            if(nbTresorTrouve == nbTresorPartie){
+                //Si c'est le cas on leur dit de go à l'héliport (genre la surligner un truc comme ça)
+                System.out.println("Rendez-vous à l'heliport pour vous enfuir !!!");
+                for (Joueur joueur : application.getJoueurs()){           
+                    //On vérifie si un joueur est sur héliport
+                    if(joueur.getRoleJoueur().getPosition().getNom() == "Heliport"){
+                        System.out.println(joueur.getNomJoueur() + "sur la case Heliport " + nbJoueurSurCaseHeliport);
+                       nbJoueurSurCaseHeliport++;
+                    }
+                    //CHECK Si le nombre de joueurs sur heliport == nombre de joueurs de la partie 
+                    if(nbJoueurSurCaseHeliport == nbJoueurPartie){
+                        System.out.println("Tout les joueurs sont sur l'heliport");
+                        //on veut savoir s'ils ont au moins une carte helicoptere pour s'enfuir
+                        if(joueur.getCarteSpeciale().contains(TypeC.héliport)){
+                            Message m = new Message();
+                            m.type = TypesMessages.VICTOIRE;
+                            notifierObservateur(m);
+                        }
+                    }
+                }
+            }
+                
+           
+    }
+
+
+ 
+        
+    
     
     public void fermerFenetre(){
         fenetre.dispose();
