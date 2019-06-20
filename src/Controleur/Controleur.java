@@ -12,6 +12,7 @@ import Vue.VueIle;
 import Vue.VueNiveauDo;
 import Vue.VuedébutV3;
 import ile_interdite.TypeAventurier;
+import ile_interdite.TypeCT;
 import java.util.ArrayList;
 
 public class Controleur implements Observateur {
@@ -115,6 +116,18 @@ public class Controleur implements Observateur {
                 vueIle.deck();
                 vueIle.actualiser();
                 break;
+            case CARTE_SPE:
+                joueur=message.joueur;
+                carte=message.carte;
+                tuile=message.tuile;
+                if (carte.getType()==TypeCT.hélicoptère) {
+                    application.deplacement(joueur, tuile);
+                }
+                if (carte.getType()==TypeCT.sac2sable) {
+                    joueur.getRoleJoueur().assecher(tuile);
+                }
+                vueIle.actualiser();
+                break;             
             case GAGNER_TRESOR:
                 tuile=message.tuile;
                 if(tuile==application.getIle().getTuile("Le Palais de Corail") 

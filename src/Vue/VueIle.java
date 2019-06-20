@@ -238,6 +238,7 @@ public class VueIle extends Observe {
     private JButton voler;
     private JButton gagnerTresor;
     private JButton defausser;
+    private JButton carteSpe;
     
     private JComboBox listeDeroulanteBouger;
     private JComboBox listeDeroulanteAssecher;
@@ -245,6 +246,7 @@ public class VueIle extends Observe {
     private JComboBox listeDeroulanteDeck;
     private JComboBox listeDeroulanteDonner;
     private JComboBox listeDeroulantePilote;
+    private JComboBox listeDeroulanteCartesSpe;
     
     private String[] tuile;
     private String[] tuileA;
@@ -350,6 +352,7 @@ public class VueIle extends Observe {
         gagnerTresor = new JButton("Gagner le trésor");
         defausser = new JButton("Défausser une carte trésor");
         gagnerTresor = new JButton("Gagner le tresor");
+        carteSpe = new JButton("Utiliser une carte spéciale");
         canvasTresor= new CanvasT();
         
         /*Creation de la liste deroulante avec les deplacements possible*/
@@ -386,6 +389,11 @@ public class VueIle extends Observe {
             listeDeroulanteDonner.addItem(ct.getType());
         }
         
+        listeDeroulanteCartesSpe = new JComboBox();
+        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCarteSpeciale()) {
+            listeDeroulanteCartesSpe.addItem(ct.getType());
+        }
+        
         joueurCourant = new JLabel("Joueur Courant :"+application.getJoueur("J"+joueurcourant).getRoleJoueur().getRoleToString());   //Affiche le joueur dont c'est le tour
         pa = new JLabel("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3"); //Affiche les PA du joueur
         tr = new JLabel("Trésors :");
@@ -402,6 +410,10 @@ public class VueIle extends Observe {
         panelBouton.add(donner);
         panelBouton.remove(listeDeroulanteJoueurs);
         panelBouton.remove(donner);
+        panelBouton.add(listeDeroulanteCartesSpe);
+        panelBouton.add(carteSpe);
+        panelBouton.remove(listeDeroulanteCartesSpe);
+        panelBouton.remove(carteSpe);
         panelBouton.add(finTour);
         panelBouton.add(deck);
         panelBouton.add(listeDeroulanteDonner);
@@ -559,13 +571,13 @@ public class VueIle extends Observe {
                             if (application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()==TypeAventurier.messager){
                                 j =0;
                                 for (Joueur joueur : application.getJoueurs()){
-                                if(joueur!=application.getJoueur("J"+joueurcourant)){
-                                    if(listeDeroulanteJoueurs.getSelectedIndex()==j){
-                                        m.receveur=joueur;
+                                    if(joueur!=application.getJoueur("J"+joueurcourant)){
+                                        if(listeDeroulanteJoueurs.getSelectedIndex()==j){
+                                            m.receveur=joueur;
+                                        }
+                                        j=j+1;
                                     }
-                                    j=j+1;
                                 }
-                            }
                             }
                             
                             m.carte = application.getJoueur("J"+joueurcourant).getCartesT().get(listeDeroulanteDonner.getSelectedIndex());
@@ -586,6 +598,42 @@ public class VueIle extends Observe {
                     }  
                 
         });
+        
+        carteSpe.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().size()>0) {
+                    Message m = new Message();
+                    m.type = TypesMessages.CARTE_SPE;
+                    m.joueur = application.getJoueur("J"+joueurcourant);
+                    m.carte = application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex());
+                    m.tuile = application.getCasesDeplacementPilote().get(listeDeroulantePilote.getSelectedIndex());
+                    
+                    notifierObservateur(m);
+                    
+                    listeDeroulanteCartesSpe.removeAllItems();
+                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                            listeDeroulanteCartesSpe.addItem(ct.getType());
+                        }
+                    listeDeroulanteCartesSpe.repaint();
+                    
+                    if (m.carte.getType()==TypeCT.hélicoptère){
+                        listeDeroulantePilote.removeAllItems();
+                            for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                                listeDeroulantePilote.addItem(ct.getType());
+                            }
+                        listeDeroulantePilote.repaint();
+                    }
+                    else if (m.carte.getType()==TypeCT.sac2sable) {
+                        listeDeroulantePilote.removeAllItems();
+                            for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                                listeDeroulantePilote.addItem(ct.getType());
+                            }
+                        listeDeroulantePilote.repaint();
+                    }
+                }
+            }
+        });
+            
            
             defausser.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -678,8 +726,10 @@ public class VueIle extends Observe {
                         listeDeroulanteAssecher.repaint();
                         listeDeroulanteBouger.repaint();
                         listeDeroulanteDonner.repaint();
+                        listeDeroulanteCartesSpe.repaint();
                         
                         boutonsDonner();
+                        boutonsCartesSpe();
                         boutonsPilote();
                         boutonsTresor();
                         plusDe5Cartes();
@@ -858,6 +908,23 @@ public class VueIle extends Observe {
         
     }
     
+    public void boutonsCartesSpe() {
+        if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().size()>0) {
+            panelBouton.remove(finTour);
+            panelBouton.remove(deck);
+            panelBouton.remove(listeDeroulanteDonner);
+            panelBouton.remove(tr);
+            panelBouton.remove(canvasTresor);
+            panelBouton.add(listeDeroulanteCartesSpe);
+            panelBouton.add(carteSpe);
+            panelBouton.add(finTour);
+            panelBouton.add(deck);
+            panelBouton.add(listeDeroulanteDonner);
+            panelBouton.add(tr);
+            panelBouton.add(canvasTresor);
+        }
+    }
+    
     public void boutonsTresor(){
         int calice=0;
         int cristal=0;
@@ -909,8 +976,10 @@ public class VueIle extends Observe {
             panelBouton.remove(assecher);
             panelBouton.remove(listeDeroulanteJoueurs);
             panelBouton.remove(donner);
-            panelBouton.remove(listeDeroulantePilote);
-            panelBouton.remove(voler);
+            if (application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()==TypeAventurier.pilote){
+                panelBouton.remove(listeDeroulantePilote);
+                panelBouton.remove(voler);
+            }
             panelBouton.remove(finTour);
             panelBouton.remove(tr);
             panelBouton.remove(canvasTresor);
