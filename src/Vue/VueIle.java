@@ -258,7 +258,7 @@ public class VueIle extends Observe {
     private boolean defaussé=false;
     private boolean aasseche=false;
     
-    public VueIle(Application appli) throws IOException {
+    public VueIle(Application appli) {
         
         application = appli;
         
@@ -1060,28 +1060,38 @@ public class VueIle extends Observe {
             }
         }
     }
+    
     public void conditionDefaite(){
-        if(application.getIle().getTuile("Héliport").getEtat()== EtatC.sombrée){
+        if(application.getIle().getTuile("Heliport").getEtat()== EtatC.sombrée){
             Message m = new Message();
             m.type = TypesMessages.FIN_PARTIE;
             notifierObservateur(m);}
         if((EtatC.sombrée==application.getIle().getTuile("Le Palais de Corail").getEtat() 
-        || EtatC.sombrée==application.getIle().getTuile("Le Palais des Marees").getEtat())){
-            gagnerTresor.setBackground(new Color(0,192,255));
-            panelBouton.add(gagnerTresor);
+        && EtatC.sombrée==application.getIle().getTuile("Le Palais des Marees").getEtat())){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            notifierObservateur(m);
         } else if((EtatC.sombrée==application.getIle().getTuile("La Caverne du Brasier").getEtat() 
-        || EtatC.sombrée==application.getIle().getTuile("La Caverne des Ombres").getEtat())){
-            gagnerTresor.setBackground(new Color(255,64,0));
-            panelBouton.add(gagnerTresor);
+        && EtatC.sombrée==application.getIle().getTuile("La Caverne des Ombres").getEtat())){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            notifierObservateur(m);
         } else if((EtatC.sombrée==application.getIle().getTuile("Le Temple de La Lune").getEtat() 
-        || EtatC.sombrée==application.getIle().getTuile("Le Temple du Soleil").getEtat())){
-            gagnerTresor.setBackground(new Color(128,0,200));
-            panelBouton.add(gagnerTresor);
+        && EtatC.sombrée==application.getIle().getTuile("Le Temple du Soleil").getEtat())){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            notifierObservateur(m);
         } else if((EtatC.sombrée==application.getIle().getTuile("Le Jardin des Murmures").getEtat() 
-        || EtatC.sombrée==application.getIle().getTuile("Le Jardin des Hurlements").getEtat())){
-            gagnerTresor.setBackground(new Color(255,200,0));
-            panelBouton.add(gagnerTresor);
+        && EtatC.sombrée==application.getIle().getTuile("Le Jardin des Hurlements").getEtat())){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            notifierObservateur(m);
+        }else if (application.getNiveaudeau().getNiveau() == 10){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            notifierObservateur(m);
         }
+        
     }
     
     public void fermerFenetre(){

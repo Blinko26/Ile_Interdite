@@ -1,5 +1,6 @@
 package Controleur;
 
+import Vue.VueDefaite;
 import ile_interdite.Application;
 import ile_interdite.EtatT;
 import ile_interdite.Joueur;
@@ -14,21 +15,17 @@ import Vue.VuedébutV3;
 import ile_interdite.TypeAventurier;
 import ile_interdite.TypeCT;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;
     private VuedébutV3 vueDebut;
     private VueNiveauDo vueNiveauDo;
+    private VueDefaite vueDef;
     private Application application;
     
-    public Controleur() throws IOException {
-        application = new Application();
-        application.initMap();
-        application.initCartes();
-        application.initJoueurs(6);
-        vueIle = new VueIle(application);
-        vueIle.addObservateur(this);
-        
+    public Controleur() {
         vueDebut = new VuedébutV3();
         vueDebut.addObservateur(this);
     }  
@@ -40,10 +37,20 @@ public class Controleur implements Observateur {
         int no_joueur = 0, suivant;
 
         switch(message.type) {
-            case DEMARRER_PARTIE: //Action pour démarrer la partie
-                    vueIle.start();
+            case DEMARRER_PARTIE:
+                application = new Application();
+                application.initMap();
+                application.initCartes();
+                application.initJoueurs(6);
+                vueIle = new VueIle(application);
+                vueIle.addObservateur(this);
+                vueIle.start();
                 break;
-            
+            case REJOUER:
+                new Controleur(); 
+                System.out.println("REJOUEr");
+                break;
+          
             case DEPLACER:  //Clic sur deplacer
                 joueur = message.joueur;
                 tuile = message.tuile;
@@ -180,13 +187,16 @@ public class Controleur implements Observateur {
                     application.getNiveaudeau().monterEau();
                     application.setEtatTour(false);
                 }
+                vueIle.conditionDefaite();
                 vueIle.listeAssecher();
                 vueIle.deck();
                 vueIle.actualiser();
                 break;
             case FIN_PARTIE:
-                
-                //vueIle.fermerFenetre();
+                System.out.println("Vous avez PERDU");
+                vueIle.fermerFenetre();
+                vueDef = new VueDefaite();
+                vueDef.addObservateur(this);
                 break;
                 
                 

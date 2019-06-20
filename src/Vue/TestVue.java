@@ -31,7 +31,7 @@ public class TestVue {
      */
     public static void main(String[] args){
         // TODO code application logic here
-       ArrayList<CarteTresor> carteT = new ArrayList<>();
+       /*ArrayList<CarteTresor> carteT = new ArrayList<>();
        CarteTresor carte = new CarteTresor(TypeCT.cristal);
        
        for(int i =0; i<5;i++){
@@ -40,7 +40,9 @@ public class TestVue {
        
        
        
-       new VueDeck(carteT);     
+       new VueDeck(carteT);     */
+       
+       new VueDefaite();
     }
 
 }
