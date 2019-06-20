@@ -14,6 +14,8 @@ import Vue.VueNiveauDo;
 import Vue.VuedébutV3;
 import ile_interdite.TypeAventurier;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;
@@ -22,14 +24,7 @@ public class Controleur implements Observateur {
     private VueDefaite vueDef;
     private Application application;
     
-    public Controleur() throws IOException {
-        application = new Application();
-        application.initMap();
-        application.initCartes();
-        application.initJoueurs(6);
-        vueIle = new VueIle(application);
-        vueIle.addObservateur(this);
-        
+    public Controleur() {
         vueDebut = new VuedébutV3();
         vueDebut.addObservateur(this);
     }  
@@ -41,10 +36,20 @@ public class Controleur implements Observateur {
         int no_joueur = 0, suivant;
 
         switch(message.type) {
-            case DEMARRER_PARTIE: //Action pour démarrer la partie
-                    vueIle.start();
+            case DEMARRER_PARTIE:
+                application = new Application();
+                application.initMap();
+                application.initCartes();
+                application.initJoueurs(6);
+                vueIle = new VueIle(application);
+                vueIle.addObservateur(this);
+                vueIle.start();
                 break;
-            
+            case REJOUER:
+                new Controleur(); 
+                System.out.println("REJOUEr");
+                break;
+          
             case DEPLACER:  //Clic sur deplacer
                 joueur = message.joueur;
                 tuile = message.tuile;
@@ -178,6 +183,7 @@ public class Controleur implements Observateur {
                 System.out.println("Vous avez PERDU");
                 vueIle.fermerFenetre();
                 vueDef = new VueDefaite();
+                vueDef.addObservateur(this);
                 break;
                 
                 

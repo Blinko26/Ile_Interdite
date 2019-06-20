@@ -18,5 +18,6 @@ public enum TypesMessages {
     GAGNER_TRESOR,
     TERMINER_TOUR, 
     DEFAUSSER,
-    FIN_PARTIE
+    FIN_PARTIE,
+    REJOUER
 }

@@ -1019,7 +1019,12 @@ public class VueIle extends Observe {
             Message m = new Message();
             m.type = TypesMessages.FIN_PARTIE;
             notifierObservateur(m);
+        }else if (application.getNiveaudeau().getNiveau() == 10){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            notifierObservateur(m);
         }
+        
     }
     
     public void fermerFenetre(){

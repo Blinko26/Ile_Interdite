@@ -88,7 +88,7 @@ public class VueDefaite extends Observe{
            public void actionPerformed(ActionEvent e) {
                fenetre.dispose();
                     Message m = new Message();
-                    m.type = TypesMessages.DEMARRER_PARTIE;    
+                    m.type = TypesMessages.REJOUER;    
                     notifierObservateur(m);
            } 
         });
