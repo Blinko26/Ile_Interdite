@@ -1,5 +1,6 @@
 package Controleur;
 
+import Vue.VueDefaite;
 import ile_interdite.Application;
 import ile_interdite.EtatT;
 import ile_interdite.Joueur;
@@ -18,6 +19,7 @@ public class Controleur implements Observateur {
     private VueIle vueIle;
     private VuedébutV3 vueDebut;
     private VueNiveauDo vueNiveauDo;
+    private VueDefaite vueDef;
     private Application application;
     
     public Controleur() throws IOException {
@@ -167,13 +169,15 @@ public class Controleur implements Observateur {
                     application.getNiveaudeau().monterEau();
                     application.setEtatTour(false);
                 }
+                vueIle.conditionDefaite();
                 vueIle.listeAssecher();
                 vueIle.deck();
                 vueIle.actualiser();
                 break;
             case FIN_PARTIE:
-                
-                //vueIle.fermerFenetre();
+                System.out.println("Vous avez PERDU");
+                vueIle.fermerFenetre();
+                vueDef = new VueDefaite();
                 break;
                 
                 
