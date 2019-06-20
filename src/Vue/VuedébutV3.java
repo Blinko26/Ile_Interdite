@@ -116,10 +116,10 @@ public class VuedébutV3 extends Observe {
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("3 joueurs");
-        jRadioButton2.setSelected(true);
         
         buttonGroup1.add(jRadioButton3);
         jRadioButton3.setText("4 joueurs");
+        jRadioButton3.setSelected(true);
 
         nj1.setText("Nom joueur 1 : ");
         nj2.setText("Nom joueur 2 : ");
