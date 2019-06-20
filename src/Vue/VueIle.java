@@ -1019,7 +1019,7 @@ public class VueIle extends Observe {
     
 
     public void conditionVictoire(){
-        int nbJoueurSurCaseHeliport = 1;
+        int nbJoueurSurCaseHeliport = 0 ;
         int nbTresorTrouve = 0;
         int nbJoueurPartie = application.getJoueurs().size();
         int nbTresorPartie = application.getTrésors().size();
@@ -1031,8 +1031,19 @@ public class VueIle extends Observe {
                 nbTresorTrouve++;
             }
         }
+        for (Joueur joueur1 : application.getJoueurs()){           
+                    //On vérifie si un joueur est sur héliport
+                    if(joueur1.getRoleJoueur().getPosition().getNom() == "Heliport"){
+                        System.out.println(joueur1.getNomJoueur() + "sur la case Heliport " + nbJoueurSurCaseHeliport);
+                        nbJoueurSurCaseHeliport++;
+                    }
+                    if(nbJoueurSurCaseHeliport == nbJoueurPartie){
+                        System.out.println("Tout les joueurs sont sur l'heliport");
+                        //on veut savoir s'ils ont au moins une carte helicoptere pour s'enfuir
+                    }
+        
             //On regarde si le nombre de trésor trouvé = nombre de trésors totaux
-            if(nbTresorTrouve == nbTresorPartie){
+          /*  if(nbTresorTrouve == nbTresorPartie){
                 //Si c'est le cas on leur dit de go à l'héliport (genre la surligner un truc comme ça)
                 System.out.println("Rendez-vous à l'heliport pour vous enfuir !!!");
                 for (Joueur joueur : application.getJoueurs()){           
@@ -1052,14 +1063,14 @@ public class VueIle extends Observe {
                         }
                     }
                 }
-            }
+            }*/
                 
            
     }
 
 
  
-        
+    }  
     
     
     public void fermerFenetre(){
