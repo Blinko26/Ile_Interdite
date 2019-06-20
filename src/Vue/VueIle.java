@@ -455,6 +455,7 @@ public class VueIle extends Observe {
         
         boutonsDonner();
         
+        
 
         // Action pour le bouton deplacer
         deplacer.addActionListener(new ActionListener() {
@@ -616,20 +617,14 @@ public class VueIle extends Observe {
                         }
                     listeDeroulanteCartesSpe.repaint();
                     
-                    if (m.carte.getType()==TypeCT.hélicoptère){
-                        listeDeroulantePilote.removeAllItems();
-                            for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
-                                listeDeroulantePilote.addItem(ct.getType());
+                    listeDeroulantePilote.removeAllItems();
+                        for (Tuile tu : application.getIle().getCase2ile()){  
+                            if (tu.getEtat()!=EtatC.sombrée){
+                                listeDeroulantePilote.addItem(tu.getNom());
                             }
-                        listeDeroulantePilote.repaint();
-                    }
-                    else if (m.carte.getType()==TypeCT.sac2sable) {
-                        listeDeroulantePilote.removeAllItems();
-                            for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
-                                listeDeroulantePilote.addItem(ct.getType());
-                            }
-                        listeDeroulantePilote.repaint();
-                    }
+                        }
+                    listeDeroulantePilote.repaint();
+                    
                 }
             }
         });
@@ -693,12 +688,21 @@ public class VueIle extends Observe {
                     Message m = new Message();
                     m.type = TypesMessages.TERMINER_TOUR;
                     m.joueur = application.getJoueur("J"+joueurcourant);
-                    if(application.getCartesTresor().size()>0){
-                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                        application.getCartesTresor().remove(0);
-                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                        application.getCartesTresor().remove(0);
-                    }
+                    
+                    /*if(application.getCartesTresor().size()>0){
+                        for (int i = 0; i<2; i++){
+                            if (application.getCartesTresor().get(0).getType()!=TypeCT.montéedso){
+                                application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
+                                application.getCartesTresor().remove(0);
+                            }
+                            else {
+                                application.getCartesTresor().remove(0);
+                                application.getNiveaudeau().monterEau();
+                            }
+                        }
+                    }*/
+                    
+                    application.piocherCarte(application.getJoueur("J"+joueurcourant));
                     /*Modifie le joueur courant*/
                     if (joueurcourant==application.getJoueurs().size()){
                         joueurcourant=1;
@@ -922,6 +926,24 @@ public class VueIle extends Observe {
             panelBouton.add(listeDeroulanteDonner);
             panelBouton.add(tr);
             panelBouton.add(canvasTresor);
+            
+            
+            listeDeroulanteCartesSpe.removeAllItems();
+            for (CarteTresor spé : application.getJoueur("J"+joueurcourant).getCarteSpeciale()){           
+                listeDeroulanteCartesSpe.addItem(spé.getType());
+            }
+        }
+        else {
+            int joueurprecedent;
+            if(joueurcourant==1)
+                joueurprecedent=4;
+            else{
+                joueurprecedent=joueurcourant-1;
+            }
+            if(application.getJoueur("J"+joueurprecedent).getCarteSpeciale().size()>0){
+                panelBouton.remove(listeDeroulanteCartesSpe);
+                panelBouton.remove(carteSpe);
+            }   
         }
     }
     
@@ -980,6 +1002,10 @@ public class VueIle extends Observe {
                 panelBouton.remove(listeDeroulantePilote);
                 panelBouton.remove(voler);
             }
+            if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().size()>0) {
+                panelBouton.remove(listeDeroulanteCartesSpe);
+                panelBouton.remove(carteSpe);
+            }
             panelBouton.remove(finTour);
             panelBouton.remove(tr);
             panelBouton.remove(canvasTresor);
@@ -999,6 +1025,10 @@ public class VueIle extends Observe {
             panelBouton.add(deplacer);
             panelBouton.add(listeDeroulanteAssecher);
             panelBouton.add(assecher);
+            if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().size()>0) {
+                panelBouton.add(listeDeroulanteCartesSpe);
+                panelBouton.add(carteSpe);
+            }
             panelBouton.add(finTour);
             panelBouton.add(deck);
             panelBouton.add(listeDeroulanteDonner);
@@ -1040,6 +1070,7 @@ public class VueIle extends Observe {
                fenetre.setSize(1650, 950);
                application.initPartie();
                listeAssecher();
+               boutonsCartesSpe();
     }
     
     public void bonhommeSurSombrée(){
