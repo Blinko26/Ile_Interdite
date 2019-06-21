@@ -1065,13 +1065,20 @@ public class VueIle extends Observe {
     public void bonhommeSurSombrée(){
         for (Joueur joueur : application.getJoueurs()){
             if(joueur.getRoleJoueur().getPosition().getEtat() == EtatC.sombrée){
-                if (joueur.getRoleJoueur().PossibleMouvement().size()==0){
+                if (joueur.getRoleJoueur().PossibleMouvement().size()==0 && application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()!= TypeAventurier.pilote){
                     System.out.println("T MORT");
                     Message m = new Message();
                     m.type = TypesMessages.FIN_PARTIE;
+                    m.raisonMort = "Le joueur"+application.getJoueur("J"+joueurcourant).getRoleJoueur().getRoleToString();
                     notifierObservateur(m);
+                }else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()== TypeAventurier.pilote){
+                    ArrayList<Tuile> tuiles = application.getIle().getTuilesNonSombrees();
+                    Collections.shuffle(tuiles);
+                    System.out.println(joueur.getRoleJoueur().PossibleMouvement().size());
+                    application.deplacement(joueur, tuiles.get(0));
                 }
-                else { 
+                else {
+                    
                     ArrayList<Tuile> tuiles = joueur.getRoleJoueur().PossibleMouvement();
                     Collections.shuffle(tuiles);
                     System.out.println(joueur.getRoleJoueur().PossibleMouvement().size());
