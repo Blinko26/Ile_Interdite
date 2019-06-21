@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2019-05-13" view-index="0" gantt-divider-location="300" resource-divider-location="300" version="2.8.10" locale="en_US">
+    <description/>
+    <view zooming-state="default:2" id="gantt-chart">
+        <field id="tpd3" name="Name" width="167" order="0"/>
+        <field id="tpd4" name="Begin date" width="65" order="1"/>
+        <field id="tpd5" name="End date" width="64" order="2"/>
+        <timeline>
+            <![CDATA[81,0,27,28]]>
+        </timeline>
+        <option id="color.recent">
+            <![CDATA[#ff3300 #ff6600 #ff0000 #ff9900 #0066cc #0099cc #0000ff]]>
+        </option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+        <date year="2019" month="6" date="10" type="HOLIDAY">
+            <![CDATA[Holiday on 6/10/19, 12:00 AM]]>
+        </date>
+        <date year="2019" month="6" date="11" type="HOLIDAY">
+            <![CDATA[Holiday on 6/11/19, 12:00 AM]]>
+        </date>
+        <date year="2019" month="6" date="12" type="HOLIDAY">
+            <![CDATA[Holiday on 6/12/19, 12:00 AM]]>
+        </date>
+        <date year="2019" month="6" date="13" type="HOLIDAY">
+            <![CDATA[Holiday on 6/13/19, 12:00 AM]]>
+        </date>
+        <date year="2019" month="6" date="14" type="HOLIDAY">
+            <![CDATA[Holiday on 6/14/19, 12:00 AM]]>
+        </date>
+        <date year="2019" month="6" date="16" type="HOLIDAY">
+            <![CDATA[Holiday on 6/16/19, 12:00 AM]]>
+        </date>
+        <date year="2019" month="6" date="15" type="HOLIDAY">
+            <![CDATA[Holiday on 6/15/19, 12:00 AM]]>
+        </date>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="Conception" color="#0066cc" meeting="false" start="2019-05-15" duration="23" complete="0" thirdDate="2019-05-08" thirdDate-constraint="0" expand="true">
+            <task id="4" name="diagramme de classe" color="#0066cc" meeting="false" start="2019-05-15" duration="5" complete="0" thirdDate="2019-05-08" thirdDate-constraint="0" expand="true"/>
+            <task id="5" name="diagrammes de séquence" color="#0066cc" meeting="false" start="2019-05-20" duration="5" complete="0" thirdDate="2019-05-08" thirdDate-constraint="0" expand="true"/>
+            <task id="51" name="Vérification cohérence" color="#0066cc" meeting="false" start="2019-06-04" duration="3" complete="0" thirdDate="2019-05-14" thirdDate-constraint="0" expand="true"/>
+            <task id="62" name="Verification cohérence" color="#0066cc" meeting="false" start="2019-06-21" duration="1" complete="0" thirdDate="2019-05-14" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="16" name="Programmation" color="#ff3300" meeting="false" start="2019-05-22" duration="18" complete="0" thirdDate="2019-05-08" thirdDate-constraint="0" expand="true">
+            <task id="27" name="Programmation partie 1" color="#ff6600" meeting="false" start="2019-05-22" duration="12" complete="0" thirdDate="2019-05-24" thirdDate-constraint="0" expand="true">
+                <task id="44" name="Squelette des classes" color="#ff6600" meeting="false" start="2019-05-22" duration="2" complete="0" thirdDate="2019-05-14" thirdDate-constraint="0" expand="true"/>
+                <task id="45" name="Méthodes principales" color="#ff6600" meeting="false" start="2019-05-24" duration="10" complete="0" thirdDate="2019-05-14" thirdDate-constraint="0" expand="true"/>
+                <task id="46" name="Maquette fonctionnelle IHM" color="#ff6600" meeting="false" start="2019-05-28" duration="8" complete="0" thirdDate="2019-05-14" thirdDate-constraint="0" expand="true"/>
+            </task>
+            <task id="28" name="Programmation partie 2" color="#ff9900" meeting="false" start="2019-06-17" duration="5" complete="0" thirdDate="2019-05-24" thirdDate-constraint="0" expand="true">
+                <task id="57" name="Finalisation méthodes" color="#ff9900" meeting="false" start="2019-06-17" duration="5" complete="0" thirdDate="2019-05-21" thirdDate-constraint="0" expand="true"/>
+                <task id="58" name="Finalisation IHM" color="#ff9900" meeting="false" start="2019-06-17" duration="5" complete="0" thirdDate="2019-05-21" thirdDate-constraint="0" expand="true"/>
+            </task>
+        </task>
+        <task id="81" name="Presentation finale" color="#ff0000" meeting="false" start="2019-06-24" duration="1" complete="0" thirdDate="2019-05-20" thirdDate-constraint="0" expand="true"/>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+</project>
