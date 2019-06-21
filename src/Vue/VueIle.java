@@ -402,7 +402,7 @@ public class VueIle extends Observe {
         }
         
         joueurCourant = new JLabel("Joueur Courant :"+application.getJoueur("J"+joueurcourant).getRoleJoueur().getRoleToString());   //Affiche le joueur dont c'est le tour
-        pa = new JLabel("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3"); //Affiche les PA du joueur
+        pa = new JLabel("PA : "+ application.getJoueur("J"+joueurcourant).getPA()+"/" + application.getJoueur("J"+joueurcourant).getMaxPA()); //Affiche les PA du joueur
         tr = new JLabel("Trésors :");
         deck  = new JLabel("Deck :");
         

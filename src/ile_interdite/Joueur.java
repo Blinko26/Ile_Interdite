@@ -94,6 +94,15 @@ public class Joueur {
             return pointAction;
         }
         
+        public int getMaxPA() {
+            if(roleJoueur.getType()==TypeAventurier.navigateur) {
+                return 4;
+            }
+            else {
+                return 3;
+            }
+        }
+        
         public boolean peutJouer(){
             if (getPA()>0){
                 return true;

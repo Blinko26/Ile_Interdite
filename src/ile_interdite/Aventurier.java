@@ -22,7 +22,7 @@ public abstract class Aventurier {
     public TypeAventurier getType() { //retourne le type de l'aventurier
         return type;
     }
-
+     
     public int[] getEmplacement() { //retourne l'emplacement de l'aventurier
         return emplacement;
     }
