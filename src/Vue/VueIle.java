@@ -64,6 +64,8 @@ public class VueIle extends Observe {
     private static int joueurcourant=1;
     private VueNiveauDo vueEau = new VueNiveauDo(1);
     private VueDeck vueDeck;
+    private VueCartesSpé vueSpé;
+    private VueAssecheInge vueAI;
     
     public static class MyCanvas extends JPanel {
 
@@ -256,7 +258,7 @@ public class VueIle extends Observe {
     private TypeCT[] carteD;
     private String[] tuileP;
     
-    private boolean aasseche=false;
+    public boolean aasseche=false;
     
     public VueIle(Application appli) {
         
@@ -501,13 +503,22 @@ public class VueIle extends Observe {
                     if (application.getJoueur("J"+joueurcourant).peutJouer() && application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable().size()!=0)
                     {
                         if (application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()==TypeAventurier.ingénieur && application.getJoueur("J"+joueurcourant).getPA()==1){
-                            panelBouton.removeAll();
-                            panelBouton.add(joueurCourant);
-                            panelBouton.add(pa);
-                            panelBouton.add(listeDeroulanteAssecher);
-                            panelBouton.add(assecher);
-                            panelBouton.add(tr);
-                            panelBouton.add(canvasTresor);
+                            Message m = new Message();
+                            m.type = TypesMessages.ASSECHER;
+                            m.joueur = application.getJoueur("J"+joueurcourant);
+                            m.tuile = application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable().get(listeDeroulanteAssecher.getSelectedIndex());
+                            notifierObservateur(m);
+                            
+                            pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
+                            listeAssecher();
+                            listeDeroulanteAssecher.repaint();
+                            if (!application.getJoueur("J"+joueurcourant).peutJouer()){
+                                pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+                            }
+                            vueAI = new VueAssecheInge();
+                            vueAI.lancerVueAssecheInge(application.getJoueur("J"+joueurcourant));
+                            assecheIngeListener();
+                            fenetre.setEnabled(false);
                         }
                         else{
                             Message m = new Message();
@@ -517,13 +528,10 @@ public class VueIle extends Observe {
                             m.aasseche=aasseche;
 
                             notifierObservateur(m);
-
-                            if (aasseche==false){
-                                aasseche=true;
-                            }
-                            else{
-                                aasseche=false;
-                            }
+                            
+                            System.out.println(aasseche);
+                            aasseche=!aasseche;
+                            System.out.println(aasseche);
 
                             pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
                             listeAssecher();
@@ -626,31 +634,41 @@ public class VueIle extends Observe {
         carteSpe.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().size()>0) {
-                    /*Message m = new Message();
+                   /* Message m = new Message();
                     m.type = TypesMessages.CARTE_SPE;
                     m.joueur = application.getJoueur("J"+joueurcourant);
                     m.carte = application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex());
-                    m.tuile = application.getCasesDeplacementPilote().get(listeDeroulantePilote.getSelectedIndex());
+                    //m.tuile = application.getCasesDeplacementPilote().get(listeDeroulantePilote.getSelectedIndex());
                     
                     notifierObservateur(m);                    
                     
                     listeDeroulanteCartesSpe.removeAllItems();
-                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCarteSpeciale()){           
                             listeDeroulanteCartesSpe.addItem(ct.getType());
                         }
                     listeDeroulanteCartesSpe.repaint();
                     
-                    listeDeroulantePilote.removeAllItems();
+                    /*listeDeroulantePilote.removeAllItems();
                         for (Tuile tu : application.getIle().getCase2ile()){  
                             if (tu.getEtat()!=EtatC.sombrée){
                                 listeDeroulantePilote.addItem(tu.getNom());
                             }
                         }
-                    listeDeroulantePilote.repaint();*/
+                    listeDeroulantePilote.repaint();
                     
-
-                    
-                    
+                    deck();
+                    fenetre.setEnabled(false);*/
+                   boolean helOrSac;
+                   if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex()).getType()==TypeCT.hélicoptère){
+                       helOrSac=true;
+                   }
+                   else{
+                       helOrSac=false;
+                   }
+                   vueSpé = new VueCartesSpé();
+                   vueSpé.lancerVueCarteSpé(application.getJoueur("J"+joueurcourant), helOrSac);
+                   carteSpéListener();
+                   fenetre.setEnabled(false);
                 }
             }
         });
@@ -672,6 +690,7 @@ public class VueIle extends Observe {
                     }
 
                     plusDe5Cartes();
+                    boutonsPilote();
                 }
             });
         
@@ -765,6 +784,7 @@ public class VueIle extends Observe {
                     Message m = new Message();
                     m.type = TypesMessages.GAGNER_TRESOR;
                     m.tuile = application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition();
+                    m.joueur = application.getJoueur("J"+joueurcourant);
                     notifierObservateur(m);
                     actualiser();
                 }
@@ -1054,8 +1074,23 @@ public class VueIle extends Observe {
     }
 
     public void actualiser(){
-        aasseche=false;
         monterEau();
+        deck();
+        actualiserCartSpé();   
+        listeDeroulanteDonner.removeAllItems();
+        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+            listeDeroulanteDonner.addItem(ct.getType());
+        }
+
+        if (!application.getJoueur("J"+joueurcourant).peutJouer()){
+            pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+        }
+        pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
+        listeAssecher();
+        listeDeroulanteBouger.removeAllItems();
+        for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
+            listeDeroulanteBouger.addItem(tu.getNom()); 
+        }
         fenetre.repaint();
         listeDeroulanteBouger.repaint();
         listeDeroulanteAssecher.repaint();
@@ -1085,6 +1120,7 @@ public class VueIle extends Observe {
                fenetre.setVisible(true);
                fenetre.setSize(1650, 950);
                application.initPartie();
+               vueEau.monteDesEaux(application.getNiveaudeau().getNiveau());
                listeAssecher();
                boutonsCartesSpe();
                actualiserDeplacement();
@@ -1235,6 +1271,14 @@ public class VueIle extends Observe {
         }
     }
     
+    public void actualiserCartSpé(){
+        listeDeroulanteCartesSpe.removeAllItems();
+                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCarteSpeciale()){           
+                            listeDeroulanteCartesSpe.addItem(ct.getType());
+                        }
+                    listeDeroulanteCartesSpe.repaint();
+    }
+    
     public void deckActionListener(){
         
         vueDeck.getJ1().addActionListener(new ActionListener() {
@@ -1293,6 +1337,67 @@ public class VueIle extends Observe {
         else{
             vueDeck.setColorDefault(vueDeck.getJ4());
         }
+    }
+    
+    public void carteSpéListener(){
+        vueSpé.getVoler().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Message m = new Message();
+                m.type = TypesMessages.CARTE_SPE;
+                m.joueur = application.getJoueur("J"+joueurcourant);
+                m.carte = application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex());
+                m.tuile = application.getIle().getTuile(vueSpé.getTuileSelected().getSelectedItem().toString()); 
+                notifierObservateur(m); 
+                vueSpé.fermerFenetre();
+                fenetre.setEnabled(true);
+                
+            }
+        });
+        
+        vueSpé.getAssecher().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Message m = new Message();
+                m.type = TypesMessages.CARTE_SPE;
+                m.joueur = application.getJoueur("J"+joueurcourant);
+                m.carte = application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex());
+                m.tuile = application.getIle().getTuile(vueSpé.getTuileSelected().getSelectedItem().toString()); 
+                notifierObservateur(m); 
+                vueSpé.fermerFenetre();
+                fenetre.setEnabled(true);
+            }
+        });
+        
+    }
+    
+    public void assecheIngeListener() {
+        vueAI.getAssecher().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Message m = new Message();
+                m.type = TypesMessages.ASSECHER2;
+                m.joueur = application.getJoueur("J"+joueurcourant);
+                m.tuile = application.getIle().getTuile(vueAI.getTuileSelected().getSelectedItem().toString()); 
+                m.annule=false;
+                notifierObservateur(m); 
+                vueAI.fermerFenetre();
+                fenetre.setEnabled(true);
+            }
+        });
+        
+        vueAI.getAnnuler().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Message m = new Message();
+                m.type = TypesMessages.ASSECHER2;
+                m.joueur = application.getJoueur("J"+joueurcourant);
+                m.annule=true;
+                notifierObservateur(m); 
+                vueAI.fermerFenetre();
+                fenetre.setEnabled(true);
+            }
+        });
     }
   
 }

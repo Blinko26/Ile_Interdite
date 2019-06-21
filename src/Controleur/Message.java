@@ -30,4 +30,5 @@ public class Message {
     public boolean aasseche;
     public String raisonMort;
     public boolean victoire;
+    public boolean annule;
 }

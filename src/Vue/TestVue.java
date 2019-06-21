@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import ile_interdite.CarteTresor;
+import ile_interdite.Joueur;
 import ile_interdite.TypeCT;
 
 /**
@@ -41,8 +42,9 @@ public class TestVue {
        
        
        new VueDeck(carteT);     */
-       
-       new VueDefaite();
+       Joueur j = new Joueur(1, "md",null);
+       VueCartesSpé vue = new VueCartesSpé();
+       vue.lancerVueCarteSpé(j,false);
     }
 
 }

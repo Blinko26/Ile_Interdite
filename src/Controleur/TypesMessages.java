@@ -20,6 +20,7 @@ public enum TypesMessages {
     DEFAUSSER,
     FIN_PARTIE,
     CARTE_SPE,
-    REJOUER
+    REJOUER,
+    ASSECHER2
 
 }

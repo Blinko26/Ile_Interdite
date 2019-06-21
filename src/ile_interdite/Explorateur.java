@@ -52,4 +52,14 @@ public class Explorateur extends Aventurier {
         return casesAssechable;
     }
 
+    @Override
+    public boolean getAAsseche() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setAsseche() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
