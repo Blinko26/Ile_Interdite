@@ -366,8 +366,13 @@ public class VueIle extends Observe {
             tuile[i] = tu.getNom(); 
             i++; 
         }
-        
         listeDeroulanteBouger = new JComboBox(tuile);   //Instanciation de la liste déroulante
+        listeDeroulanteBouger.removeAllItems();
+        for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
+            listeDeroulanteBouger.addItem(tu.getNom());
+        }
+        
+        
 
         //application.getJoueur("J"+joueurcourant).getRoleJoueur().setPosition(application.getIle().getTuile(application.getJoueur("J"+joueurcourant).getRoleJoueur().getDepart()));
         
@@ -1060,6 +1065,7 @@ public class VueIle extends Observe {
                application.initPartie();
                listeAssecher();
                boutonsCartesSpe();
+               actualiserDeplacement();
     }
     
     public void bonhommeSurSombrée(){
@@ -1190,6 +1196,13 @@ public class VueIle extends Observe {
     
     public void fermerFenetre(){
         fenetre.dispose();
+    }
+    
+    public void actualiserDeplacement(){
+        listeDeroulanteBouger.removeAllItems();
+        for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
+            listeDeroulanteBouger.addItem(tu.getNom());
+        }
     }
   
 }
