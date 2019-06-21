@@ -1080,14 +1080,12 @@ public class VueIle extends Observe {
                 }else if(application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()== TypeAventurier.pilote){
                     ArrayList<Tuile> tuiles = application.getIle().getTuilesNonSombrees();
                     Collections.shuffle(tuiles);
-                    System.out.println(joueur.getRoleJoueur().PossibleMouvement().size());
                     application.deplacement(joueur, tuiles.get(0));
                 }
                 else {
                     
                     ArrayList<Tuile> tuiles = joueur.getRoleJoueur().PossibleMouvement();
                     Collections.shuffle(tuiles);
-                    System.out.println(joueur.getRoleJoueur().PossibleMouvement().size());
                     application.deplacement(joueur, tuiles.get(0));
                 }
             }
