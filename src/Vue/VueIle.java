@@ -610,13 +610,13 @@ public class VueIle extends Observe {
         carteSpe.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().size()>0) {
-                    Message m = new Message();
+                    /*Message m = new Message();
                     m.type = TypesMessages.CARTE_SPE;
                     m.joueur = application.getJoueur("J"+joueurcourant);
                     m.carte = application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex());
                     m.tuile = application.getCasesDeplacementPilote().get(listeDeroulantePilote.getSelectedIndex());
                     
-                    notifierObservateur(m);
+                    notifierObservateur(m);                    
                     
                     listeDeroulanteCartesSpe.removeAllItems();
                         for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
@@ -630,7 +630,10 @@ public class VueIle extends Observe {
                                 listeDeroulantePilote.addItem(tu.getNom());
                             }
                         }
-                    listeDeroulantePilote.repaint();
+                    listeDeroulantePilote.repaint();*/
+                    
+
+                    
                     
                 }
             }
@@ -732,6 +735,7 @@ public class VueIle extends Observe {
                         boutonsTresor();
                         plusDe5Cartes();
                         deck();
+                        joueurCourantRouge();
                     //FIN TEST
                     actualiser();
                     notifierObservateur(m);
@@ -907,6 +911,7 @@ public class VueIle extends Observe {
     }
     
     public void boutonsCartesSpe() {
+        System.out.println("test");
         if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().size()>0) {
             panelBouton.remove(finTour);
             panelBouton.remove(deck);
@@ -1054,7 +1059,7 @@ public class VueIle extends Observe {
     }
     
     public void deck(){
-        vueDeck.actualiserDeck(application.getJoueur("J"+joueurcourant).cartesT);
+        vueDeck.actualiserDeck(application.getJoueur("J"+joueurcourant),application.getJoueur("J"+joueurcourant).cartesT);
         panelDeck = vueDeck;
         panelDeck.repaint();
     }
@@ -1066,6 +1071,9 @@ public class VueIle extends Observe {
                listeAssecher();
                boutonsCartesSpe();
                actualiserDeplacement();
+               deck();
+               deckActionListener();
+               joueurCourantRouge();
     }
     
     public void bonhommeSurSombrée(){
@@ -1202,6 +1210,66 @@ public class VueIle extends Observe {
         listeDeroulanteBouger.removeAllItems();
         for (Tuile tu : application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement()){           
             listeDeroulanteBouger.addItem(tu.getNom());
+        }
+    }
+    
+    public void deckActionListener(){
+        
+        vueDeck.getJ1().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                vueDeck.actualiserDeck(application.getJoueur("J"+1), application.getJoueur("J"+1).getCartesT());
+            }
+        });
+        
+        vueDeck.getJ2().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                vueDeck.actualiserDeck(application.getJoueur("J"+2), application.getJoueur("J"+2).getCartesT());
+            }
+        });
+        
+        vueDeck.getJ3().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                vueDeck.actualiserDeck(application.getJoueur("J"+3), application.getJoueur("J"+3).getCartesT());
+            }
+        });
+        
+        vueDeck.getJ4().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                vueDeck.actualiserDeck(application.getJoueur("J"+4), application.getJoueur("J"+4).getCartesT());
+            }
+        });
+        
+       
+    }
+    
+    public void joueurCourantRouge(){
+        if (joueurcourant== 1){
+            vueDeck.setROUGE(vueDeck.getJ1());
+        }
+        else {
+            vueDeck.setColorDefault(vueDeck.getJ1());
+        }
+        if (joueurcourant== 2){
+            vueDeck.setROUGE(vueDeck.getJ2());
+        }
+        else{
+            vueDeck.setColorDefault(vueDeck.getJ2());
+        }
+        if (joueurcourant== 3){
+            vueDeck.setROUGE(vueDeck.getJ3());
+        }
+        else{
+            vueDeck.setColorDefault(vueDeck.getJ3());
+        }
+        if (joueurcourant== 4){
+            vueDeck.setROUGE(vueDeck.getJ4());
+        }
+        else{
+            vueDeck.setColorDefault(vueDeck.getJ4());
         }
     }
   

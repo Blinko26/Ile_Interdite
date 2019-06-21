@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import ile_interdite.CarteTresor;
+import ile_interdite.Joueur;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -28,12 +29,18 @@ public class VueDeck extends JPanel {
     private JPanel mainPanel;
     private JPanel panelCartes;
     private JPanel panelOption;
+    private JPanel panelJoueur;
+    
     private JButton[] buttonCarte; 
     private ImageIcon imgCarte;
     private File path;
     private JLabel joueur;
-    private JButton btGauche;
-    private JButton btDroite;
+    
+    private JButton j1;
+    private JButton j2;
+    private JButton j3;
+    private JButton j4;
+    
     private JButton buttonDonner;
     private JButton buttonRetour;
     private JButton buttonDeffauser;
@@ -76,7 +83,10 @@ public class VueDeck extends JPanel {
        });
        
        mainPanel.add(panelOption, BorderLayout.SOUTH);
-
+       
+       joueur = new JLabel("test");
+       mainPanel.add(joueur , BorderLayout.NORTH);
+       
        int i=0; 
        buttonCarte = new JButton[cartesT.size()];
        for(CarteTresor carte:cartesT){
@@ -103,21 +113,26 @@ public class VueDeck extends JPanel {
            });
            i++;
        }
+            
+       j1 = new JButton("J1");
+       j2 = new JButton("J2");
+       j3 = new JButton("J3");
+       j4 = new JButton("J4");
        
+       panelJoueur = new JPanel(new GridLayout(1,4));
+       panelJoueur.add(j1);
+       panelJoueur.add(j2);
+       panelJoueur.add(j3);
+       panelJoueur.add(j4);
        
-       
-       btGauche = new JButton("<==");
-       btDroite = new JButton("==>");
-       
-       mainPanel.add(btDroite, BorderLayout.EAST);       
-       mainPanel.add(btGauche, BorderLayout.WEST);
+       mainPanel.add(panelJoueur, BorderLayout.SOUTH);       
        mainPanel.add(panelCartes, BorderLayout.CENTER);
        this.add(mainPanel);
        this.setVisible(true);
        
     }
     
-    public void actualiserDeck(ArrayList<CarteTresor> cartesT){
+    public void actualiserDeck(Joueur j,ArrayList<CarteTresor> cartesT){
        panelCartes.removeAll();
        buttonDonner.setEnabled(false);
        buttonRetour.setEnabled(false);
@@ -156,5 +171,32 @@ public class VueDeck extends JPanel {
                    buttonDonner.setEnabled(false);
                    buttonRetour.setEnabled(false);           }
        });
+       
+       joueur.setText("Deck de : "+j.getNomJoueur());
     }
+
+    public JButton getJ1() {
+        return j1;
+    }
+
+    public JButton getJ2() {
+        return j2;
+    }
+
+    public JButton getJ3() {
+        return j3;
+    }
+
+    public JButton getJ4() {
+        return j4;
+    }
+    
+   public void setROUGE(JButton bt){
+       bt.setBackground(java.awt.Color.red);
+   }
+   
+   public void setColorDefault(JButton bt){
+       bt.setBackground(java.awt.Color.LIGHT_GRAY);
+   }
+   
 }
