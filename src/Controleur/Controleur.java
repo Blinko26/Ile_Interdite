@@ -117,12 +117,13 @@ public class Controleur implements Observateur {
                 carte=message.carte;
                 tuile=message.tuile;
                 if (carte.getType()==TypeCT.hélicoptère) {
-                    //application.deplacement(joueur, tuile);
+                    application.deplacement(joueur, tuile);
                 }
-                if (carte.getType()==TypeCT.sac2sable) {
-                    //joueur.getRoleJoueur().assecher(tuile);
+                else if (carte.getType()==TypeCT.sac2sable) {
+                    joueur.getRoleJoueur().assecher(tuile);
                 }
                 joueur.removeCarte(carte);
+                
                 vueIle.actualiser();
                 break;             
             case GAGNER_TRESOR:

@@ -10,13 +10,15 @@ public class Joueur {
 	private String nomJoueur; //nom du joueur
 	public ArrayList<CarteTresor> cartesT; //inventaire de cartes trésor du joueur
 	public Aventurier roleJoueur; //aventurier associé au joueur
-        public int pointAction = 3;
+        public int pointAction;
         
         public Joueur(int numJoueur, String nomJoueur, Aventurier roleJoueur){
             this.numJoueur= numJoueur;
             this.nomJoueur = nomJoueur;
             cartesT = new ArrayList<CarteTresor>();
             this.roleJoueur = roleJoueur;
+            initPointAction();
+            
         }
 
         public int getNumJoueur() { //retourne le numéro du joueur, soit sa place dans le tour
@@ -76,7 +78,12 @@ public class Joueur {
         }
         
         public void initPointAction(){
-            this.pointAction = 3;
+            if(roleJoueur.getType()==TypeAventurier.navigateur){
+                pointAction = 4;
+            }
+            else{
+                pointAction = 3;
+            }
         }
         
         public void removePA(int pa){

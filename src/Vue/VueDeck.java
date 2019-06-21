@@ -172,7 +172,7 @@ public class VueDeck extends JPanel {
                    buttonRetour.setEnabled(false);           }
        });
        
-       joueur.setText("Deck de : "+j.getNomJoueur());
+       joueur.setText("Deck de : "+j.getNomJoueur()+" "+j.getRoleJoueur().getRoleToString());
     }
 
     public JButton getJ1() {

@@ -64,6 +64,7 @@ public class VueIle extends Observe {
     private static int joueurcourant=1;
     private VueNiveauDo vueEau = new VueNiveauDo(1);
     private VueDeck vueDeck;
+    private VueCartesSpé vueSpé;
     
     public static class MyCanvas extends JPanel {
 
@@ -610,7 +611,7 @@ public class VueIle extends Observe {
         carteSpe.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().size()>0) {
-                    Message m = new Message();
+                   /* Message m = new Message();
                     m.type = TypesMessages.CARTE_SPE;
                     m.joueur = application.getJoueur("J"+joueurcourant);
                     m.carte = application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex());
@@ -630,11 +631,21 @@ public class VueIle extends Observe {
                                 listeDeroulantePilote.addItem(tu.getNom());
                             }
                         }
-                    listeDeroulantePilote.repaint();*/
+                    listeDeroulantePilote.repaint();
                     
                     deck();
-                    
-                    
+                    fenetre.setEnabled(false);*/
+                   boolean helOrSac;
+                   if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex()).getType()==TypeCT.hélicoptère){
+                       helOrSac=true;
+                   }
+                   else{
+                       helOrSac=false;
+                   }
+                   vueSpé = new VueCartesSpé();
+                   vueSpé.lancerVueCarteSpé(application.getJoueur("J"+joueurcourant), helOrSac);
+                   carteSpéListener();
+                   fenetre.setEnabled(false);
                 }
             }
         });
@@ -656,6 +667,7 @@ public class VueIle extends Observe {
                     }
 
                     plusDe5Cartes();
+                    boutonsPilote();
                 }
             });
         
@@ -1041,6 +1053,11 @@ public class VueIle extends Observe {
     public void actualiser(){
         monterEau();
         deck();
+        actualiserCartSpé();   
+        listeDeroulanteDonner.removeAllItems();
+                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                            listeDeroulanteDonner.addItem(ct.getType());
+                        }
         fenetre.repaint();
         listeDeroulanteBouger.repaint();
         listeDeroulanteAssecher.repaint();
@@ -1220,6 +1237,14 @@ public class VueIle extends Observe {
         }
     }
     
+    public void actualiserCartSpé(){
+        listeDeroulanteCartesSpe.removeAllItems();
+                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCarteSpeciale()){           
+                            listeDeroulanteCartesSpe.addItem(ct.getType());
+                        }
+                    listeDeroulanteCartesSpe.repaint();
+    }
+    
     public void deckActionListener(){
         
         vueDeck.getJ1().addActionListener(new ActionListener() {
@@ -1278,6 +1303,38 @@ public class VueIle extends Observe {
         else{
             vueDeck.setColorDefault(vueDeck.getJ4());
         }
+    }
+    
+    public void carteSpéListener(){
+        vueSpé.getVoler().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Message m = new Message();
+                m.type = TypesMessages.CARTE_SPE;
+                m.joueur = application.getJoueur("J"+joueurcourant);
+                m.carte = application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex());
+                m.tuile = application.getIle().getTuile(vueSpé.getTuileSelected().getSelectedItem().toString()); 
+                notifierObservateur(m); 
+                vueSpé.fermerFenetre();
+                fenetre.setEnabled(true);
+                
+            }
+        });
+        
+        vueSpé.getAssecher().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Message m = new Message();
+                m.type = TypesMessages.CARTE_SPE;
+                m.joueur = application.getJoueur("J"+joueurcourant);
+                m.carte = application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex());
+                m.tuile = application.getIle().getTuile(vueSpé.getTuileSelected().getSelectedItem().toString()); 
+                notifierObservateur(m); 
+                vueSpé.fermerFenetre();
+                fenetre.setEnabled(true);
+            }
+        });
+        
     }
   
 }
