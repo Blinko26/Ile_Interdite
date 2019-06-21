@@ -1087,6 +1087,7 @@ public class VueIle extends Observe {
                fenetre.setVisible(true);
                fenetre.setSize(1650, 950);
                application.initPartie();
+               vueEau.monteDesEaux(application.getNiveaudeau().getNiveau());
                listeAssecher();
                boutonsCartesSpe();
                actualiserDeplacement();
