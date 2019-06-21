@@ -19,5 +19,7 @@ public enum TypesMessages {
     TERMINER_TOUR, 
     DEFAUSSER,
     FIN_PARTIE,
-    VICTOIRE
+    CARTE_SPE,
+    REJOUER
+
 }

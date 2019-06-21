@@ -239,6 +239,7 @@ public class VueIle extends Observe {
     private JButton voler;
     private JButton gagnerTresor;
     private JButton defausser;
+    private JButton carteSpe;
     
     private JComboBox listeDeroulanteBouger;
     private JComboBox listeDeroulanteAssecher;
@@ -246,6 +247,7 @@ public class VueIle extends Observe {
     private JComboBox listeDeroulanteDeck;
     private JComboBox listeDeroulanteDonner;
     private JComboBox listeDeroulantePilote;
+    private JComboBox listeDeroulanteCartesSpe;
     
     private String[] tuile;
     private String[] tuileA;
@@ -257,7 +259,7 @@ public class VueIle extends Observe {
     private boolean defaussé=false;
     private boolean aasseche=false;
     
-    public VueIle(Application appli) throws IOException {
+    public VueIle(Application appli) {
         
         application = appli;
         
@@ -351,6 +353,7 @@ public class VueIle extends Observe {
         gagnerTresor = new JButton("Gagner le trésor");
         defausser = new JButton("Défausser une carte trésor");
         gagnerTresor = new JButton("Gagner le tresor");
+        carteSpe = new JButton("Utiliser une carte spéciale");
         canvasTresor= new CanvasT();
         
         /*Creation de la liste deroulante avec les deplacements possible*/
@@ -387,6 +390,11 @@ public class VueIle extends Observe {
             listeDeroulanteDonner.addItem(ct.getType());
         }
         
+        listeDeroulanteCartesSpe = new JComboBox();
+        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCarteSpeciale()) {
+            listeDeroulanteCartesSpe.addItem(ct.getType());
+        }
+        
         joueurCourant = new JLabel("Joueur Courant :"+application.getJoueur("J"+joueurcourant).getRoleJoueur().getRoleToString());   //Affiche le joueur dont c'est le tour
         pa = new JLabel("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3"); //Affiche les PA du joueur
         tr = new JLabel("Trésors :");
@@ -403,6 +411,10 @@ public class VueIle extends Observe {
         panelBouton.add(donner);
         panelBouton.remove(listeDeroulanteJoueurs);
         panelBouton.remove(donner);
+        panelBouton.add(listeDeroulanteCartesSpe);
+        panelBouton.add(carteSpe);
+        panelBouton.remove(listeDeroulanteCartesSpe);
+        panelBouton.remove(carteSpe);
         panelBouton.add(finTour);
         panelBouton.add(deck);
         panelBouton.add(listeDeroulanteDonner);
@@ -561,13 +573,13 @@ public class VueIle extends Observe {
                             if (application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()==TypeAventurier.messager){
                                 j =0;
                                 for (Joueur joueur : application.getJoueurs()){
-                                if(joueur!=application.getJoueur("J"+joueurcourant)){
-                                    if(listeDeroulanteJoueurs.getSelectedIndex()==j){
-                                        m.receveur=joueur;
+                                    if(joueur!=application.getJoueur("J"+joueurcourant)){
+                                        if(listeDeroulanteJoueurs.getSelectedIndex()==j){
+                                            m.receveur=joueur;
+                                        }
+                                        j=j+1;
                                     }
-                                    j=j+1;
                                 }
-                            }
                             }
                             
                             m.carte = application.getJoueur("J"+joueurcourant).getCartesT().get(listeDeroulanteDonner.getSelectedIndex());
@@ -588,6 +600,42 @@ public class VueIle extends Observe {
                     }  
                 
         });
+        
+        carteSpe.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().size()>0) {
+                    Message m = new Message();
+                    m.type = TypesMessages.CARTE_SPE;
+                    m.joueur = application.getJoueur("J"+joueurcourant);
+                    m.carte = application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex());
+                    m.tuile = application.getCasesDeplacementPilote().get(listeDeroulantePilote.getSelectedIndex());
+                    
+                    notifierObservateur(m);
+                    
+                    listeDeroulanteCartesSpe.removeAllItems();
+                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                            listeDeroulanteCartesSpe.addItem(ct.getType());
+                        }
+                    listeDeroulanteCartesSpe.repaint();
+                    
+                    if (m.carte.getType()==TypeCT.hélicoptère){
+                        listeDeroulantePilote.removeAllItems();
+                            for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                                listeDeroulantePilote.addItem(ct.getType());
+                            }
+                        listeDeroulantePilote.repaint();
+                    }
+                    else if (m.carte.getType()==TypeCT.sac2sable) {
+                        listeDeroulantePilote.removeAllItems();
+                            for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                                listeDeroulantePilote.addItem(ct.getType());
+                            }
+                        listeDeroulantePilote.repaint();
+                    }
+                }
+            }
+        });
+            
            
             defausser.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -647,12 +695,9 @@ public class VueIle extends Observe {
                     Message m = new Message();
                     m.type = TypesMessages.TERMINER_TOUR;
                     m.joueur = application.getJoueur("J"+joueurcourant);
-                    if(application.getCartesTresor().size()>0){
-                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                        application.getCartesTresor().remove(0);
-                        application.getJoueur("J"+joueurcourant).addCarteToJoueur(application.getCartesTresor().get(0));
-                        application.getCartesTresor().remove(0);
-                    }
+                    
+                    
+                    application.piocherCarte(application.getJoueur("J"+joueurcourant));
                     /*Modifie le joueur courant*/
                     if (joueurcourant==application.getJoueurs().size()){
                         joueurcourant=1;
@@ -680,8 +725,10 @@ public class VueIle extends Observe {
                         listeDeroulanteAssecher.repaint();
                         listeDeroulanteBouger.repaint();
                         listeDeroulanteDonner.repaint();
+                        listeDeroulanteCartesSpe.repaint();
                         
                         boutonsDonner();
+                        boutonsCartesSpe();
                         boutonsPilote();
                         boutonsTresor();
                         plusDe5Cartes();
@@ -860,6 +907,23 @@ public class VueIle extends Observe {
         
     }
     
+    public void boutonsCartesSpe() {
+        if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().size()>0) {
+            panelBouton.remove(finTour);
+            panelBouton.remove(deck);
+            panelBouton.remove(listeDeroulanteDonner);
+            panelBouton.remove(tr);
+            panelBouton.remove(canvasTresor);
+            panelBouton.add(listeDeroulanteCartesSpe);
+            panelBouton.add(carteSpe);
+            panelBouton.add(finTour);
+            panelBouton.add(deck);
+            panelBouton.add(listeDeroulanteDonner);
+            panelBouton.add(tr);
+            panelBouton.add(canvasTresor);
+        }
+    }
+    
     public void boutonsTresor(){
         int calice=0;
         int cristal=0;
@@ -911,8 +975,10 @@ public class VueIle extends Observe {
             panelBouton.remove(assecher);
             panelBouton.remove(listeDeroulanteJoueurs);
             panelBouton.remove(donner);
-            panelBouton.remove(listeDeroulantePilote);
-            panelBouton.remove(voler);
+            if (application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()==TypeAventurier.pilote){
+                panelBouton.remove(listeDeroulantePilote);
+                panelBouton.remove(voler);
+            }
             panelBouton.remove(finTour);
             panelBouton.remove(tr);
             panelBouton.remove(canvasTresor);
@@ -993,32 +1059,62 @@ public class VueIle extends Observe {
             }
         }
     }
+    
     public void conditionDefaite(){
-        if(application.getIle().getTuile("Héliport").getEtat()== EtatC.sombrée){
+        
+        if(application.getIle().getTuile("Heliport").getEtat()== EtatC.sombrée){
             Message m = new Message();
             m.type = TypesMessages.FIN_PARTIE;
-            notifierObservateur(m);}
-        if((EtatC.sombrée==application.getIle().getTuile("Le Palais de Corail").getEtat() 
-        || EtatC.sombrée==application.getIle().getTuile("Le Palais des Marees").getEtat())){
-            gagnerTresor.setBackground(new Color(0,192,255));
-            panelBouton.add(gagnerTresor);
-        } else if((EtatC.sombrée==application.getIle().getTuile("La Caverne du Brasier").getEtat() 
-        || EtatC.sombrée==application.getIle().getTuile("La Caverne des Ombres").getEtat())){
-            gagnerTresor.setBackground(new Color(255,64,0));
-            panelBouton.add(gagnerTresor);
-        } else if((EtatC.sombrée==application.getIle().getTuile("Le Temple de La Lune").getEtat() 
-        || EtatC.sombrée==application.getIle().getTuile("Le Temple du Soleil").getEtat())){
-            gagnerTresor.setBackground(new Color(128,0,200));
-            panelBouton.add(gagnerTresor);
-        } else if((EtatC.sombrée==application.getIle().getTuile("Le Jardin des Murmures").getEtat() 
-        || EtatC.sombrée==application.getIle().getTuile("Le Jardin des Hurlements").getEtat())){
-            gagnerTresor.setBackground(new Color(255,200,0));
-            panelBouton.add(gagnerTresor);
+            m.victoire = false;
+            m.raisonMort = "Immersion de la case Heliport";
+            notifierObservateur(m);
         }
+        if((EtatC.sombrée==application.getIle().getTuile("Le Palais de Corail").getEtat() 
+        && EtatC.sombrée==application.getIle().getTuile("Le Palais des Marees").getEtat())){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            m.victoire = false;
+           m.raisonMort = "Immersion de la case Calice";
+           notifierObservateur(m);
+           
+        } else if((EtatC.sombrée==application.getIle().getTuile("La Caverne du Brasier").getEtat() 
+        && EtatC.sombrée==application.getIle().getTuile("La Caverne des Ombres").getEtat())){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            m.victoire = false;
+            m.raisonMort = "Immersion de la case Cristal";
+            notifierObservateur(m);
+            
+        } else if((EtatC.sombrée==application.getIle().getTuile("Le Temple de La Lune").getEtat() 
+        && EtatC.sombrée==application.getIle().getTuile("Le Temple du Soleil").getEtat())){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            m.victoire = false;
+            m.raisonMort = "Immersion de la case Pierre";
+            notifierObservateur(m);
+        } else if((EtatC.sombrée==application.getIle().getTuile("Le Jardin des Murmures").getEtat() 
+        && EtatC.sombrée==application.getIle().getTuile("Le Jardin des Hurlements").getEtat())){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            m.victoire = false;
+            m.raisonMort = "Immersion de la case Statue";
+            notifierObservateur(m);
+            
+        }else if (application.getNiveaudeau().getNiveau() == 10){
+            Message m = new Message();
+            m.type = TypesMessages.FIN_PARTIE;
+            m.victoire = false;
+            m.raisonMort = "Niveau d'eau mortel";
+            notifierObservateur(m);
+        }
+        
+        
+        
     }
     
 
     public void conditionVictoire(){
+        
         int nbJoueurSurCaseHeliport = 0 ;
         int nbTresorTrouve = 0;
         int nbJoueurPartie = application.getJoueurs().size();
@@ -1031,26 +1127,30 @@ public class VueIle extends Observe {
                 nbTresorTrouve++;
             }
         }
-        for (Joueur joueur1 : application.getJoueurs()){           
-                    //On vérifie si un joueur est sur héliport
-                    if(joueur1.getRoleJoueur().getPosition().getNom() == "Heliport"){
-                        System.out.println(joueur1.getNomJoueur() + "sur la case Heliport " + nbJoueurSurCaseHeliport);
+        //////////////TRUC POUR VOIR UN TRUC ON PEUT ENLEVER CETTE PARTIE/////////////:
+        for(Joueur joueurs : application.getJoueurs()){
+             //On vérifie si un joueur est sur héliport
+                    if(joueurs.getRoleJoueur().getPosition().getNom() == "Heliport"){  
+                        System.out.println(joueurs.getNomJoueur() + "sur la case Heliport " + (nbJoueurSurCaseHeliport+1));
                         nbJoueurSurCaseHeliport++;
+                    }else{
+                        System.out.println("Personne sur heliport");
                     }
                     if(nbJoueurSurCaseHeliport == nbJoueurPartie){
                         System.out.println("Tout les joueurs sont sur l'heliport");
-                        //on veut savoir s'ils ont au moins une carte helicoptere pour s'enfuir
                     }
-        
-            //On regarde si le nombre de trésor trouvé = nombre de trésors totaux
-          /*  if(nbTresorTrouve == nbTresorPartie){
-                //Si c'est le cas on leur dit de go à l'héliport (genre la surligner un truc comme ça)
-                System.out.println("Rendez-vous à l'heliport pour vous enfuir !!!");
-                for (Joueur joueur : application.getJoueurs()){           
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////// truc final
+        if(nbTresorTrouve == nbTresorPartie){
+            //Si c'est le cas on leur dit de go à l'héliport (genre la surligner un truc comme ça)
+            System.out.println("Rendez-vous à l'heliport pour vous enfuir !!!");
+            for (Joueur joueur : application.getJoueurs()){           
                     //On vérifie si un joueur est sur héliport
                     if(joueur.getRoleJoueur().getPosition().getNom() == "Heliport"){
-                        System.out.println(joueur.getNomJoueur() + "sur la case Heliport " + nbJoueurSurCaseHeliport);
-                       nbJoueurSurCaseHeliport++;
+                        System.out.println(joueur.getNomJoueur() + "sur la case Heliport " + (nbJoueurSurCaseHeliport+1));
+                        nbJoueurSurCaseHeliport++;
+                    }else{
+                        System.out.println("Personne sur heliport");
                     }
                     //CHECK Si le nombre de joueurs sur heliport == nombre de joueurs de la partie 
                     if(nbJoueurSurCaseHeliport == nbJoueurPartie){
@@ -1058,20 +1158,14 @@ public class VueIle extends Observe {
                         //on veut savoir s'ils ont au moins une carte helicoptere pour s'enfuir
                         if(joueur.getCarteSpeciale().contains(TypeC.héliport)){
                             Message m = new Message();
-                            m.type = TypesMessages.VICTOIRE;
+                            m.type = TypesMessages.FIN_PARTIE;
+                            m.victoire = true;
                             notifierObservateur(m);
                         }
                     }
-                }
-            }*/
-                
-           
-    }
-
-
- 
-    }  
-    
+            }
+        }
+    }                         
     
     public void fermerFenetre(){
         fenetre.dispose();

@@ -81,10 +81,12 @@ public class Application {
             int cri=5;
             int pie=5;
             int sta=5;
-            for(int j=0;j<20;j++){
-                int i=(int)((Math.random()*4));
-                while(i==0 && cal==0 || i==1 && cri==0 || i==2 && pie==0 || i==3 && sta==0){
-                    i=(int)((Math.random()*3));
+            int hel=3;
+            int sac=2;
+            for(int j=0;j<25;j++){
+                int i=(int)((Math.random()*6));
+                while(i==0 && cal==0 || i==1 && cri==0 || i==2 && pie==0 || i==3 && sta==0 || i==4 && hel==0 || i==5 && sac==0){
+                    i=(int)((Math.random()*5));
                 }
                 if(i==0){
                     cartesTresor.add(new CarteTresor(TypeCT.calice));
@@ -101,6 +103,12 @@ public class Application {
                 if(i==3){
                     cartesTresor.add(new CarteTresor(TypeCT.statue));
                     sta--;
+                }
+                if(i==4){
+                    cartesTresor.add(new CarteTresor(TypeCT.hélicoptère));
+                }
+                if(i==5){
+                    cartesTresor.add(new CarteTresor(TypeCT.sac2sable));
                 }
             }
         }

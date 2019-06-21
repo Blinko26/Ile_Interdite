@@ -28,4 +28,6 @@ public class Message {
     public String nj4;
     public String difficulté;
     public boolean aasseche;
+    public String raisonMort;
+    public boolean victoire;
 }

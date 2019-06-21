@@ -1,5 +1,6 @@
 package Controleur;
 
+import Vue.VueDefaite;
 import ile_interdite.Application;
 import ile_interdite.EtatT;
 import ile_interdite.Joueur;
@@ -12,22 +13,21 @@ import Vue.VueIle;
 import Vue.VueNiveauDo;
 import Vue.VuedébutV3;
 import ile_interdite.TypeAventurier;
+import ile_interdite.TypeCT;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;
     private VuedébutV3 vueDebut;
     private VueNiveauDo vueNiveauDo;
+    private VueDefaite vueDef;
     private Application application;
     
-    public Controleur() throws IOException {
-        application = new Application();
-        application.initMap();
-        application.initCartes();
-        application.initJoueurs(6);
-        vueIle = new VueIle(application);
-        vueIle.addObservateur(this);
-        
+    public Controleur() {
         vueDebut = new VuedébutV3();
         vueDebut.addObservateur(this);
     }  
@@ -37,12 +37,23 @@ public class Controleur implements Observateur {
         Tuile tuile;
         CarteTresor carte;
         int no_joueur = 0, suivant;
+        boolean victoire;
 
         switch(message.type) {
-            case DEMARRER_PARTIE: //Action pour démarrer la partie
-                    vueIle.start();
+            case DEMARRER_PARTIE:
+                application = new Application();
+                application.initMap();
+                application.initCartes();
+                application.initJoueurs(6);
+                vueIle = new VueIle(application);
+                vueIle.addObservateur(this);
+                vueIle.start();
                 break;
-            
+            case REJOUER:
+                new Controleur(); 
+                System.out.println("REJOUEr");
+                break;
+          
             case DEPLACER:  //Clic sur deplacer
                 joueur = message.joueur;
                 tuile = message.tuile;
@@ -101,6 +112,18 @@ public class Controleur implements Observateur {
                 vueIle.deck();
                 vueIle.actualiser();
                 break;
+            case CARTE_SPE:
+                joueur=message.joueur;
+                carte=message.carte;
+                tuile=message.tuile;
+                if (carte.getType()==TypeCT.hélicoptère) {
+                    application.deplacement(joueur, tuile);
+                }
+                if (carte.getType()==TypeCT.sac2sable) {
+                    joueur.getRoleJoueur().assecher(tuile);
+                }
+                vueIle.actualiser();
+                break;             
             case GAGNER_TRESOR:
                 tuile=message.tuile;
                 if(tuile==application.getIle().getTuile("Le Palais de Corail") 
@@ -154,25 +177,34 @@ public class Controleur implements Observateur {
                     application.setEtatTour(false);
                 }
                 vueIle.conditionVictoire();
+                vueIle.conditionDefaite();
+
                 vueIle.listeAssecher();
                 vueIle.deck();
                 vueIle.actualiser();
                
                 break;
+                /////////////////////////////ya myen d'opti (avec un changeListener dansVueDefaite ?)////////////////////
             case FIN_PARTIE:
-                
-                //vueIle.fermerFenetre();
+                victoire = message.victoire;
+                String messageMort = message.raisonMort;
+                vueDef = new VueDefaite();
+                vueDef.addObservateur(this);
+                //On verifie si on a gagne ou perdu
+                //Si on gagne alors message et fenetre victoire ?
+                if(victoire){
+                    vueDef.vueDefChangeTitreFenetre("Victoire");
+                    vueDef.vueDefChangeTexteVictoireOuDefaite("Vous avez gagné");
+                    //sinon on a donc perdu Fermeture fenetre + fenetre VueDefaite();
+                }else{
+                    vueDef.vueDefChangeTitreFenetre("Vous avez perdu");
+                    vueDef.vueDefChangeTailleEcritureFenetreFinJeu(30);
+                    vueDef.vueDefChangeTexteVictoireOuDefaite("La raison de votre défaite est : " +messageMort);
+                   // vueDef.perdu.setText("Vous avez Perdu :");
+                    vueIle.fermerFenetre();  
+                    
+                }
                 break;
-                
-          
-            case VICTOIRE:
-                System.out.println("Vous avez gagné");
-                vueIle.fermerFenetre();
-                break;
-                
-               
-                
-            
         }
     }
 }   

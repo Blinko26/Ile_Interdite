@@ -52,7 +52,8 @@ public class Joueur {
         }
 
 	public ArrayList<CarteTresor> getCarteSpeciale() { //permet de ne récupérer que les cartes spéciales de ce joueur
-		ArrayList<CarteTresor> cartesT = getCartesT();
+		ArrayList<CarteTresor> cartesT = this.getCartesT();
+
                 ArrayList<CarteTresor> cartesS = new ArrayList<>();
                 for(CarteTresor c : cartesT) {
                     if(c.getType() == TypeCT.hélicoptère || c.getType() == TypeCT.sac2sable) {
