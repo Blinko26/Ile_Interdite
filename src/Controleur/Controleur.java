@@ -40,13 +40,17 @@ public class Controleur implements Observateur {
         
         int no_joueur = 0, suivant;
         boolean victoire;
+        int difficulté;
 
         switch(message.type) {
             case DEMARRER_PARTIE:
+                difficulté = message.difficulté;
                 application = new Application();
                 application.initMap();
+                application.getNiveaudeau().initNiveauDeau(difficulté+1);
                 application.initCartes();
                 application.initJoueurs(6);
+                
                 vueIle = new VueIle(application);
                 vueIle.addObservateur(this);
                 vueIle.start();
@@ -242,9 +246,9 @@ public class Controleur implements Observateur {
                     vueDef.vueDefChangeTexteVictoireOuDefaite("Vous avez gagné");
                     //sinon on a donc perdu Fermeture fenetre + fenetre VueDefaite();
                 }else{
-                    vueDef.vueDefChangeTitreFenetre("Vous avez perdu");
+                    vueDef.vueDefChangeTitreFenetre("Défaite");
                     vueDef.vueDefChangeTailleEcritureFenetreFinJeu(30);
-                    vueDef.vueDefChangeTexteVictoireOuDefaite("La raison de votre défaite est : " +messageMort);
+                    vueDef.vueDefChangeTexteVictoireOuDefaite("Vous avez perdu : " +messageMort);
                    // vueDef.perdu.setText("Vous avez Perdu :");
                     vueIle.fermerFenetre();  
                     

@@ -203,7 +203,7 @@ public class VuedébutV3 extends Observe {
                     m.nj2= nomJoueur2.getText();
                     m.nj3= nomJoueur3.getText();
                     m.nj4= nomJoueur4.getText();
-                    m.difficulté=choixDifficulté.getSelectedItem().toString();
+                    m.difficulté=choixDifficulté.getSelectedIndex();
                     notifierObservateur(m);
            } 
         });   
