@@ -26,7 +26,7 @@ public class Message {
     public String nj2;
     public String nj3;
     public String nj4;
-    public String difficulté;
+    public int difficulté;
     public boolean aasseche;
     public String raisonMort;
     public boolean victoire;

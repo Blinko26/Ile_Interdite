@@ -3,6 +3,10 @@ public class Niveaudo {
 	private int niveau; //niveau de l'eau
 	private int niveauInondation; //niveau d'innondation
 
+    public Niveaudo(){
+        
+    }
+        
     public int getNiveau() { //retourne le niveau de l'eau
         return niveau;
     }
@@ -36,8 +40,8 @@ public class Niveaudo {
         }
     }
     
-    public void initNiveauDeau(){
-        setNiveau(1);
+    public void initNiveauDeau(int difficulté){
+        setNiveau(difficulté);
         updateInnondation();
     }
 }

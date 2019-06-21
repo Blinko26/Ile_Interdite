@@ -63,11 +63,21 @@ public class Application {
             
             for (Joueur js : this.getJoueurs()){
                 js.getRoleJoueur().setPosition(this.getIle().getTuile(js.getRoleJoueur().getDepart()));
-                //for(int i=0;i<2;i++){
-                   /* js.getCartesT().add(cartesTresor.get(i));
-                    cartesTresor.remove(i);        */
-                   piocherCarte(js);
-                //}
+                int h=0;
+                while(h<2){
+                        if(getCartesTresor().size()>0){
+                            if (getCartesTresor().get(0).getType()!=TypeCT.montéedso){
+                                js.addCarteToJoueur(getCartesTresor().get(0));
+                                getCartesTresor().remove(0);
+                                //System.out.println(getCartesTresor().get(0).getType().toString());
+                                h++;
+                            }
+                            else {
+                                Collections.shuffle(getCartesTresor());
+                                System.out.println("REPIOCHE");
+                            }
+                        }
+                }
             }
             
         }
@@ -130,7 +140,7 @@ public class Application {
                     cartesInondation.remove(cartesInondation.get(i));
                 }
             }
-            niveaudeau.initNiveauDeau(); //Le niveau d'eau est initialisé 
+            //niveaudeau.initNiveauDeau(); //Le niveau d'eau est initialisé 
             
             trésors.add(new Tresor(TypeT.calice,EtatT.nontrouvé));
             trésors.add(new Tresor(TypeT.cristal,EtatT.nontrouvé));

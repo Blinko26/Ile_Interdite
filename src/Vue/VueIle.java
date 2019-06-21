@@ -1126,7 +1126,7 @@ public class VueIle extends Observe {
             Message m = new Message();
             m.type = TypesMessages.FIN_PARTIE;
             m.victoire = false;
-            m.raisonMort = "Immersion de la case Heliport";
+            m.raisonMort = "la case héliport a sombré";
             notifierObservateur(m);
         }
         if((EtatC.sombrée==application.getIle().getTuile("Le Palais de Corail").getEtat() 
@@ -1134,7 +1134,7 @@ public class VueIle extends Observe {
             Message m = new Message();
             m.type = TypesMessages.FIN_PARTIE;
             m.victoire = false;
-           m.raisonMort = "Immersion de la case Calice";
+           m.raisonMort = "toutes les cases Calice ont sombré";
            notifierObservateur(m);
            
         } else if((EtatC.sombrée==application.getIle().getTuile("La Caverne du Brasier").getEtat() 
@@ -1142,7 +1142,7 @@ public class VueIle extends Observe {
             Message m = new Message();
             m.type = TypesMessages.FIN_PARTIE;
             m.victoire = false;
-            m.raisonMort = "Immersion de la case Cristal";
+            m.raisonMort = "toutes les cases Cristal ont sombré";
             notifierObservateur(m);
             
         } else if((EtatC.sombrée==application.getIle().getTuile("Le Temple de La Lune").getEtat() 
@@ -1150,21 +1150,21 @@ public class VueIle extends Observe {
             Message m = new Message();
             m.type = TypesMessages.FIN_PARTIE;
             m.victoire = false;
-            m.raisonMort = "Immersion de la case Pierre";
+            m.raisonMort = "toutes les cases Pierre ont sombré";
             notifierObservateur(m);
         } else if((EtatC.sombrée==application.getIle().getTuile("Le Jardin des Murmures").getEtat() 
         && EtatC.sombrée==application.getIle().getTuile("Le Jardin des Hurlements").getEtat())){
             Message m = new Message();
             m.type = TypesMessages.FIN_PARTIE;
             m.victoire = false;
-            m.raisonMort = "Immersion de la case Statue";
+            m.raisonMort = "toutes les cases Statue ont sombré";
             notifierObservateur(m);
             
         }else if (application.getNiveaudeau().getNiveau() == 10){
             Message m = new Message();
             m.type = TypesMessages.FIN_PARTIE;
             m.victoire = false;
-            m.raisonMort = "Niveau d'eau mortel";
+            m.raisonMort = "l'ile a sombré";
             notifierObservateur(m);
         }
         
