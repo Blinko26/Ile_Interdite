@@ -117,20 +117,27 @@ public class Controleur implements Observateur {
                 carte=message.carte;
                 tuile=message.tuile;
                 if (carte.getType()==TypeCT.hélicoptère) {
-                    application.deplacement(joueur, tuile);
+                    //application.deplacement(joueur, tuile);
                 }
                 if (carte.getType()==TypeCT.sac2sable) {
-                    joueur.getRoleJoueur().assecher(tuile);
+                    //joueur.getRoleJoueur().assecher(tuile);
                 }
+                joueur.removeCarte(carte);
                 vueIle.actualiser();
                 break;             
             case GAGNER_TRESOR:
                 tuile=message.tuile;
+                joueur= message.joueur;
+                CarteTresor carteT; 
                 if(tuile==application.getIle().getTuile("Le Palais de Corail") 
                 || tuile==application.getIle().getTuile("Le Palais des Marees")){
                     for(Tresor t:application.getTrésors()){
                         if(t.getNom()==TypeT.calice){
                             t.setEtat(EtatT.trouvé);
+                            carteT= new CarteTresor(TypeCT.calice);
+                            for (int i =0; i<4;i++){
+                                joueur.removeCarte(carteT);
+                            }
                         }
                     }
                 } else if(tuile==application.getIle().getTuile("La Caverne du Brasier") 
@@ -138,6 +145,10 @@ public class Controleur implements Observateur {
                     for(Tresor t:application.getTrésors()){
                         if(t.getNom()==TypeT.cristal){
                             t.setEtat(EtatT.trouvé);
+                            carteT= new CarteTresor(TypeCT.cristal);
+                            for (int i =0; i<4;i++){
+                                joueur.removeCarte(carteT);
+                            }
                         }
                     }
                 } else if(tuile==application.getIle().getTuile("Le Temple de La Lune") 
@@ -145,6 +156,10 @@ public class Controleur implements Observateur {
                     for(Tresor t:application.getTrésors()){
                         if(t.getNom()==TypeT.pierre){
                             t.setEtat(EtatT.trouvé);
+                            carteT= new CarteTresor(TypeCT.pierre);
+                            for (int i =0; i<4;i++){
+                                joueur.removeCarte(carteT);
+                            }
                         }
                     }
                 } else if(tuile==application.getIle().getTuile("Le Jardin des Murmures") 
@@ -152,6 +167,10 @@ public class Controleur implements Observateur {
                     for(Tresor t:application.getTrésors()){
                         if(t.getNom()==TypeT.statue){
                             t.setEtat(EtatT.trouvé);
+                            carteT= new CarteTresor(TypeCT.statue);
+                            for (int i =0; i<4;i++){
+                                joueur.removeCarte(carteT);
+                            }
                         }
                     }
                 }

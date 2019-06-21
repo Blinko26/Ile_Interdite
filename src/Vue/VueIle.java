@@ -610,21 +610,21 @@ public class VueIle extends Observe {
         carteSpe.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (application.getJoueur("J"+joueurcourant).getCarteSpeciale().size()>0) {
-                    /*Message m = new Message();
+                    Message m = new Message();
                     m.type = TypesMessages.CARTE_SPE;
                     m.joueur = application.getJoueur("J"+joueurcourant);
                     m.carte = application.getJoueur("J"+joueurcourant).getCarteSpeciale().get(listeDeroulanteCartesSpe.getSelectedIndex());
-                    m.tuile = application.getCasesDeplacementPilote().get(listeDeroulantePilote.getSelectedIndex());
+                    //m.tuile = application.getCasesDeplacementPilote().get(listeDeroulantePilote.getSelectedIndex());
                     
                     notifierObservateur(m);                    
                     
                     listeDeroulanteCartesSpe.removeAllItems();
-                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
+                        for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCarteSpeciale()){           
                             listeDeroulanteCartesSpe.addItem(ct.getType());
                         }
                     listeDeroulanteCartesSpe.repaint();
                     
-                    listeDeroulantePilote.removeAllItems();
+                    /*listeDeroulantePilote.removeAllItems();
                         for (Tuile tu : application.getIle().getCase2ile()){  
                             if (tu.getEtat()!=EtatC.sombrée){
                                 listeDeroulantePilote.addItem(tu.getNom());
@@ -632,7 +632,7 @@ public class VueIle extends Observe {
                         }
                     listeDeroulantePilote.repaint();*/
                     
-
+                    deck();
                     
                     
                 }
@@ -748,6 +748,7 @@ public class VueIle extends Observe {
                     Message m = new Message();
                     m.type = TypesMessages.GAGNER_TRESOR;
                     m.tuile = application.getJoueur("J"+joueurcourant).getRoleJoueur().getPosition();
+                    m.joueur = application.getJoueur("J"+joueurcourant);
                     notifierObservateur(m);
                     actualiser();
                 }
@@ -1039,6 +1040,7 @@ public class VueIle extends Observe {
 
     public void actualiser(){
         monterEau();
+        deck();
         fenetre.repaint();
         listeDeroulanteBouger.repaint();
         listeDeroulanteAssecher.repaint();
