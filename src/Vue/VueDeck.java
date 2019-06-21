@@ -43,7 +43,7 @@ public class VueDeck extends JPanel {
     
     private JButton buttonDonner;
     private JButton buttonRetour;
-    private JButton buttonDeffauser;
+    private JButton buttonDefausser;
     
     
     public VueDeck(ArrayList<CarteTresor> cartesT){
@@ -172,7 +172,7 @@ public class VueDeck extends JPanel {
                    buttonRetour.setEnabled(false);           }
        });
        
-       joueur.setText("Deck de : "+j.getNomJoueur());
+       joueur.setText("Deck de : "+j.getNomJoueur() + " : " + j.getRoleJoueur().getRoleToString());
     }
 
     public JButton getJ1() {

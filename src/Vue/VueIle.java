@@ -256,7 +256,6 @@ public class VueIle extends Observe {
     private TypeCT[] carteD;
     private String[] tuileP;
     
-    private boolean defaussé=false;
     private boolean aasseche=false;
     
     public VueIle(Application appli) {
@@ -473,6 +472,7 @@ public class VueIle extends Observe {
                         
                         m.joueur = application.getJoueur("J"+joueurcourant);    //Joueur courant
                         m.tuile = application.getJoueur("J"+joueurcourant).getRoleJoueur().PossibleMouvement().get(listeDeroulanteBouger.getSelectedIndex()); //Position du joueur courant
+                        m.aasseche=aasseche;
                         notifierObservateur(m);
                         pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant                        
                         //Actualisation de la liste déroulante
@@ -500,21 +500,37 @@ public class VueIle extends Observe {
                 public void actionPerformed(ActionEvent e) {
                     if (application.getJoueur("J"+joueurcourant).peutJouer() && application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable().size()!=0)
                     {
-                        
-                        Message m = new Message();
-                        m.type = TypesMessages.ASSECHER;
-                        m.joueur = application.getJoueur("J"+joueurcourant);
-                        m.tuile = application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable().get(listeDeroulanteAssecher.getSelectedIndex()); //Position du joueur courant
-                        m.aasseche=aasseche;
-                        
-                        notifierObservateur(m);
-                        
-                        aasseche=!aasseche;
-                        pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
-                        listeAssecher();
-                        listeDeroulanteAssecher.repaint();
-                        if (!application.getJoueur("J"+joueurcourant).peutJouer()){
-                            pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+                        if (application.getJoueur("J"+joueurcourant).getRoleJoueur().getType()==TypeAventurier.ingénieur && application.getJoueur("J"+joueurcourant).getPA()==1){
+                            panelBouton.removeAll();
+                            panelBouton.add(joueurCourant);
+                            panelBouton.add(pa);
+                            panelBouton.add(listeDeroulanteAssecher);
+                            panelBouton.add(assecher);
+                            panelBouton.add(tr);
+                            panelBouton.add(canvasTresor);
+                        }
+                        else{
+                            Message m = new Message();
+                            m.type = TypesMessages.ASSECHER;
+                            m.joueur = application.getJoueur("J"+joueurcourant);
+                            m.tuile = application.getJoueur("J"+joueurcourant).getRoleJoueur().getTuileAssechable().get(listeDeroulanteAssecher.getSelectedIndex()); //Position du joueur courant
+                            m.aasseche=aasseche;
+
+                            notifierObservateur(m);
+
+                            if (aasseche==false){
+                                aasseche=true;
+                            }
+                            else{
+                                aasseche=false;
+                            }
+
+                            pa.setText("PA :"+ application.getJoueur("J"+joueurcourant).getPA()+"/3");  //Actualise les PA du joueur courant
+                            listeAssecher();
+                            listeDeroulanteAssecher.repaint();
+                            if (!application.getJoueur("J"+joueurcourant).peutJouer()){
+                                pa.setForeground(Color.red);    //Change la couleur des PA pour avertir le joueur qu'il n'en a plus
+                            }
                         }
                     }
                 }
@@ -589,7 +605,7 @@ public class VueIle extends Observe {
                             }
                             
                             m.carte = application.getJoueur("J"+joueurcourant).getCartesT().get(listeDeroulanteDonner.getSelectedIndex());
-
+                            m.aasseche=aasseche;
                             notifierObservateur(m);
                             listeDeroulanteDonner.removeAllItems();
                             for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
@@ -729,6 +745,7 @@ public class VueIle extends Observe {
                         listeDeroulanteDonner.repaint();
                         listeDeroulanteCartesSpe.repaint();
                         
+                        aasseche=false;
                         boutonsDonner();
                         boutonsCartesSpe();
                         boutonsPilote();
@@ -888,7 +905,7 @@ public class VueIle extends Observe {
             joueursdispo = new String[application.getJoueurs().size()-1];
             for (Joueur joueur : application.getJoueurs()){           
                 if(joueur.getRoleJoueur().getType() != TypeAventurier.messager){
-                    joueursdispo[j] = joueur.getRoleJoueur().getRoleToString();
+                    joueursdispo[j] = joueur.getRoleJoueur().getRoleToString() + " : " + joueur.getNomJoueur();
                     j++;
                 }
             }
@@ -990,7 +1007,6 @@ public class VueIle extends Observe {
     
     public void plusDe5Cartes() {
         if (application.getJoueur("J"+joueurcourant).getCartesT().size()>5) {
-            defaussé=true;
             panelBouton.remove(listeDeroulanteBouger);
             panelBouton.remove(deplacer);
             panelBouton.remove(listeDeroulanteAssecher);
@@ -1013,7 +1029,7 @@ public class VueIle extends Observe {
             panelBouton.add(canvasTresor);
             
         }
-        else if(defaussé){
+        else {
             panelBouton.add(listeDeroulanteDonner);
             panelBouton.remove(defausser);
             panelBouton.remove(deck);
@@ -1038,6 +1054,7 @@ public class VueIle extends Observe {
     }
 
     public void actualiser(){
+        aasseche=false;
         monterEau();
         fenetre.repaint();
         listeDeroulanteBouger.repaint();

@@ -36,6 +36,8 @@ public class Controleur implements Observateur {
         Joueur joueur;
         Tuile tuile;
         CarteTresor carte;
+        boolean assecher;
+        
         int no_joueur = 0, suivant;
         boolean victoire;
 
@@ -57,11 +59,10 @@ public class Controleur implements Observateur {
             case DEPLACER:  //Clic sur deplacer
                 joueur = message.joueur;
                 tuile = message.tuile;
-                if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && joueur.getRoleJoueur().getAAsseche() == true) {
+                assecher = message.aasseche;
+                if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && assecher && joueur.getPA()>1) {
                     joueur.removePA(2);
                 }
-                
-
                 else{
                     joueur.removePA(1);
                 }
@@ -73,29 +74,37 @@ public class Controleur implements Observateur {
             case ASSECHER: //Clic pour assécher
                 joueur = message.joueur;
                 tuile = message.tuile;
-                boolean assecher = message.aasseche;
-                if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && !assecher) {
-                    joueur.removePA(0);
+                assecher = message.aasseche;
+                if (joueur.getPA()>1) {
+                    if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && !assecher) {
+                        joueur.removePA(0);
+                    }
+                    else if(joueur.getRoleJoueur().getType() != TypeAventurier.ingénieur || assecher){
+                        joueur.removePA(1);
+                    }
                 }
-                else if(joueur.getRoleJoueur().getType() != TypeAventurier.ingénieur || assecher){
+                else if (joueur.getPA()==1){
                     joueur.removePA(1);
                 }
+                
                 joueur.getRoleJoueur().assecher(tuile);//La tuile selectionnée est assechée
+                
                 vueIle.actualiser();
                 break;            
             case DONNER:    //Clic pour donner une carte
                 joueur=message.joueur;
                 Joueur joueur2=message.receveur;
+                assecher = message.aasseche;
                 int index = 0;
-                if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && joueur.getRoleJoueur().getAAsseche() == true) {
+                if(joueur.getRoleJoueur().getType() == TypeAventurier.ingénieur && assecher && joueur.getPA()>1) {
                     index=-1;
-                for(int i=0;i<joueur.getCartesT().size();i++){
-                    if(joueur.getCartesT().get(i)== message.carte){
-                        joueur.removePA(2);
-                        index=i;
-                        break;
+                    for(int i=0;i<joueur.getCartesT().size();i++){
+                        if(joueur.getCartesT().get(i)== message.carte){
+                            joueur.removePA(2);
+                            index=i;
+                            break;
+                        }
                     }
-                }
                 }
                 else {
                     index=-1;
