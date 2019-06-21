@@ -63,10 +63,11 @@ public class Application {
             
             for (Joueur js : this.getJoueurs()){
                 js.getRoleJoueur().setPosition(this.getIle().getTuile(js.getRoleJoueur().getDepart()));
-                for(int i=0;i<2;i++){
-                    js.getCartesT().add(cartesTresor.get(i));
-                    cartesTresor.remove(i);        
-                }
+                //for(int i=0;i<2;i++){
+                   /* js.getCartesT().add(cartesTresor.get(i));
+                    cartesTresor.remove(i);        */
+                   piocherCarte(js);
+                //}
             }
             
         }
@@ -83,10 +84,11 @@ public class Application {
             int sta=5;
             int hel=3;
             int sac=2;
-            for(int j=0;j<25;j++){
-                int i=(int)((Math.random()*6));
-                while(i==0 && cal==0 || i==1 && cri==0 || i==2 && pie==0 || i==3 && sta==0 || i==4 && hel==0 || i==5 && sac==0){
-                    i=(int)((Math.random()*5));
+            int me=3;
+            for(int j=0;j<28;j++){
+                int i=(int)((Math.random()*7));
+                while(i==0 && cal==0 || i==1 && cri==0 || i==2 && pie==0 || i==3 && sta==0 || i==4 && hel==0 || i==5 && sac==0 || i==6 && me==0){
+                    i=(int)((Math.random()*6));
                 }
                 if(i==0){
                     cartesTresor.add(new CarteTresor(TypeCT.calice));
@@ -106,9 +108,15 @@ public class Application {
                 }
                 if(i==4){
                     cartesTresor.add(new CarteTresor(TypeCT.hélicoptère));
+                    hel--;
                 }
                 if(i==5){
                     cartesTresor.add(new CarteTresor(TypeCT.sac2sable));
+                    sac--;
+                }
+                if(i==6){
+                    cartesTresor.add(new CarteTresor(TypeCT.montéedso));
+                    me--;
                 }
             }
         }
@@ -166,9 +174,29 @@ public class Application {
     }
     
     public void piocherCarte(Joueur j) { //Permet de piocher une carte trésor aléatoire
-        int i = (int) (Math.random()*cartesTresor.size());
-        j.addCarteToJoueur(cartesTresor.get(i));
-        cartesTresor.remove(cartesTresor.get(i));
+        
+        for (int i = 0; i<2; i++){
+            if(getCartesTresor().size()>0){
+                if (getCartesTresor().get(0).getType()!=TypeCT.montéedso){
+                    j.addCarteToJoueur(getCartesTresor().get(0));
+                    getCartesTresor().remove(0);
+                    //System.out.println(getCartesTresor().get(0).getType().toString());
+                }
+                else {
+                    getCartesTresor().remove(0);
+                    getNiveaudeau().monterEau();
+                    System.out.println("Avant"+defausseInondation.size());
+                    this.retournerDefausseInondation();
+                    System.out.println("Apres"+defausseInondation.size());
+                    System.out.println(getCartesTresor().get(0).getType().toString());
+
+                }
+                if (getCartesTresor().size()==0){
+                    setCartesTresor(getDefausseCartesTresor());
+                    this.retournerDefausseTresor();
+                }
+            }
+        }
     }
         
     public void addJoueur(Joueur j) { //ajoute un joueur dans le jeu
@@ -292,18 +320,26 @@ public class Application {
     
     public void retournerDefausseTresor() { //permet de mélanger la défausse de cartes trésor et d'en faire la pioche
         Collections.shuffle(defausseTresor);
-        for(CarteTresor ct : defausseTresor) {
+        ArrayList<CarteTresor> saveC = defausseTresor;
+        for(CarteTresor ct : saveC) {
             cartesTresor.add(ct);
             defausseTresor.remove(ct);
         }
     }
     
     public void retournerDefausseInondation(){ //permet de mélanger la défausse de cartes trésor et d'en faire la pioche
-        Collections.shuffle(defausseInondation);
-        for(CarteInondation ci : defausseInondation) {
+        /*Collections.shuffle(defausseInondation);
+        ArrayList<CarteInondation> saveC = defausseInondation;
+        for(CarteInondation ci : saveC) {
             cartesInondation.add(ci);
             defausseInondation.remove(ci);
+        }*/
+        
+        for(CarteInondation ci : defausseInondation){
+            cartesInondation.add(ci);
         }
+        defausseInondation.clear();
+        Collections.shuffle(cartesInondation);
     }
     
     public ArrayList<Tuile> getCasesDeplacementPilote(){
