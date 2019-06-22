@@ -11,6 +11,7 @@ public class Joueur {
 	public ArrayList<CarteTresor> cartesT; //inventaire de cartes trésor du joueur
 	public Aventurier roleJoueur; //aventurier associé au joueur
         public int pointAction;
+        public String pseudo;
         
         public Joueur(int numJoueur, String nomJoueur, Aventurier roleJoueur){
             this.numJoueur= numJoueur;
@@ -111,4 +112,14 @@ public class Joueur {
                 return false;
             }
         }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+        
+        
 }

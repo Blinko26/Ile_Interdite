@@ -46,7 +46,7 @@ public class VueDeck extends JPanel {
     private JButton buttonDefausser;
     
     
-    public VueDeck(ArrayList<CarteTresor> cartesT){
+    public VueDeck(int nbJoueur, ArrayList<CarteTresor> cartesT){
        mainPanel = new JPanel(new BorderLayout());
        panelCartes = new JPanel();  
        
@@ -120,10 +120,17 @@ public class VueDeck extends JPanel {
        j4 = new JButton("J4");
        
        panelJoueur = new JPanel(new GridLayout(1,4));
-       panelJoueur.add(j1);
-       panelJoueur.add(j2);
-       panelJoueur.add(j3);
-       panelJoueur.add(j4);
+       if (nbJoueur >= 2){
+           panelJoueur.add(j1);
+           panelJoueur.add(j2);
+       }
+       if (nbJoueur >= 3){
+           panelJoueur.add(j3);
+       }
+       if (nbJoueur >=4){
+           panelJoueur.add(j4);
+       }
+       
        
        mainPanel.add(panelJoueur, BorderLayout.SOUTH);       
        mainPanel.add(panelCartes, BorderLayout.CENTER);
@@ -172,7 +179,7 @@ public class VueDeck extends JPanel {
                    buttonRetour.setEnabled(false);           }
        });
        
-       joueur.setText("Deck de : "+j.getNomJoueur()+" "+j.getRoleJoueur().getRoleToString());
+       joueur.setText("Deck de : "+j.getPseudo()+" "+j.getRoleJoueur().getRoleToString());
     }
 
     public JButton getJ1() {

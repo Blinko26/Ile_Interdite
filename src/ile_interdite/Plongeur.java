@@ -91,4 +91,14 @@ public class Plongeur extends Aventurier {
         }
         return casesDisp; 
     }  
+
+    @Override
+    public boolean getAAsseche() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setAsseche() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

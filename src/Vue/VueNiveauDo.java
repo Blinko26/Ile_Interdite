@@ -40,7 +40,7 @@ public class VueNiveauDo extends JPanel{
         } catch (IOException ex) {
             Logger.getLogger(VueNiveauDo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        imgLabel = new JLabel(new ImageIcon(image.getScaledInstance((int) (size.getWidth()*0.15), (int) (size.getHeight()*0.9), Image.SCALE_DEFAULT)));
+        imgLabel = new JLabel(new ImageIcon(image.getScaledInstance((int) (size.getWidth()*0.30), (int) (size.getHeight()*0.9), Image.SCALE_DEFAULT)));
         mainPanel.add(imgLabel);
 
         // add the Jpanel to the main window

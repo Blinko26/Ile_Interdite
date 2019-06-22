@@ -94,8 +94,8 @@ public class VuedébutV3 extends Observe {
         difficulté = new JLabel("Choisissez la diffculté");
         choixDifficulté = new JComboBox<>();
         
-        panBack = new JPanel();
-        panBack.setOpaque(false);
+        //panBack = new JPanel();
+        //panBack.setOpaque(false);
         File path = new File("");
         imgBackground = new ImageIcon(path.getAbsolutePath()+"/src/Image/fond.png");
         contentPane = new JLabel();
@@ -103,7 +103,7 @@ public class VuedébutV3 extends Observe {
         contentPane.setLayout(new BorderLayout());
         fenetre.setContentPane(contentPane);
         
-        fenetre.getContentPane().add(panBack);
+        //fenetre.getContentPane().add(panBack);
         
         nbJoueurs.setText("Nombre de Joueurs : ");
 
@@ -167,8 +167,6 @@ public class VuedébutV3 extends Observe {
            panelBas.add(new JLabel()); 
         }
         
-        panelBouton.setOpaque(true);
-        
         panelBouton.setOpaque(false); 
         panelNbJoueur.setOpaque(false); 
         panelDifficulte.setOpaque(false); 
@@ -195,7 +193,7 @@ public class VuedébutV3 extends Observe {
                     else if (jRadioButton2.isSelected()){
                         m.nbJoueurs = 3;
                     }
-                    else if (jRadioButton1.isSelected()){
+                    else if (jRadioButton3.isSelected()){
                         m.nbJoueurs = 4;
                     }
                     

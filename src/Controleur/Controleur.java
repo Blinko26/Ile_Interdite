@@ -41,15 +41,29 @@ public class Controleur implements Observateur {
         int no_joueur = 0, suivant;
         boolean victoire;
         int difficulté;
+        int nbJoueurs;
+        ArrayList<String> pseudos;
 
         switch(message.type) {
             case DEMARRER_PARTIE:
+                pseudos = new ArrayList<>();
                 difficulté = message.difficulté;
+                nbJoueurs = message.nbJoueurs;
+                System.out.println("Nombre de Joueur : "+nbJoueurs);
+                pseudos.add(message.nj1);
+                pseudos.add(message.nj2);
+                pseudos.add(message.nj3);
+                pseudos.add(message.nj4);
                 application = new Application();
                 application.initMap();
                 application.getNiveaudeau().initNiveauDeau(difficulté+1);
                 application.initCartes();
-                application.initJoueurs(6);
+                application.initJoueurs(nbJoueurs);
+                
+                for (Joueur j: application.getJoueurs()){
+                    j.setPseudo(pseudos.get(0));
+                    pseudos.remove(0);
+                }
                 
                 vueIle = new VueIle(application);
                 vueIle.addObservateur(this);

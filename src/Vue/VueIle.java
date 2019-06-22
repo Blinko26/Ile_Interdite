@@ -38,6 +38,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,6 +47,7 @@ import javax.swing.JPanel;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -73,9 +75,9 @@ public class VueIle extends Observe {
         public void paintComponent (Graphics g) {  //permet de dessiner la carte de l'ile
             Graphics2D g2d = (Graphics2D) g;
             Dimension size = getSize();
+            //g2d.setColor(Color.RED);
             
-            g2d.setColor(Color.white);
-            g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
+            //g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
 
             
             
@@ -177,8 +179,8 @@ public class VueIle extends Observe {
             Graphics2D g2d = (Graphics2D) g;
             Dimension size = getSize();
             
-            g2d.setColor(Color.white);
-            g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
+            //g2d.setColor(Color.white);
+           // g2d.fillRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
             
             g2d.setColor(new Color(128,128,128));
             if(application.getTrésors().get(0).getEtat()==EtatT.trouvé){
@@ -258,6 +260,10 @@ public class VueIle extends Observe {
     private TypeCT[] carteD;
     private String[] tuileP;
     
+    private ImageIcon imgBackground;
+    private JLabel contentPane;
+    private JPanel panBack;
+    
     public boolean aasseche=false;
     
     public VueIle(Application appli) {
@@ -270,6 +276,18 @@ public class VueIle extends Observe {
         fenetre.setVisible(false);
         this.configureWindow(fenetre);
         
+        //Fond de l'ile
+        File path = new File("");
+        imgBackground = new ImageIcon(path.getAbsolutePath()+"/src/Image/FondBois.jpg");
+        contentPane = new JLabel();
+        contentPane.setIcon(imgBackground);
+        contentPane.setLayout(new BorderLayout());
+       //fenetre.setContentPane(contentPane);
+       contentPane.setOpaque(false);
+       
+        fenetre.setContentPane(contentPane);
+        
+        /////////////////////////////////////////////////////
         panelCentrale = new JPanel(new BorderLayout());
         fenetre.add(panelCentrale, BorderLayout.CENTER);
         panelCentrale.setOpaque(false);
@@ -284,7 +302,7 @@ public class VueIle extends Observe {
         panelNiveauEau = vueEau;
         fenetre.add(panelNiveauEau, BorderLayout.WEST);
         
-        vueDeck = new VueDeck(application.getJoueur("J"+joueurcourant).cartesT);
+        vueDeck = new VueDeck(application.getJoueurs().size(),application.getJoueur("J"+joueurcourant).cartesT);
         panelDeck = vueDeck;
         panelCentrale.add(panelDeck, BorderLayout.SOUTH);
         
@@ -788,14 +806,25 @@ public class VueIle extends Observe {
                     notifierObservateur(m);
                     actualiser();
                 }
-        });          
+        });         
+       
+        panelCentrale.setOpaque(false);
+        panelMap.setOpaque(false);
+        panelBouton.setOpaque(false);
+        
+        panelNiveauEau.setOpaque(false);
+        panelDeck.setOpaque(false);
+        vueDeck.setOpaque(false);
+        canvas.setOpaque(false);
+        
     }    
     /*
      *   configureWindow
      *   Configurer de la fenêtre : taille et action à la fermeture
      */
     private void configureWindow(JFrame window) {
-        window.setSize(500, 200);
+        fenetre.setVisible(true);
+        fenetre.setSize(1800, 950);
         window.getContentPane().setLayout(new java.awt.BorderLayout());
         window.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new java.awt.event.WindowListener() {
@@ -826,7 +855,7 @@ public class VueIle extends Observe {
         int j=0;
         int joueurprecedent;
         if(joueurcourant==1)
-            joueurprecedent=4;
+            joueurprecedent=application.getJoueurs().size();
         else{
             joueurprecedent=joueurcourant-1;
         }
@@ -972,7 +1001,7 @@ public class VueIle extends Observe {
         else {
             int joueurprecedent;
             if(joueurcourant==1)
-                joueurprecedent=4;
+                joueurprecedent=application.getJoueurs().size();
             else{
                 joueurprecedent=joueurcourant-1;
             }
@@ -1117,8 +1146,6 @@ public class VueIle extends Observe {
     }
     
     public void start(){
-               fenetre.setVisible(true);
-               fenetre.setSize(1650, 950);
                application.initPartie();
                vueEau.monteDesEaux(application.getNiveaudeau().getNiveau());
                listeAssecher();
