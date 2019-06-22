@@ -38,6 +38,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +49,7 @@ import javax.swing.JPanel;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -85,12 +88,38 @@ public class VueIle extends Observe {
                 for(int i=0;i<=5;i++){
                     if(application.getIle().getTuile(i+1,j+1).getEtat()==EtatC.normale){
                         g2d.setColor(new Color(255,255,127));
-                    }
+                                                File path = new File("");
+                        BufferedImage image = null;
+                        try {
+                            image = ImageIO.read(new File(path.getAbsolutePath()+"/src/ImagesTuiles/"+application.getIle().getTuile(i+1,j+1).getNom()+".png"));
+                        } catch (IOException ex) {
+                            Logger.getLogger(VueNiveauDo.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        g2d.drawImage(image,8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6,160,110,this);                    }
                     if(application.getIle().getTuile(i+1,j+1).getEtat()==EtatC.innondée){
                         g2d.setColor(new Color(0,255,255));
+                        File path = new File("");
+                        BufferedImage image = null;
+                        try {
+                            image = ImageIO.read(new File(path.getAbsolutePath()+"/src/ImagesTuiles/"+application.getIle().getTuile(i+1,j+1).getNom()+"2.png"));
+                        } catch (IOException ex) {
+                            Logger.getLogger(VueNiveauDo.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        //g.drawImage(image, 0, h, w*scale, h*scale, null);
+                        g2d.drawImage(image,8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6,160,110,this);
                     }
                     if(application.getIle().getTuile(i+1,j+1).getEtat()==EtatC.sombrée){
                         g2d.setColor(new Color(0,0,255));
+                        File path = new File("");
+                        BufferedImage image = null;
+                        try {
+                            image = ImageIO.read(new File(path.getAbsolutePath()+"/src/ImagesTuiles/Eau.png"));
+                        } catch (IOException ex) {
+                            Logger.getLogger(VueNiveauDo.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+         
+                        g2d.drawImage(image,8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6,160,110,this);
                     }
                     //for (int[] tuile : application.getJoueurs().get(0).getRoleJoueur().getPosition().getTuilesAdj()){
                     //    application.getIle().getTuile(tuile[0], tuile [1]).setSurligné(true);
@@ -99,21 +128,32 @@ public class VueIle extends Observe {
                          //   g2d.setColor(new Color(255,0,255));
                         //}
                     
-                    g2d.fillRect(8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) (size.getWidth()-30)*7/8)/6, (int)((int) size.getHeight()-30)/6);
+                    //g2d.fillRect(8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6, 8+2*j+j*(int)((int) size.getHeight()-30)/6, (int)((int) (size.getWidth()-30)*7/8)/6, (int)((int) size.getHeight()-30)/6);
                     
                 }
             }
             int placement=0;
             for(int i=0;i<application.getJoueurs().size();i++){
                 int xjoueur=placement+8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[0]-1)*(int)((int) (size.getWidth()-30)*7/8)/6 +(int)((int) (size.getWidth()-30)*7/8)/12-10;
-                g2d.setColor(application.getJoueurs().get(i).getRoleJoueur().getCouleur());
+                //Affichage des pions
+                File path = new File("");
+                        BufferedImage image = null;
+                        try {
+                            image = ImageIO.read(new File(path.getAbsolutePath()+"/src/Image/"+application.getJoueurs().get(i).getRoleJoueur().getRoleToString()+".png"));
+                        } catch (IOException ex) {
+                            Logger.getLogger(VueNiveauDo.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+         
+                        g2d.drawImage(image,xjoueur,8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)*(int)((int) size.getHeight()-30)/6+(int)((int) size.getHeight()-30)/12 -10,20,20,this);
+                        //////////////////////////
+                /*g2d.setColor(application.getJoueurs().get(i).getRoleJoueur().getCouleur());
                 g2d.fillOval(xjoueur,8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)*(int)((int) size.getHeight()-30)/6+(int)((int) size.getHeight()-30)/12 -10, 20, 20);
-                g2d.setColor(new Color(0,0,0));
+                g2d.setColor(Color.WHITE);
                 g2d.drawOval(xjoueur,8+2*(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)+(application.getJoueurs().get(i).getRoleJoueur().getEmplacement()[1]-1)*(int)((int) size.getHeight()-30)/6+(int)((int) size.getHeight()-30)/12 -10, 20, 20);
-                placement=placement+10;
+                placement=placement+10;*/
             }
             
-            int ex1=0;
+           /* int ex1=0;
             int ey1=0;
             int ex2=0;
             int ey2=0;
@@ -151,13 +191,13 @@ public class VueIle extends Observe {
                 g2d.setColor(new Color(0,0,0));
                 g2d.drawOval(8+2*ex1+ex1*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey1+ey1*(int)((int) (size.getHeight()-30))/6+(int) ((size.getHeight()/6)*3/4),10, 15);
                 g2d.drawOval(8+2*ex2+ex2*(int)((int) (size.getWidth()-30)*7/8)/6+2,8+2*ey2+ey2*(int)((int) (size.getHeight()-30))/6+(int) ((size.getHeight()/6)*3/4),10, 15);
-            }
+            }*/
             
             g2d.setColor(new Color(255,0,0));
             for(int j=0;j<=5;j++){
                 for(int i=0;i<=5;i++){
-                    g2d.drawString("Nom : "+application.getIle().getTuile(i+1, j+1).getNom(), 8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+30);
-                    g2d.drawString("Coord : "+application.getIle().getTuile(i+1, j+1).getEmplacementX()+", "+application.getIle().getTuile(i+1, j+1).getEmplacementY(), 8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+45);
+                    g2d.drawString(/*"Nom : "+*/application.getIle().getTuile(i+1, j+1).getNom(), 8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+30);
+                    //g2d.drawString("Coord : "+application.getIle().getTuile(i+1, j+1).getEmplacementX()+", "+application.getIle().getTuile(i+1, j+1).getEmplacementY(), 8+2*i+i*(int)((int) (size.getWidth()-30)*7/8)/6+20, 8+2*j+j*(int)((int) size.getHeight()-30)/6+45);
                 }
             } 
             
