@@ -39,7 +39,7 @@ import javax.swing.JTextField;
  *
  * @author bihanb
  */
-public class VuedébutV3 extends Observe {
+public class Vuedébut extends Observe {
     
     private JFrame fenetre;
     private JButton Regles;
@@ -69,7 +69,7 @@ public class VuedébutV3 extends Observe {
     private JPanel panelNomJoueur;
     private JPanel panelBas;
     
-    public VuedébutV3() {
+    public Vuedébut() {
         fenetre = new JFrame();
         buttonGroup1 = new ButtonGroup();
         titre = new Label();
@@ -253,6 +253,7 @@ public class VuedébutV3 extends Observe {
         window.setSize(imgBackground.getIconWidth(), imgBackground.getIconHeight()+30);
         window.setVisible(true);
         window.setResizable(false);
+        window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new java.awt.event.WindowListener() {
             public void windowOpened(java.awt.event.WindowEvent e) {}

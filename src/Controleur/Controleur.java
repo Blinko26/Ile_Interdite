@@ -1,6 +1,6 @@
 package Controleur;
 
-import Vue.VueDefaite;
+import Vue.VueFinPartie;
 import ile_interdite.Application;
 import ile_interdite.EtatT;
 import ile_interdite.Joueur;
@@ -11,7 +11,7 @@ import ile_interdite.CarteTresor;
 import java.io.IOException;
 import Vue.VueIle;
 import Vue.VueNiveauDo;
-import Vue.VuedébutV3;
+import Vue.Vuedébut;
 import ile_interdite.TypeAventurier;
 import ile_interdite.TypeCT;
 import java.beans.PropertyChangeEvent;
@@ -22,13 +22,13 @@ import javax.swing.JLabel;
 
 public class Controleur implements Observateur {
     private VueIle vueIle;
-    private VuedébutV3 vueDebut;
+    private Vuedébut vueDebut;
     private VueNiveauDo vueNiveauDo;
-    private VueDefaite vueDef;
+    private VueFinPartie vueDef;
     private Application application;
     
     public Controleur() {
-        vueDebut = new VuedébutV3();
+        vueDebut = new Vuedébut();
         vueDebut.addObservateur(this);
     }  
     @Override
@@ -251,7 +251,7 @@ public class Controleur implements Observateur {
             case FIN_PARTIE:
                 victoire = message.victoire;
                 String messageMort = message.raisonMort;
-                vueDef = new VueDefaite();
+                vueDef = new VueFinPartie();
                 vueDef.addObservateur(this);
                 //On verifie si on a gagne ou perdu
                 //Si on gagne alors message et fenetre victoire ?

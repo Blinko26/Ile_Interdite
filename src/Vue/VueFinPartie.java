@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  *
  * @author viellarb
  */
-public class VueDefaite extends Observe{
+public class VueFinPartie extends Observe{
     private JPanel panelBouton;
     
     private JButton rejouer;
@@ -42,7 +42,7 @@ public class VueDefaite extends Observe{
 
     public JFrame fenetre;
     
-    public VueDefaite(){        
+    public VueFinPartie(){        
         // main window
         //on va changer son nom avec le controleur
         fenetre = new JFrame();
@@ -94,6 +94,7 @@ public class VueDefaite extends Observe{
                     Message m = new Message();
                     m.type = TypesMessages.REJOUER;    
                     notifierObservateur(m);
+                    fenetre.dispose();
            } 
         });
         
@@ -110,6 +111,7 @@ public class VueDefaite extends Observe{
         window.setSize(imgBack.getIconWidth()-200, imgBack.getIconHeight()-300);
         window.setVisible(true);
         window.setResizable(true);
+        window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new java.awt.event.WindowListener() {
             public void windowOpened(java.awt.event.WindowEvent e) {}
