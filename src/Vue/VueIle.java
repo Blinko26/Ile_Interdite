@@ -1146,7 +1146,8 @@ public class VueIle extends Observe {
     public void actualiser(){
         monterEau();
         deck();
-        actualiserCartSpé();   
+        actualiserCartSpé();  
+         conditionVictoire();
         listeDeroulanteDonner.removeAllItems();
         for (CarteTresor ct : application.getJoueur("J"+joueurcourant).getCartesT()){           
             listeDeroulanteDonner.addItem(ct.getType());
@@ -1301,6 +1302,7 @@ public class VueIle extends Observe {
                         System.out.println("Tout les joueurs sont sur l'heliport");
                     }
         }
+        nbTresorTrouve = 0;
         //////////////////////////////////////////////////////////////////////////////////////////// truc final
         if(nbTresorTrouve == nbTresorPartie){
             //Si c'est le cas on leur dit de go à l'héliport (genre la surligner un truc comme ça)
@@ -1317,12 +1319,11 @@ public class VueIle extends Observe {
                     if(nbJoueurSurCaseHeliport == nbJoueurPartie){
                         System.out.println("Tout les joueurs sont sur l'heliport");
                         //on veut savoir s'ils ont au moins une carte helicoptere pour s'enfuir
-                        if(joueur.getCarteSpeciale().contains(TypeC.héliport)){
                             Message m = new Message();
                             m.type = TypesMessages.FIN_PARTIE;
                             m.victoire = true;
                             notifierObservateur(m);
-                        }
+                        
                     }
             }
         }

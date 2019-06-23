@@ -264,9 +264,9 @@ public class Controleur implements Observateur {
                     vueDef.vueDefChangeTailleEcritureFenetreFinJeu(30);
                     vueDef.vueDefChangeTexteVictoireOuDefaite("Vous avez perdu : " +messageMort);
                    // vueDef.perdu.setText("Vous avez Perdu :");
-                    vueIle.fermerFenetre();  
                     
                 }
+                vueIle.fermerFenetre();  
                 break;
         }
     }
